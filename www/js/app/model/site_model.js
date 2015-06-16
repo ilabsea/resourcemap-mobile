@@ -1,7 +1,8 @@
 SiteModel = {
   create: function(attr, successCallback, errorCallback) {
     var cId = attr.collection_id;
-    var url = App.URL_SITE + cId + "/sites?auth_token=" + App.Session.getAuthToken();
+    var endpoint = getEndPoint();
+    var url = endpoint.URL_SITE + cId + "/sites?auth_token=" + App.Session.getAuthToken();
     $.ajax({
       url: url,
       type: "POST",
@@ -12,8 +13,9 @@ SiteModel = {
     });
   },
   fetch: function(collectionID, successCallback) {
+    var endpoint = getEndPoint();
     $.ajax({
-      url: App.URL_SITE + collectionID + "/sites.json?auth_token=" + App.Session.getAuthToken(),
+      url: endpoint.URL_SITE + collectionID + "/sites.json?auth_token=" + App.Session.getAuthToken(),
       type: "GET",
       datatype: 'json',
       success: successCallback,
@@ -26,8 +28,9 @@ SiteModel = {
   fetchOne: function(successCallback) {
     var cId = localStorage.getItem("cId");
     var sId = localStorage.getItem("sId");
+    var endpoint = getEndPoint();
     $.ajax({
-      url: App.URL_SITE + cId + "/sites/" + sId + ".json",
+      url: endpoint.URL_SITE + cId + "/sites/" + sId + ".json",
       data: {"auth_token": App.Session.getAuthToken()},
       type: "GET",
       datatype: 'json',
@@ -47,10 +50,11 @@ SiteModel = {
   update: function(data, successCallback, errorCallback) {
     var cId = localStorage.getItem("cId");
     var sId = localStorage.getItem("sId");
+    var endpoint = getEndPoint();
     $.ajax({
       data: data,
       type: "post",
-      url: App.URL_SITE + cId + "/sites/" + sId,
+      url: endpoint.URL_SITE + cId + "/sites/" + sId,
       dataType: "json",
       success: successCallback,
       error: errorCallback

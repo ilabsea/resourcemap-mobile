@@ -2,8 +2,9 @@ var SessionOnlineController = {
   authUser: function (email, password) {
     var data = SessionHelper.getUser(email, password);
     ViewBinding.setBusy(true);
+    var endpoint = getEndPoint();
 
-    UserModel.create(App.AUTH_URL, data, function (response) {
+    UserModel.create(endpoint.AUTH_URL, data, function (response) {
       App.Session.setAuthToken(response.auth_token);
 
       UserOffline.fetchByEmail(email, function (user) {
@@ -34,8 +35,8 @@ var SessionOnlineController = {
   },
   storeSession: function (email, password) {
     var data = SessionHelper.getUser(email, password);
-
-    UserModel.create(App.AUTH_URL, data, function () {
+    var endpoint = getEndPoint();
+    UserModel.create(endpoint.AUTH_URL, data, function () {
       App.redirectTo("#page-collection-list");
     }, function (x, t, m) {
       if (t === "timeout" || t === "notmodified") {

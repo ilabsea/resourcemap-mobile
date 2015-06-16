@@ -24,13 +24,16 @@
         "ajax-loader": "Please wait ...",
         "no_internet_connection": "No internet connection.",
         "please_resend_data": "Please resend the data.",
-        "please_reupdate_your_site": "Please reupdate your site."
+        "please_reupdate_your_site": "Please reupdate your site.",
+        "ok": "Ok"
     },
     "login_page": {
         "login": "Login",
         "creat_new_accotun": "Create new account",
         "invalide_email": "Please enter a valid email address.",
-        "about":"About"
+        "about":"About",
+        "change_endpoint": "Change end point",
+        "endpoint": "End point"
     },
     "signup_page": {
         "sign_up": "SignUp",

@@ -1,7 +1,8 @@
 SitesPermission = {
   fetch: function(cId, successCallback) {
+    var endpoint = getEndPoint();
     $.ajax({
-      url: App.URL_SITE + cId + "/site_permissions?auth_token=" + App.Session.getAuthToken(),
+      url: endpoint.URL_SITE + cId + "/site_permissions?auth_token=" + App.Session.getAuthToken(),
       type: "GET",
       datatype: 'json',
       success: successCallback,

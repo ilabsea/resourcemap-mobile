@@ -9,8 +9,9 @@ UserModel = {
     });
   },
   delete: function(callback) {
+    var endpoint = getEndPoint();
     $.ajax({
-      url: App.URL_LOGOUT + App.Session.getAuthToken(),
+      url: endpoint.URL_LOGOUT + App.Session.getAuthToken(),
       type: "POST",
       complete: function() {
         callback();

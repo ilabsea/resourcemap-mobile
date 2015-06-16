@@ -2,8 +2,9 @@ VisibleLayersFor = {
   fetch: function(successCallback) {
     var cId = localStorage.getItem("cId");
     var sId = localStorage.getItem("sId");
+    var endpoint = getEndPoint();
     $.ajax({
-      url: App.URL_SITE + cId + "/sites/" + sId + "/visible_layers_for?auth_token=" 
+      url: endpoint.URL_SITE + cId + "/sites/" + sId + "/visible_layers_for?auth_token=" 
           +  App.Session.getAuthToken(),
       type: "GET",
       datatype: 'json',

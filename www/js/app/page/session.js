@@ -10,8 +10,27 @@ $(function() {
     SessionController.logout();
   });
   
+  $(document).delegate('#page-login', 'pageshow', function() {
+    var url = App.DataStore.get("URL");
+    if (url == null || url == "" || url == "undefined"){
+      url = "http://resourcemap-sea.instedd.org/";
+      App.DataStore.set("URL", url);
+    } 
+  });
+  
   $(document).delegate('#page-login', 'pagebeforehide', function() {
     ValidationHelper.resetFormValidate("#form_login");
+  });
+  
+  $(document).delegate('#btn_confirm_endpoint', 'click', function() {
+    var url = $("#input_endpoint").val();
+    App.DataStore.set("URL", url);
+    App.redirectTo("index.html");
+  });
+  
+  $(document).delegate('#page-endpoint', 'pagebeforeshow', function() {
+    var url = App.DataStore.get("URL");
+    $("#input_endpoint").val(url);
   });
  
 });
