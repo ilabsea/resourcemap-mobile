@@ -1,7 +1,7 @@
 var Spinner = {
   show: function () {
-    $.mobile.activePage.addClass("ui-disabled");
     Spinner.spinner();
+    $.mobile.activePage.addClass("ui-disabled");
   },
   hide: function () {
     $.mobile.loading('hide');

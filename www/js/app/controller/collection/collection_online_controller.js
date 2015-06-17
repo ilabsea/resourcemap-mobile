@@ -1,5 +1,6 @@
 var CollectionOnlineController = {
   getByUserId: function (currentUser) {
+    ViewBinding.setBusy(true);  
     CollectionModel.fetch(function (collections) {
       var collectionData = [];
       $.each(collections, function (key, collection) {
