@@ -27,6 +27,14 @@ App = {
     createTables();
     FastClick.attach(document.body);
     App.initialPage();
+    App.setDefaultEndPoint();
+  },
+  setDefaultEndPoint: function () {
+    var url = App.DataStore.get("URL");
+    if (url == null || url == "" || url == "undefined") {
+      url = "http://resourcemap-sea.instedd.org/";
+      App.DataStore.set("URL", url);
+    }
   },
   initialPage: function () {
     var currentUser = JSON.parse(App.DataStore.get("currentUser"));
