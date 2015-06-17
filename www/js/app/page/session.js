@@ -10,14 +10,6 @@ $(function() {
     SessionController.logout();
   });
   
-  $(document).delegate('#page-login', 'pageshow', function() {
-    var url = App.DataStore.get("URL");
-    if (url == null || url == "" || url == "undefined"){
-      url = "http://resourcemap-sea.instedd.org/";
-      App.DataStore.set("URL", url);
-    } 
-  });
-  
   $(document).delegate('#page-login', 'pagebeforehide', function() {
     ValidationHelper.resetFormValidate("#form_login");
   });
