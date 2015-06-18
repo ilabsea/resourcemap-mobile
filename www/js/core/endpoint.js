@@ -10,6 +10,6 @@ function EndPoint(URL, END_POINT) {
 
 function getEndPoint() {
   var url = App.DataStore.get("URL");
-  var endpoint = new EndPoint(url, url + "api");
+  var endpoint = new EndPoint(url, url + "/api");
   return endpoint;
 }
