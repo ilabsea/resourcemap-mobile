@@ -65,7 +65,7 @@
  <body> 
   <!--page-login-->   
   <div data-role="page" id="page-login" data-theme="b">
-   <div data-role="header"> 
+   <div data-role="header" data-position="fixed"> 
     <div id="div-language" style=""> </div>
     <div style="clear: both"></div>
    </div> 
@@ -156,7 +156,7 @@
 
   <!-- page-collection-list -->
   <div data-role="page" id="page-collection-list" data-theme="b">
-   <div data-role="header" >
+   <div data-role="header" data-position="fixed">
     <button id="logout" data-theme="a" data-inline="true" data-icon="carat-r" 
             class="ui-btn-right" data-i18n="global.logout">Sign out</button>
     <h2 data-i18n="collection_page.collection">My Collections</h2>
@@ -176,7 +176,7 @@
 
   <!--page-site-list-all-offline-->
   <div data-role="page" id="page-site-list-all" data-theme="b">
-   <div data-role="header">
+   <div data-role="header" data-position="fixed">
     <a href="#page-collection-list" data-theme="a"  data-role="button" 
        data-inline="true" data-icon="carat-l" class="ui-btn-left" 
        data-i18n="global.back">Back
@@ -202,7 +202,7 @@
 
   <!--site-site-list-->
   <div data-role="page" id="page-site-list" data-theme="b">
-   <div data-role="header">
+   <div data-role="header" data-position="fixed">
     <a href="#page-collection-list" data-role="button" data-theme="a" 
        data-inline="true" data-icon="carat-l" class="ui-btn-left" 
        data-i18n="global.back">Back
@@ -239,7 +239,7 @@
 
   <!--page-create-site-->
   <div data-role="page" id="page-create-site" data-theme="b">
-   <div data-role="header">
+   <div data-role="header" data-position="fixed">
     <a data-role="button" data-theme="a" href="#page-site-list" 
        id='btn_back_site_in_create' data-icon="carat-l" class="ui-btn-left" 
        data-i18n="global.back">Back
@@ -276,7 +276,7 @@
 
   <!-- view map -->
   <div data-role="page" id="page-map" data-theme="b" >
-   <div data-role="header">
+   <div data-role="header" data-position="fixed">
     <a id="btn_back_create_site" href="#page-create-site" data-role="button" 
        data-theme="a" data-inline="true" data-icon="carat-l" class="ui-btn-left" 
        data-i18n="global.back">Back
@@ -306,7 +306,7 @@
 
   <!-- update site within a collection in local database-->
   <div data-role="page" id="page-update-site" data-theme="b">
-   <div data-role="header">
+   <div data-role="header" data-position="fixed">
     <div><a href="#page-site-list" id="btn_back_site_list" 
             data-role="button" data-theme="a" data-inline="true" data-icon="carat-l" 
             class="ui-btn-left" data-i18n="global.back">Back</a></div>
@@ -338,7 +338,7 @@
 
   <!--update site within a collection in server database-->
   <div data-role="page" id="page-update-site-online" data-theme="b">
-   <div data-role="header">
+   <div data-role="header" data-position="fixed">
     <a href="#page-site-list" id="btn_back_site_list_online" data-role="button" 
        data-theme="a" data-inline="true" data-icon="carat-l" class="ui-btn-left" 
        data-i18n="global.back">Back
