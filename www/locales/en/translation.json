@@ -35,7 +35,7 @@
         "change_endpoint": "Change end point",
         "endpoint": "End point",
         "are_you_sure": "Are you sure?",
-        "confirm_message_change_end_point": "You change your end point, your offline sites will lose"
+        "confirm_message_change_end_point": "The change will detroy your offline data. Are you sure you want to continue?"
     },
     "signup_page": {
         "sign_up": "SignUp",
