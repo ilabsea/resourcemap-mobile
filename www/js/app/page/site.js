@@ -1,6 +1,6 @@
 $(function () {
 
-  $(document).delegate('#page-site-list', 'pagebeforeshow', function () {
+  $(document).delegate('#page-site-list', 'pageshow', function () {
     $("#btn_sendToServer").hide();
     var cId = App.DataStore.get("cId");
     SiteOfflineController.countByCollectionId(cId);

@@ -1,28 +1,39 @@
 App.initialize();
 App.onDeviceReady();
-$(function() {
+$(function () {
   FastClick.attach(document.body);
   Translation.setLang(Translation.getLang());
   Translation.renderLang();
-  $.mobile.defaultPageTransition = 'none'; 
+  $.mobile.defaultPageTransition = 'none';
 
-  $(document).delegate('#logout', 'click', function() {
+  $(document).delegate('#logout', 'click', function () {
     SessionController.logout();
   });
   
   $(document).delegate('#page-login', 'pagebeforehide', function() {
     ValidationHelper.resetFormValidate("#form_login");
   });
-  
-  $(document).delegate('#btn_confirm_endpoint', 'click', function() {
+
+  $(document).delegate('#btn_confirm_endpoint', 'click', function () {
     var url = $("#input_endpoint").val();
+    var previous_url = App.DataStore.get("URL");
+    if (url != previous_url)
+      $.mobile.changePage('#page-confirm-endpoint', { role: 'dialog'});
+    else
+      App.redirectTo("index.html");
+  });
+
+  $(document).delegate('#btn_confirm_accept_endpoint', 'click', function () {
+    var url = $("#input_endpoint").val();
+    App.resetCache();
+    App.resetDb();
     App.DataStore.set("URL", url);
     App.redirectTo("index.html");
   });
-  
-  $(document).delegate('#page-endpoint', 'pagebeforeshow', function() {
+
+  $(document).delegate('#page-endpoint', 'pagebeforeshow', function () {
     var url = App.DataStore.get("URL");
     $("#input_endpoint").val(url);
   });
- 
+
 });
