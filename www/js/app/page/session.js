@@ -25,6 +25,8 @@ $(function () {
 
   $(document).delegate('#btn_confirm_accept_endpoint', 'click', function () {
     var url = $("#input_endpoint").val();
+    App.resetCache();
+    App.resetDb();
     App.DataStore.set("URL", url);
     App.redirectTo("index.html");
   });

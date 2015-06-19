@@ -8,6 +8,7 @@ $(function() {
     var currentUser = SessionHelper.currentUser();
     SiteOfflineController.countByUserId(currentUser.id);
   });
+  
   $(document).delegate('#page-collection-list li', 'click', function() {
     var cId = $(this).attr("data-id");
     App.DataStore.set("cId", cId);

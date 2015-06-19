@@ -7,6 +7,7 @@ var SiteOnlineController = {
   },
   getByCollectionId: function () {
     var cId = App.DataStore.get("cId");
+    ViewBinding.setBusy(true);
     SiteModel.fetch(cId, function (response) {
       var siteOnlineData = [];
       $.each(response["sites"], function (key, data) {
