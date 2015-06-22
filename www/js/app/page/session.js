@@ -20,7 +20,7 @@ $(function () {
     if (url != previous_url)
       $.mobile.changePage('#page-confirm-endpoint', { role: 'dialog'});
     else
-      App.redirectTo("index.html");
+      App.redirectTo("#page-login");
   });
 
   $(document).delegate('#btn_confirm_accept_endpoint', 'click', function () {
@@ -28,7 +28,7 @@ $(function () {
     App.resetCache();
     App.resetDb();
     App.DataStore.set("URL", url);
-    App.redirectTo("index.html");
+    App.redirectTo("#page-login");
   });
 
   $(document).delegate('#page-endpoint', 'pagebeforeshow', function () {

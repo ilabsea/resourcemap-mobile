@@ -41,9 +41,20 @@ var Location = {
       $("#mark_lng").val(lng);
       FieldController.renderLocationField("#lat", "#lng", "");
     }, function () {
-      alert("Location cannot be found.");
+      alert("Your current location cannot be found.");
     }, {
       enableHighAccuracy: true
+    });
+  },
+  prepareLocation: function () {
+    InvisibleLayer.invisibleNameLatLng("wrapSiteLocation", "wrapSiteName", function () {
+      requireReload(function () {
+        var lat = $("#lat").val();
+        var lng = $("#lng").val();
+        if (lat == "" && lng == "") {
+          Location.getCurrentLocation();
+        }
+      });
     });
   }
 };
