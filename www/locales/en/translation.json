@@ -32,10 +32,10 @@
         "creat_new_accotun": "Create new account",
         "invalide_email": "Please enter a valid email address.",
         "about":"About",
-        "change_endpoint": "Change end point",
-        "endpoint": "End point",
-        "are_you_sure": "Are you sure?",
-        "confirm_message_change_end_point": "The change will detroy your offline data. Are you sure you want to continue?"
+        "change_server_url": "Change server url",
+        "url": "URL",
+        "warning": "Warning",
+        "confirm_message_change_server_url": "Your offline data will lose. Are you sure you want to continue?"
     },
     "signup_page": {
         "sign_up": "SignUp",
