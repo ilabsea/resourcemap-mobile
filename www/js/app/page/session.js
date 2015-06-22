@@ -9,6 +9,11 @@ $(function () {
   $(document).delegate('#logout', 'click', function () {
     SessionController.logout();
   });
+  
+  $(document).delegate('#page-login', 'pageshow', function () {
+    var url = App.DataStore.get("URL");
+    EndPointView.display($("#page-about-release"), {url: url});
+  });
 
   $(document).delegate('#page-login', 'pagebeforehide', function () {
     ValidationHelper.resetFormValidate("#form_login");

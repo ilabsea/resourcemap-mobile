@@ -28,6 +28,8 @@ App = {
     FastClick.attach(document.body);
     App.initialPage();
     App.setDefaultEndPoint();
+    var url = App.DataStore.get("URL");
+    EndPointView.display($("#page-about-release"), {url: url});
   },
   setDefaultEndPoint: function () {
     var url = App.DataStore.get("URL");
