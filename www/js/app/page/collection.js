@@ -1,6 +1,6 @@
 $(function() {
 
-  $(document).delegate('#page-collection-list', 'pagebeforeshow', function() {
+  $(document).delegate('#page-collection-list', 'pageshow', function() {
     App.emptyHTML();
     SiteList.clear();
     hideElement($("#info_sign_in"));

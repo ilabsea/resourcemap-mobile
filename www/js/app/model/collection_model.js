@@ -1,14 +1,19 @@
 CollectionModel = {
-  fetch: function(successCallback) {
+  fetch: function (successCallback) {
     var endpoint = getEndPoint();
     $.ajax({
       type: "get",
       url: endpoint.LIST_COLLECTION + App.Session.getAuthToken(),
       dataType: "json",
-      success: successCallback
+      success: successCallback,
+      error: function (error, t) {
+        if (t === "timeout" || t === "notmodified") {
+          alert('Internet connection problem.');
+        }
+      }
     });
   },
-  fetchOne: function(callback) {
+  fetchOne: function (callback) {
     var endpoint = getEndPoint();
     $.ajax({
       type: "get",
