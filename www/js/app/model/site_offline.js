@@ -14,8 +14,11 @@ SiteOffline = {
   fetchBySiteId: function(sId, callback) {
     Site.all().filter('id', "=", sId).one(callback);
   },
-  fetchByCollectionId: function(cId, callback) {
-    Site.all().filter('collection_id', "=", cId).list(null, callback);
+  fetchByCollectionIdUserId: function(cId, userId, callback){
+    Site.all()
+        .filter('collection_id', "=", cId)
+        .filter('user_id', '=', userId)
+        .list(null, callback);
   },
   fetchByUserId: function(userId, callback) {
     Site.all().filter('user_id', '=', userId).list(null, callback);
@@ -27,8 +30,11 @@ SiteOffline = {
       App.redirectTo("#page-site-list");
     });
   },
-  countByCollectionId: function(idcollection, callback) {
-    Site.all().filter('collection_id', "=", idcollection).count(null, function(count) {
+  countByCollectionIdUserId: function(idcollection, userId, callback) {
+    Site.all()
+        .filter('collection_id', "=", idcollection)
+        .filter('user_id', '=', userId)
+        .count(null, function(count) {
       callback(count);
     });
   },

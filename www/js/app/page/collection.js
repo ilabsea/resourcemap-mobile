@@ -1,6 +1,6 @@
-$(function() {
+$(function () {
 
-  $(document).delegate('#page-collection-list', 'pageshow', function() {
+  $(document).delegate('#page-collection-list', 'pageshow', function () {
     App.emptyHTML();
     SiteList.clear();
     hideElement($("#info_sign_in"));
@@ -8,14 +8,15 @@ $(function() {
     var currentUser = SessionHelper.currentUser();
     SiteOfflineController.countByUserId(currentUser.id);
   });
-  
-  $(document).delegate('#page-collection-list li', 'click', function() {
+
+  $(document).delegate('#page-collection-list li', 'click', function () {
     var cId = $(this).attr("data-id");
     App.DataStore.set("cId", cId);
     var cName = $(this).attr("data-name");
     App.DataStore.set("collectionName", cName);
     CollectionView.displayName({name: cName});
     CollectionController.getOne(cId);
-    MembershipOnlineController.getByCollectionId(cId);
+    if (App.isOnline())
+      MembershipOnlineController.getByCollectionId(cId);
   });
 });

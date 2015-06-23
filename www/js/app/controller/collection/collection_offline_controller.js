@@ -4,7 +4,8 @@ var CollectionOfflineController = {
       var asyncTotal = 0;
       var collectionData = [];
       $.map(collections, function (collection) {
-        SiteOffline.countByCollectionId(collection.idcollection(), function (count) {
+        var currentUser = SessionHelper.currentUser();
+        SiteOffline.countByCollectionIdUserId(collection.idcollection(), currentUser.id, function (count) {
           var item = CollectionHelper.dataCollection(collection, currentUser, count, false);
           asyncTotal++;
           collectionData.push(item);
