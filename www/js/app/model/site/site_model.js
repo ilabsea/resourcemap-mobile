@@ -1,8 +1,10 @@
 SiteModel = {
-  create: function(attr, successCallback, errorCallback) {
+  sitePage: 0,
+  create: function (attr, successCallback, errorCallback) {
     var cId = attr.collection_id;
     var endpoint = getEndPoint();
-    var url = endpoint.URL_SITE + cId + "/sites?auth_token=" + App.Session.getAuthToken();
+    var url = endpoint.URL_SITE + cId
+        + "/sites?auth_token=" + App.Session.getAuthToken();
     $.ajax({
       url: url,
       type: "POST",
@@ -12,20 +14,23 @@ SiteModel = {
       error: errorCallback
     });
   },
-  fetch: function(collectionID, successCallback) {
+  fetch: function (collectionID, offset, successCallback) {
     var endpoint = getEndPoint();
+    var url = endpoint.URL_SITE + collectionID
+        + "/sites.json?offset=" + offset + "&limit=15&auth_token="
+        + App.Session.getAuthToken();
     $.ajax({
-      url: endpoint.URL_SITE + collectionID + "/sites.json?auth_token=" + App.Session.getAuthToken(),
+      url: url,
       type: "GET",
       datatype: 'json',
       success: successCallback,
       timeout: 600000,
-      error: function(error) {
+      error: function (error) {
         App.log("Retriving sites from server : ", error);
       }
     });
   },
-  fetchOne: function(successCallback) {
+  fetchOne: function (successCallback) {
     var cId = localStorage.getItem("cId");
     var sId = localStorage.getItem("sId");
     var endpoint = getEndPoint();
@@ -36,18 +41,18 @@ SiteModel = {
       datatype: 'json',
       success: successCallback,
       timeout: 600000,
-      error: function(error, t) {
-        if(t==="timeout" || t==="notmodified") {
+      error: function (error, t) {
+        if (t === "timeout" || t === "notmodified") {
           alert('Internet connection problem.');
           App.redirectTo('#page-site-list');
-        } 
+        }
       },
-      complete: function() {
+      complete: function () {
         ViewBinding.setBusy(true);
       }
     });
   },
-  update: function(data, successCallback, errorCallback) {
+  update: function (data, successCallback, errorCallback) {
     var cId = localStorage.getItem("cId");
     var sId = localStorage.getItem("sId");
     var endpoint = getEndPoint();
@@ -63,7 +68,7 @@ SiteModel = {
 };
 
 SiteMenu = {
-  menu: function() {
+  menu: function () {
     App.emptyHTML();
     var cId = App.DataStore.get("cId");
     var value = $('#site-list-menu').val();

@@ -7,10 +7,12 @@ var SiteOnlineController = {
   },
   getByCollectionId: function () {
     var cId = App.DataStore.get("cId");
+    var limit = 15;
+    var offset = SiteModel.sitePage * limit;
     ViewBinding.setBusy(true);
-    SiteModel.fetch(cId, function (response) {
+    SiteModel.fetch(cId, offset, function (response) {
       var siteOnlineData = [];
-      $.each(response["sites"], function (key, data) {
+      $.map(response["sites"], function (data) {
         var date = data.created_at;
         date = new Date(date);
         date = dateToParam(date);
@@ -22,10 +24,14 @@ var SiteOnlineController = {
         };
         siteOnlineData.push(item);
         SiteList.add(new SiteObj(item.id, item.name));
-        if (key === response["total"] - 1) {
-          SiteView.display($('#site-list-online'), {siteList: siteOnlineData});
-        }
       });
+      var hasMoreSites = false;
+      var limit = 15;
+      var siteLength = response["sites"].length + (SiteModel.sitePage * limit);
+      if (siteLength < response["total"]) {
+        hasMoreSites = true;
+      }
+      SiteView.display($('#site-list-online'), {hasMoreSites: hasMoreSites, siteList: siteOnlineData});
     });
   },
   updateBySiteId: function () {

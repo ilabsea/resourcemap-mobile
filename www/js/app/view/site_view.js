@@ -1,7 +1,13 @@
 var SiteView = {
   display: function (element, siteData) {
     App.Template.process("site/list.html", siteData, function (content) {
-      element.html(content);
+      element.append(content);
+      element.listview("refresh");
+    });
+  },
+  displayMore: function (element, siteData) {
+    App.Template.process("site/list.html", siteData, function (content) {
+      element.append(content).append(element.children('#load-more-site'));
       element.listview("refresh");
     });
   },

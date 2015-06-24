@@ -4,6 +4,7 @@ $(function () {
     $("#btn_sendToServer").hide();
     var cId = App.DataStore.get("cId");
     SiteOfflineController.countByCollectionId(cId);
+    SiteModel.sitePage = 0;
     SiteController.getAllByCollectionId();
     $("#site-list-menu").get(0).selectedIndex = 0;
     PhotoList.clear();
@@ -112,5 +113,11 @@ $(function () {
 
   $(document).delegate('#lat, #lng', 'change', function () {
     FieldController.renderLocationField("#lat", "#lng", "");
+  });
+  
+  $(document).delegate('#load-more-link-site', 'click', function () {
+    $("#load-more-site").remove();
+    SiteModel.sitePage++;
+    SiteOnlineController.getByCollectionId();
   });
 });
