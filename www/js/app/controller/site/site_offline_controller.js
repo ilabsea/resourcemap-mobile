@@ -5,8 +5,9 @@ var SiteOfflineController = {
   },
   getByCollectionId: function () {
     var cId = App.DataStore.get("cId");
-    var currentUser = SessionHelper.currentUser();
-    SiteOffline.fetchByCollectionIdUserId(cId, currentUser.id, function (sites) {
+    var uId = SessionHelper.currentUser().id;
+    var offset = SiteOffline.sitePage * SiteOffline.limit;
+    SiteOffline.fetchByCollectionIdUserId(cId, uId, offset, function (sites) {
       var siteData = [];
       sites.forEach(function (site) {
         var fullDate = dateToParam(site.created_at());
@@ -18,11 +19,23 @@ var SiteOfflineController = {
           link: "#page-update-site"
         });
       });
-      SiteView.display($('#site-list'), {siteList: siteData});
+      SiteOffline.countByCollectionIdUserId(cId, uId, function (count) {
+        var siteLength = sites.length + offset;
+        var hasMoreSites = false;
+        if (siteLength < count) {
+          hasMoreSites = true;
+        }
+        var sitesRender = {
+          hasMoreSites: hasMoreSites,
+          state: "offline",
+          siteList: siteData};
+        SiteView.display($('#site-list'), sitesRender);
+      });
     });
   },
   getByUserId: function (userId) {
-    SiteOffline.fetchByUserId(userId, function (sites) {
+    var offset = SiteOffline.sitePage * SiteOffline.limit;
+    SiteOffline.fetchByUserId(userId, offset, function (sites) {
       var siteofflineData = [];
       sites.forEach(function (site) {
         var fullDate = dateToParam(site.created_at());
@@ -35,7 +48,18 @@ var SiteOfflineController = {
         SiteList.add(new SiteObj(site.id, site.name()));
         siteofflineData.push(item);
       });
-      SiteView.display($('#offlinesite-list'), {siteList: siteofflineData});
+      SiteOffline.countByUserId(userId, function(count){
+        var siteLength = sites.length + offset;
+        var hasMoreSites = false;
+        if (siteLength < count) {
+          hasMoreSites = true;
+        }
+        var sitesRender = {
+          hasMoreSites: hasMoreSites,
+          state: "all",
+          siteList: siteofflineData};
+        SiteView.display($('#offlinesite-list'), sitesRender);
+      });
     });
   },
   updateBySiteId: function () {
@@ -86,7 +110,7 @@ var SiteOfflineController = {
     var currentUser = SessionHelper.currentUser();
     SiteOfflineController.processToServerByUserId(currentUser.id);
   },
-  processToServerByCollectionIdUserId: function(cId, uId){
+  processToServerByCollectionIdUserId: function (cId, uId) {
     if (App.isOnline()) {
       SiteOffline.fetchByCollectionIdUserId(cId, uId, function (sites) {
         if (sites.length > 0)
@@ -96,7 +120,7 @@ var SiteOfflineController = {
     else
       alert(i18n.t("global.no_internet_connection"));
   },
-  processToServerByUserId: function (userId ) {
+  processToServerByUserId: function (userId) {
     if (App.isOnline()) {
       SiteOffline.fetchByUserId(userId, function (sites) {
         if (sites.length > 0)

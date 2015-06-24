@@ -1,4 +1,5 @@
 SiteModel = {
+  limit: 15,
   sitePage: 0,
   create: function (attr, successCallback, errorCallback) {
     var cId = attr.collection_id;
@@ -17,7 +18,8 @@ SiteModel = {
   fetch: function (collectionID, offset, successCallback) {
     var endpoint = getEndPoint();
     var url = endpoint.URL_SITE + collectionID
-        + "/sites.json?offset=" + offset + "&limit=15&auth_token="
+        + "/sites.json?offset=" + offset + "&limit=" +
+        SiteModel.limit + "&auth_token="
         + App.Session.getAuthToken();
     $.ajax({
       url: url,

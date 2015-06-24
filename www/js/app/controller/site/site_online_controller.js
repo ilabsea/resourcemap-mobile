@@ -7,8 +7,7 @@ var SiteOnlineController = {
   },
   getByCollectionId: function () {
     var cId = App.DataStore.get("cId");
-    var limit = 15;
-    var offset = SiteModel.sitePage * limit;
+    var offset = SiteModel.sitePage * SiteModel.limit;
     ViewBinding.setBusy(true);
     SiteModel.fetch(cId, offset, function (response) {
       var siteOnlineData = [];
@@ -26,12 +25,15 @@ var SiteOnlineController = {
         SiteList.add(new SiteObj(item.id, item.name));
       });
       var hasMoreSites = false;
-      var limit = 15;
-      var siteLength = response["sites"].length + (SiteModel.sitePage * limit);
+      var siteLength = response["sites"].length + offset;
       if (siteLength < response["total"]) {
         hasMoreSites = true;
       }
-      SiteView.display($('#site-list-online'), {hasMoreSites: hasMoreSites, siteList: siteOnlineData});
+      var siteData = {
+        hasMoreSites: hasMoreSites, 
+        state: "online",
+        siteList: siteOnlineData};
+      SiteView.display($('#site-list-online'), siteData);
     });
   },
   updateBySiteId: function () {
