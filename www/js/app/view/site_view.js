@@ -5,12 +5,6 @@ var SiteView = {
       element.listview("refresh");
     });
   },
-  displayMore: function (element, siteData) {
-    App.Template.process("site/list.html", siteData, function (content) {
-      element.append(content).append(element.children('#load-more-site'));
-      element.listview("refresh");
-    });
-  },
   displayUpdateLatLng: function (templateURL, element, suffix, siteUpdateData) {
     App.Template.process(templateURL, siteUpdateData, function (content) {
       element.html(content);
