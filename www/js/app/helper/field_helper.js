@@ -292,6 +292,6 @@ FieldHelper = {
   buildFieldLocationUpdate: function (site, item, fromServer) {
     var lat = fromServer ? site.lat : site.lat();
     var lng = fromServer ? site.lng : site.lng();
-    item.config.locationOptions = Location.getLocations(lat, lng, item.config);
+    item.config.locationOptions = LocationHelper.getLocations(lat, lng, item.config);
   }
 };

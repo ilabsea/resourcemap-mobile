@@ -61,23 +61,24 @@
  </div>
  {{else}}
  {{#if config.locations}}
- <div id="wrapper_{{idfield}}" tabindex="0">
-  <label>{{name}}</label>
-  <select id="{{idfield}}" 
-          data-theme="a" 
-          name="{{idfield}}" 
-          data-native-menu="false"
-          {{required}} 
-          class="validateSelectFields needsclick">
-   <option value="">Option</option>
-   <option value="" selected>(no value)</option>
-   {{#config.locationOptions}}
-   <option value="{{code}}">{{name}}</option>
-   {{/config.locationOptions}}
-  </select>
+ <div id="wrapper_{{idfield}}" tabindex="0" class="wrapper_autocomplete">
+  <label>{{name}} {{#if required}} <span class="requiredAsteric">*</span>  {{/if}} </label>
+  <input id="{{idfield}}" 
+         data-type="search" 
+         name="{{name}}" 
+         {{required}} 
+         class="search_location">
+  <label id="label_{{idfield}}" class="errorSearch" style="display: none">{{t "validation.user_email"}}</label>
+  <ul id="autocomplete_{{idfield}}"
+      data-role="listview" 
+      data-filter="true" 
+      data-input="#{{idfield}}"  
+      data-inset="true"
+      class="autocomplete">
+  </ul>
  </div>
  {{else}}
- <div id="wrapper_{{idfield}}" tabindex="0">
+ <div id="wrapper_{{idfield}}" tabindex="0" class="wrapper_autocomplete">
   <label for='name'>{{name}} {{#if required}} <span class="requiredAsteric">*</span>  {{/if}} </label>
   {{#ifCond widgetType "search"}}
   <input id="{{idfield}}" 

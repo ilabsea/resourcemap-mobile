@@ -38,11 +38,11 @@ var UserFieldController = {
 
 var AutoCompleteList = {
   hideLi: function (e) {
-    var container = $(".autocomplete");
+    var container = $(".wrapper_autocomplete");
 
     if (!container.is(e.target)
         && container.has(e.target).length === 0) {
-      container.addClass('ui-screen-hidden');
+      $(".autocomplete").addClass('ui-screen-hidden');
     }
   },
   getLi: function (liElement) {
@@ -50,7 +50,7 @@ var AutoCompleteList = {
     var ul = $(liElement).closest("ul");
     var id = $(ul).attr("data-input");
     $(id).val(text);
-    ul.children().addClass('ui-screen-hidden');
+    ul.addClass('ui-screen-hidden');
 
     id = id.substring(1, id.length);
     var idfield = id.substring(id.lastIndexOf('_') + 1);

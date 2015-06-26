@@ -10,8 +10,13 @@ FieldView = {
   },
   displayLocationField: function (templateURL, element, configData) {
     App.Template.process(templateURL, configData, function (content) {
-      element.html(content);
-      element.selectmenu("refresh");
+      element.html("<li><div class='ui-loader'><span class='ui-icon ui-icon-loading'></span></div></li>");
+      element.listview("refresh");
+      element.append(content);
+      App.log("content : ", content);
+      element.removeClass("ui-screen-hidden");
+      element.listview("refresh");
+      element.trigger("updatelayout");
     });
   },
   displayLayerMenu: function (path, element, layers_collection, current_page) {

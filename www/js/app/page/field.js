@@ -37,6 +37,56 @@ $(function () {
     $("#" + ele).val("");
   });
 
+  $(document).delegate("#page-create-site, \n\
+#page-update-site, \n\
+#page-update-site-online", "pageshow", function () {
+    Location.page = 0;
+    var cId = App.DataStore.get("cId");
+    var members = [];
+    MembershipOffline.fetchByCollectionId(cId, function (results) {
+      results.forEach(function (result) {
+        members.push({user_email: result.user_email()});
+      });
+    });
+
+    $(document).delegate("#user_autocomplete", "filterablebeforefilter", function (e, data) {
+      $(this).removeClass("ui-screen-hidden");
+      UserFieldController.autoComplete(this, data, members);
+    });
+
+    $(document).delegate("#site_autocomplete", "filterablebeforefilter", function (e, data) {
+      $(this).removeClass("ui-screen-hidden");
+      SiteFieldController.autoComplete(this, data);
+    });
+
+    $(document).delegate("#user_autocomplete li", "click", function () {
+      AutoCompleteList.getLi(this);
+    });
+
+    $(document).delegate("#site_autocomplete li", "click", function () {
+      AutoCompleteList.getLi(this);
+    });
+
+    $(document).delegate("html", "click", function (e) {
+      AutoCompleteList.hideLi(e);
+    });
+  });
+
+  $(document).delegate(".search_location", "focus", function () {
+    FieldController.renderLocationField("#lat", "#lng", this.id);
+  });
+
+  $(document).delegate(".autocomplete li", "click", function () {
+    if (this.id != "load_more_location")
+      AutoCompleteList.getLi(this);
+    else {
+      Location.page++;
+      var id = $(this).closest("ul").attr("data-input");
+      id = id.substring(1, id.length);
+      FieldController.renderLocationField("#lat", "#lng", id);
+    }
+  });
+  
   $('body').click(function (event) {
     var yesNoField = App.DataStore.get("yesNoField");
     var otherField = $(event.target).attr("id");
@@ -47,5 +97,6 @@ $(function () {
         SkipLogic.unhighlightElement(highlightedElement, typeElement);
         App.DataStore.remove("yesNoField");
       }
-  });
+  }
+  );
 });

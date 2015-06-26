@@ -90,40 +90,6 @@ $(function () {
         App.Cache.resetValue();
       });
 
-  $(document).delegate("#page-create-site, \n\
-#page-update-site, \n\
-#page-update-site-online", "pageshow", function () {
-    var cId = App.DataStore.get("cId");
-    var members = [];
-    MembershipOffline.fetchByCollectionId(cId, function (results) {
-      results.forEach(function (result) {
-        members.push({user_email: result.user_email()});
-      });
-    });
-
-    $(document).delegate("#user_autocomplete", "filterablebeforefilter", function (e, data) {
-      $(this).removeClass("ui-screen-hidden");
-      UserFieldController.autoComplete(this, data, members);
-    });
-
-    $(document).delegate("#site_autocomplete", "filterablebeforefilter", function (e, data) {
-      $(this).removeClass("ui-screen-hidden");
-      SiteFieldController.autoComplete(this, data);
-    });
-
-    $(document).delegate("#user_autocomplete li", "click", function (e) {
-      AutoCompleteList.getLi(this);
-    });
-
-    $(document).delegate("#site_autocomplete li", "click", function () {
-      AutoCompleteList.getLi(this);
-    });
-
-    $(document).delegate("html", "click", function (e) {
-      AutoCompleteList.hideLi(e);
-    });
-  });
-
   $(document).delegate('#updatelolat, #updatelolng', 'change', function () {
     FieldController.renderLocationField("#updatelolat", "#updatelolng", "update_");
   });

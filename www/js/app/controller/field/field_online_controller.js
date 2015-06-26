@@ -24,7 +24,7 @@ var FieldOnlineController = {
         FieldView.display("field/add.html", $('#div_field_collection'), "",
             {field_collections: field_collections}, false);
             
-        Location.prepareLocation();
+        LocationHelper.prepareLocation();
       });
     });
   },

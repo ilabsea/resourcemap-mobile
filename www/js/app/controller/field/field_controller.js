@@ -97,17 +97,21 @@ FieldController = {
     }
     propertiesFile.properties[item["idfield"]] = value;
   },
-  renderLocationField: function (textLat, textLng, prefixId) {
+  renderLocationField: function (textLat, textLng, id) {
     var lat = $(textLat).val();
     var lng = $(textLng).val();
-    var location_fields_id = JSON.parse(App.DataStore.get("location_fields_id"));
-    for (var i in location_fields_id) {
-      var id = location_fields_id[i];
-      var config = JSON.parse(App.DataStore.get("configLocations_" + id));
-      var locationOptions = Location.getLocations(lat, lng, config);
-      config.locationOptions = locationOptions;
-      var $element = $("#" + prefixId + id);
-      FieldView.displayLocationField("field/location.html", $element, {config: config});
+    var config = JSON.parse(App.DataStore.get("configLocations_" + id));
+    var locationOptions = LocationHelper.getLocations(lat, lng, config);
+    
+    var offset = Location.page * Location.limit;
+    App.log("offset", offset);
+
+    var hasMoreLocation = false;
+    if (Location.limit + offset < locationOptions.length) {
+      hasMoreLocation = true;
     }
+    config.locationOptions = locationOptions.slice(offset, Location.limit + offset);
+    var $ul = $("#autocomplete_" + id);
+    FieldView.displayLocationField("field/location.html", $ul, {hasMoreLocation: hasMoreLocation, config: config});
   }
 };
