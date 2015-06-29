@@ -40,7 +40,6 @@ $(function () {
   $(document).delegate("#page-create-site, \n\
 #page-update-site, \n\
 #page-update-site-online", "pageshow", function () {
-    Location.page = 0;
     var cId = App.DataStore.get("cId");
     var members = [];
     MembershipOffline.fetchByCollectionId(cId, function (results) {
@@ -73,20 +72,24 @@ $(function () {
   });
 
   $(document).delegate(".search_location", "focus", function () {
-    FieldController.renderLocationField("#lat", "#lng", this.id);
+    FieldController.renderLocationField("#lat", "#lng", this.id, true);
   });
 
   $(document).delegate(".autocomplete li", "click", function () {
-    if (this.id != "load_more_location")
-      AutoCompleteList.getLi(this);
-    else {
+    if (this.id == "load_more_location") {
       Location.page++;
       var id = $(this).closest("ul").attr("data-input");
       id = id.substring(1, id.length);
-      FieldController.renderLocationField("#lat", "#lng", id);
+
+      $("#load_more_location").remove();
+      $(".autocomplete").listview("refresh");
+
+      FieldController.renderLocationField("#lat", "#lng", id, false);
+    } else {
+      AutoCompleteList.getLi(this);
     }
   });
-  
+
   $('body').click(function (event) {
     var yesNoField = App.DataStore.get("yesNoField");
     var otherField = $(event.target).attr("id");

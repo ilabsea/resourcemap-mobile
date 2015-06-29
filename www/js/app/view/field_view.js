@@ -10,11 +10,10 @@ FieldView = {
   },
   displayLocationField: function (templateURL, element, configData) {
     App.Template.process(templateURL, configData, function (content) {
-      element.html("<li><div class='ui-loader'><span class='ui-icon ui-icon-loading'></span></div></li>");
-      element.listview("refresh");
       element.append(content);
-      App.log("content : ", content);
-      element.removeClass("ui-screen-hidden");
+      setTimeout(function () {
+        element.removeClass("ui-screen-hidden");
+      }, 20);
       element.listview("refresh");
       element.trigger("updatelayout");
     });
