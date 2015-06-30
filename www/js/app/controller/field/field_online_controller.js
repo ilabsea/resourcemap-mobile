@@ -23,8 +23,6 @@ var FieldOnlineController = {
             {field_collections: field_collections}, "");
         FieldView.display("field/add.html", $('#div_field_collection'), "",
             {field_collections: field_collections}, false);
-            
-        LocationHelper.prepareLocation();
       });
     });
   },

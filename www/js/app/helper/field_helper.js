@@ -75,7 +75,7 @@ FieldHelper = {
         widgetType = "tel";
         break;
       case "location":
-        widgetType = "select_one";
+        widgetType = "location";
         App.DataStore.set("configLocations_" + id,
             JSON.stringify(config));
         break;
@@ -250,10 +250,11 @@ FieldHelper = {
   },
   setFieldLocationValue: function (item, value) {
     item.__value = value;
+    App.log('item.__value : ', item.__value);
     for (var k = 0; k < item.config.locationOptions.length; k++) {
-      item.config.locationOptions[k]["selected"] = "";
       if (item.config.locationOptions[k].code == item.__value) {
-        item.config.locationOptions[k]["selected"] = "selected";
+        item.__valueLabel = item.config.locationOptions[k].name;
+        break;
       }
     }
   },

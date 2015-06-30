@@ -65,14 +65,10 @@ $(function () {
     $(document).delegate("#site_autocomplete li", "click", function () {
       AutoCompleteList.getLi(this);
     });
-
-    $(document).delegate("html", "click", function (e) {
-      AutoCompleteList.hideLi(e);
-    });
   });
 
   $(document).delegate(".search_location", "focus", function () {
-    FieldController.renderLocationField("#lat", "#lng", this.id, true);
+    FieldController.renderLocationField("#updatelolat_online", "#updatelolng_online", this.id, true);
   });
 
   $(document).delegate(".autocomplete li", "click", function () {
@@ -83,10 +79,10 @@ $(function () {
 
       $("#load_more_location").remove();
       $(".autocomplete").listview("refresh");
-
       FieldController.renderLocationField("#lat", "#lng", id, false);
     } else {
       AutoCompleteList.getLi(this);
+      $(".autocomplete").html("");
     }
   });
 
@@ -100,6 +96,5 @@ $(function () {
         SkipLogic.unhighlightElement(highlightedElement, typeElement);
         App.DataStore.remove("yesNoField");
       }
-  }
-  );
+  });
 });

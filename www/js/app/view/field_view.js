@@ -11,9 +11,7 @@ FieldView = {
   displayLocationField: function (templateURL, element, configData) {
     App.Template.process(templateURL, configData, function (content) {
       element.append(content);
-      setTimeout(function () {
-        element.removeClass("ui-screen-hidden");
-      }, 20);
+      element.removeClass("ui-screen-hidden");
       element.listview("refresh");
       element.trigger("updatelayout");
     });

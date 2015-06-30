@@ -42,16 +42,5 @@ var LocationHelper = {
     }, {
       enableHighAccuracy: true
     });
-  },
-  prepareLocation: function () {
-    InvisibleLayer.invisibleNameLatLng("wrapSiteLocation", "wrapSiteName", function () {
-      requireReload(function () {
-        var lat = $("#lat").val();
-        var lng = $("#lng").val();
-        if (lat == "" && lng == "") {
-          LocationHelper.getCurrentLocation();
-        }
-      });
-    });
   }
 };

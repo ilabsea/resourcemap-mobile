@@ -90,6 +90,18 @@ $(function () {
         App.Cache.resetValue();
       });
 
+  $(document).delegate('#page-create-site', 'pagebeforeshow', function () {
+    InvisibleLayer.invisibleNameLatLng("wrapSiteLocation", "wrapSiteName", function () {
+      requireReload(function () {
+        var lat = $("#lat").val();
+        var lng = $("#lng").val();
+        if (lat == "" && lng == "") {
+          LocationHelper.getCurrentLocation();
+        }
+      });
+    });
+  });
+
   $(document).delegate('#updatelolat, #updatelolng', 'change', function () {
     FieldController.renderLocationField("#updatelolat", "#updatelolng", "update_");
   });
