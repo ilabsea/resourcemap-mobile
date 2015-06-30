@@ -40,6 +40,7 @@ $(function () {
   $(document).delegate("#page-create-site, \n\
 #page-update-site, \n\
 #page-update-site-online", "pageshow", function () {
+    Location.page = 0;
     var cId = App.DataStore.get("cId");
     var members = [];
     MembershipOffline.fetchByCollectionId(cId, function (results) {
@@ -68,7 +69,7 @@ $(function () {
   });
 
   $(document).delegate(".search_location", "focus", function () {
-    FieldController.renderLocationField("#updatelolat_online", "#updatelolng_online", this.id, true);
+    FieldController.renderLocationField("#lat", "#lng", this.id, true);
   });
 
   $(document).delegate(".autocomplete li", "click", function () {

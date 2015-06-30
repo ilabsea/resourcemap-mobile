@@ -44,13 +44,13 @@ FieldController = {
     });
     return pf;
   },
-  updateFieldLocationValue: function(idHTMLForUpdate, item, propertiesFile){
+  updateFieldLocationValue: function (idHTMLForUpdate, item, propertiesFile) {
     var nodeId = idHTMLForUpdate + item["idfield"];
     var value = $(nodeId).attr('data-code')
     if (value == null)
       value = "";
     propertiesFile.properties[item["idfield"]] = value;
-    
+
   },
   updateFieldSearchValue: function (item, propertiesFile) {
     propertiesFile.properties[item["idfield"]] = SearchList.getFieldValue(item["idfield"]);
@@ -109,20 +109,18 @@ FieldController = {
     propertiesFile.properties[item["idfield"]] = value;
   },
   renderLocationField: function (textLat, textLng, id, isFocus) {
-    var lat = $(textLat).val();
-    var lng = $(textLng).val();
-    var indexId = id.lastIndexOf('_');
-    var pureId = id.substring(indexId + 1, id.length);
-    var config = JSON.parse(App.DataStore.get("configLocations_" + pureId));
-    var locationOptions = LocationHelper.getLocations(lat, lng, config);
     var offset = Location.page * Location.limit;
     var $ul = $("#autocomplete_" + id);
+    var lat = $(textLat).val();
+    var lng = $(textLng).val();
+    var config = JSON.parse(App.DataStore.get("configLocations_" + id));
+    var locationOptions = LocationHelper.getLocations(lat, lng, config);
+
     if (offset == 0 || (offset != 0 && !isFocus)) {
       var hasMoreLocation = false;
       if (Location.limit + offset < locationOptions.length) {
         hasMoreLocation = true;
       }
-
       config.locationOptions = locationOptions.slice(offset, Location.limit + offset);
       FieldView.displayLocationField("field/location.html", $ul,
           {hasMoreLocation: hasMoreLocation, config: config});
