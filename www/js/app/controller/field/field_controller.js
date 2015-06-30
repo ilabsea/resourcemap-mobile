@@ -12,7 +12,7 @@ FieldController = {
       FieldOffline.add(newFields);
     });
   },
-  updateFieldValueBySiteId: function (propertiesFile, field, idHTMLForUpdate, fromServer) {
+  updateFieldValueBySiteId: function (propertiesFile, field, fromServer) {
     var pf = propertiesFile;
     var itemLayer = fromServer ? FieldHelper.buildField(field, {fromServer: fromServer}, "") :
         FieldHelper.buildField(field._data, {fromServer: fromServer}, "");
@@ -24,29 +24,29 @@ FieldController = {
           FieldController.updateFieldPhotoValue(item, propertiesFile, fromServer);
           break;
         case "date":
-          FieldController.updateFieldDateValue(idHTMLForUpdate, item, propertiesFile);
+          FieldController.updateFieldDateValue(item, propertiesFile);
           break;
         case "hierarchy":
-          FieldController.updateFieldHierarchy(idHTMLForUpdate, item, propertiesFile);
+          FieldController.updateFieldHierarchy(item, propertiesFile);
           break;
         case "number":
-          FieldController.updateFieldNumberValue(idHTMLForUpdate, item, propertiesFile);
+          FieldController.updateFieldNumberValue(item, propertiesFile);
           break;
         case 'search':
           FieldController.updateFieldSearchValue(item, propertiesFile);
           break;
         case 'location':
-          FieldController.updateFieldLocationValue(idHTMLForUpdate, item, propertiesFile);
+          FieldController.updateFieldLocationValue(item, propertiesFile);
           break;
         default:
-          FieldController.updateFieldDefaultValue(idHTMLForUpdate, item, propertiesFile);
+          FieldController.updateFieldDefaultValue(item, propertiesFile);
       }
     });
     return pf;
   },
-  updateFieldLocationValue: function (idHTMLForUpdate, item, propertiesFile) {
-    var nodeId = idHTMLForUpdate + item["idfield"];
-    var value = $(nodeId).attr('data-code')
+  updateFieldLocationValue: function (item, propertiesFile) {
+    var $node = $("#" + item["idfield"]);
+    var value = $node.attr('data-code');
     if (value == null)
       value = "";
     propertiesFile.properties[item["idfield"]] = value;
@@ -55,9 +55,9 @@ FieldController = {
   updateFieldSearchValue: function (item, propertiesFile) {
     propertiesFile.properties[item["idfield"]] = SearchList.getFieldValue(item["idfield"]);
   },
-  updateFieldDefaultValue: function (idHTMLForUpdate, item, propertiesFile) {
-    var nodeId = idHTMLForUpdate + item["idfield"];
-    var value = $(nodeId).val();
+  updateFieldDefaultValue: function ( item, propertiesFile) {
+    var $node = $("#" + item["idfield"]);
+    var value = $node.val();
     if (value == null)
       value = "";
     propertiesFile.properties[item["idfield"]] = value;
@@ -81,27 +81,27 @@ FieldController = {
       }
     }
   },
-  updateFieldHierarchy: function (idHTMLForUpdate, item, propertiesFile) {
-    var nodeId = idHTMLForUpdate + item["idfield"];
-    var node = $(nodeId).tree('getSelectedNode');
+  updateFieldHierarchy: function (item, propertiesFile) {
+    var $node = $("#" + item["idfield"]);
+    var node = $node.tree('getSelectedNode');
     var data = node.id;
     if (data == null)
       data = "";
     propertiesFile.properties[item["idfield"]] = data;
   },
-  updateFieldDateValue: function (idHTMLForUpdate, item, propertiesFile) {
-    var nodeId = idHTMLForUpdate + item["idfield"];
-    var value = $(nodeId).val();
+  updateFieldDateValue: function (item, propertiesFile) {
+    var $node = $("#" + item["idfield"]);
+    var value = $node.val();
     if (value != "") {
       value = new Date(value);
       value = dateToParam(value);
     }
     propertiesFile.properties[item["idfield"]] = value;
   },
-  updateFieldNumberValue: function (idHTMLForUpdate, item, propertiesFile) {
+  updateFieldNumberValue: function (item, propertiesFile) {
     var config = JSON.parse(App.DataStore.get("configNumber_" + item["idfield"]));
-    var nodeId = idHTMLForUpdate + item["idfield"];
-    var value = $(nodeId).val();
+    var $node = $("#" + item["idfield"]);
+    var value = $node.val();
     if (config.digits_precision) {
       value = parseInt(value * Math.pow(10, parseInt(config.digits_precision)))
           / Math.pow(10, parseInt(config.digits_precision));

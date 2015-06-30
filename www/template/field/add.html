@@ -6,12 +6,12 @@
      id="collapsable_{{id_wrapper}}">
  <h3>{{name_wrapper}}</h3>
  {{#each fields}}
- {{#if config.options}}
- <div id="wrapper_{{idfield}}" tabindex="0">
-  <label>{{name}} {{#if required}}<span class="requiredAsteric">*</span>{{/if}} </label>
+ {{#if config.options}} 
+ <div id="wrapper_{{idfield}}" tabindex="0" class="wrapper_{{widgetType}}">
+  <label>{{name}} {{#if required}} <span class="requiredAsteric">*</span> {{/if}} </label>
   <select id="{{idfield}}" 
-          data-theme="a" 
           name="{{idfield}}" 
+          data-theme="a" 
           data-native-menu="false" 
           {{multiple}} 
           data-role="{{slider}}" 
@@ -22,40 +22,42 @@
    {{#if multiple}}
    <option>Options</option>
    {{#config.options}}
-   <option value="{{id}}">{{label}}</option>
-   {{/config.options}}   
-
+   <option value="{{id}}" {{selected}}>{{label}}</option>
+   {{/config.options}}
    {{else}}
-   {{#if slider}}  
+   {{#if slider}} 
    {{else}}
    <option value="">Option</option>
    <option value="" selected>(no value)</option>
    {{/if}}
    {{#config.options}}
-   <option value="{{id}}" data-field_id="{{field_id}}">{{label}}</option>
-   {{/config.options}}   
-   {{/if}}    
+   <option value="{{id}}" {{selected}} data-field_id="{{field_id}}">{{label}}</option>
+   {{/config.options}}
+   {{/if}}
   </select>
   <label id="label_{{idfield}}" class="errorSelect" style="display: none">{{t "validation.required"}}</label>
  </div>
  {{else}}  
- {{#if isHierarchy}} 
+ {{#if isHierarchy}}
  <div id="wrapper_{{idfield}}" tabindex="0">
-  <label>{{name}} {{#if required}} <span class="requiredAsteric">*</span> {{/if}} </label>
-  <div id="{{idfield}}" class="tree" {{required}} tabindex="0"></div>
+  <label>{{name}} {{#if required}} <span class="requiredAsteric">*</span> {{/if}}</label>
+  <div id="{{idfield}}" 
+       class="tree" 
+       {{required}}>
+  </div>
   <label id="label_{{idfield}}" class="errorHierarchy" style="display: none">{{t "validation.required"}}</label>
  </div>
  {{else}}
- {{#if isPhoto}}  
+ {{#if isPhoto}}
  <div id="wrapper_{{idfield}}" tabindex="0">
-  <label>{{name}} {{#if required}} <span class="requiredAsteric">*</span>  {{/if}} </label>
-  <div onclick="CameraModel.openCameraDialog({{idfield}}, 'new');" 
+  <span style='display:inline; margin-top:10px'>{{name}} {{#if required}} <span class="requiredAsteric">*</span>{{/if}}</span>
+  <div onclick="CameraModel.openCameraDialog({{idfield}}, '')" 
        id='property_{{idfield}}_container' 
-       class="photo">
+       class="photo"> 
    <img class="image" 
         src='{{__value}}' 
         id='{{idfield}}' 
-        {{required}} /> 
+        {{required}} />
   </div>
   <label id="label_{{idfield}}" class="errorImage" style="display: none">{{t "validation.required"}}</label>
  </div>
@@ -65,6 +67,8 @@
   <label>{{name}} {{#if required}} <span class="requiredAsteric">*</span>  {{/if}} </label>
   <input id="{{idfield}}" 
          data-type="search" 
+         value ="{{__valueLabel}}" 
+         data-code ="{{__value}}"
          name="{{name}}" 
          {{required}} 
          class="search_location">
@@ -78,19 +82,20 @@
   </ul>
  </div>
  {{else}}
- <div id="wrapper_{{idfield}}" tabindex="0" class="wrapper_autocomplete">
-  <label for='name'>{{name}} {{#if required}} <span class="requiredAsteric">*</span>  {{/if}} </label>
+ <div id="wrapper_{{idfield}}" tabindex="0">
+  <label for='name'>{{name}} {{#if required}} <span class="requiredAsteric">*</span>{{/if}} </label>
   {{#ifCond widgetType "search"}}
   <input id="{{idfield}}" 
-         data-type="search" 
+         data-type="search"
+         value ="{{__value}}" 
          name="{{name}}" 
-         {{required}} 
+         {{required}}
          class="search_input">
   <label id="label_{{idfield}}" class="errorSearch" style="display: none">{{t "validation.user_email"}}</label>
   <ul id="{{kind}}_autocomplete"
       data-role="listview" 
       data-filter="true" 
-      data-input="#{{idfield}}"  
+      data-input="#update_online_{{idfield}}"  
       data-inset="true"
       class="autocomplete">
   </ul>
@@ -101,7 +106,7 @@
          value ="{{__value}}" 
          name="{{name}}" 
          class="date" 
-         {{required}}/>
+         {{required}} >  
   {{else}}
   {{#ifCond widgetType "number"}}
   <input type="number" 
@@ -112,15 +117,15 @@
          max="{{config.range.maximum}}"
          data-is_enable_field_logic="{{is_enable_field_logic}}"
          class="skipLogicNumber"
-         {{required}}
-         {{readonly}}/>
+         {{required}} 
+         {{readonly}}>  
   {{else}}
   <input type="{{widgetType}}" 
          id="{{idfield}}" 
          value ="{{__value}}" 
          name="{{name}}" 
-         {{required}}
-         {{readonly}}/>
+         {{required}} 
+         {{readonly}}>  
   {{/ifCond}}
   {{/ifCond}}
   {{/ifCond}}

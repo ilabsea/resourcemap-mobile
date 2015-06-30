@@ -30,7 +30,7 @@ var SiteOnlineController = {
         hasMoreSites = true;
       }
       var siteData = {
-        hasMoreSites: hasMoreSites, 
+        hasMoreSites: hasMoreSites,
         state: "online",
         siteList: siteOnlineData};
       SiteView.display($('#site-list-online'), siteData);
@@ -42,7 +42,7 @@ var SiteOnlineController = {
     VisibleLayersFor.fetch(function (fields) {
       var propertiesFile = {properties: {}, files: {}};
       $.map(fields, function (field) {
-        propertiesFile = FieldController.updateFieldValueBySiteId(propertiesFile, field, "#update_online_", true);
+        propertiesFile = FieldController.updateFieldValueBySiteId(propertiesFile, field, true);
       });
       data = {
         "_method": "put",
@@ -74,8 +74,8 @@ var SiteOnlineController = {
         lat: response.lat,
         lng: response.lng
       };
-      SiteView.displayUpdateLatLng("site/updateOnline.html",
-          $('#div-site-update-name-online'), "_online", siteOnlineUpdateData);
+      FieldView.displayUpdateDefaultLayer("site/add.html",
+          $('#div-default-layer-online'), siteOnlineUpdateData);
       FieldOnlineController.renderUpdate(response);
     });
   }

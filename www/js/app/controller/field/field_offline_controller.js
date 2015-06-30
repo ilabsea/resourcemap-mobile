@@ -18,9 +18,9 @@ var FieldOfflineController = {
       App.DataStore.set("field_id_arr", JSON.stringify(field_id_arr));
       App.DataStore.set("location_fields_id", JSON.stringify(location_fields_id));
       FieldView.displayLayerMenu("layer/menu.html", $('#ui-btn-layer-menu'),
-          {field_collections: field_collections}, "");
-      FieldView.display("field/add.html", $('#div_field_collection'), "",
-          {field_collections: field_collections}, false);
+          {field_collections: field_collections});
+      FieldView.display("field/add.html", $('#div_field_collection'),
+          {field_collections: field_collections});
     });
   },
   renderUpdate: function (site) {

@@ -20,9 +20,9 @@ var FieldOnlineController = {
         
         FieldController.synForCurrentCollection(field_collections);
         FieldView.displayLayerMenu("layer/menu.html", $('#ui-btn-layer-menu'),
-            {field_collections: field_collections}, "");
-        FieldView.display("field/add.html", $('#div_field_collection'), "",
-            {field_collections: field_collections}, false);
+            {field_collections: field_collections});
+        FieldView.display("field/add.html", $('#div_field_collection'),
+            {field_collections: field_collections});
       });
     });
   },

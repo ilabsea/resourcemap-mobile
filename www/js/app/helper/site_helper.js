@@ -1,7 +1,7 @@
 var SiteHelper = {
   buildDataForSite: function () {
     var cId = App.DataStore.get("cId");
-    var sname = $('#sitename').val();
+    var sname = $('#siteName').val();
     var slat = $('#lat').val();
     var slng = $('#lng').val();
     var properties = {};
@@ -12,7 +12,6 @@ var SiteHelper = {
       for (var i = 0; i < storedFieldId.length; i++) {
         var each_field = storedFieldId[i];
         var $field = $('#' + each_field);
-        var $field_site = $("#" + each_field + "_hidden");
         if ($field.length > 0 && $field[0].tagName.toLowerCase() == 'img') {
           var lPhotoList = PhotoList.count();
           for (var p = 0; p < lPhotoList; p++) {

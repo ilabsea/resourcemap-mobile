@@ -12,10 +12,10 @@ LayerMembershipsHelper = {
         var field_collections = FieldHelper.buildFieldsUpdate(layers, siteData,
             true, layerMemberships);
         FieldView.displayLayerMenu("layer/menu.html", $('#ui-btn-layer-menu-update-online'),
-            {field_collections: field_collections}, "update_online_");
-        FieldView.display("field/updateOnline.html",
-            $('#div_update_field_collection_online'),
-            "update_online_", {field_collections: field_collections}, true);
+            {field_collections: field_collections});
+        FieldView.display("field/add.html",
+            $('#div_update_field_online'),
+             {field_collections: field_collections});
       });
     });
   },
