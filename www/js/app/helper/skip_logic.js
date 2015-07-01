@@ -83,7 +83,7 @@ SkipLogic = {
               }
             }
             if (all_condi) {
-              var field_id = "wrapper_" + field_logic.field_id;
+              var field_id = field_logic.field_id;
               SkipLogic.handleSkipLogic(field_id);
               return false;
             }

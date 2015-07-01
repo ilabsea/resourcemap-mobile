@@ -27,8 +27,9 @@ var mapObject = {
     google.maps.event.trigger(map_canvas, 'resize');
   },
   getLatLng: function () {
-    var lat = $("#mark_lat").val();
-    var lng = $("#mark_lng").val();
+    var lat = $("#lat").val();
+    var lng = $("#lng").val();
+    this.setMarkLatLng(lat, lng);
     var latlng = new google.maps.LatLng(lat, lng);
     return latlng;
   },
@@ -58,12 +59,12 @@ var mapObject = {
       _self.map.panTo(point);
     });
 
-    google.maps.event.addListener(this.map, 'mousedown', function (event) {
+    google.maps.event.addListener(this.map, 'mousedown', function () {
       $content.find('*').addClass('needsclick');
       start = new Date().getTime();
     });
 
-    google.maps.event.addListener(this.map, 'mouseup', function (event) {
+    google.maps.event.addListener(this.map, 'mouseup', function () {
       var end = new Date().getTime();
       longpress = (end - start < 800) ? false : true;
     });
@@ -81,12 +82,12 @@ var mapObject = {
     google.maps.event.trigger(map_canvas, 'resize');
   },
   setLatLngToElement: function (lat, lng) {
-    $("#updatelolat").val(lat);
-    $("#updatelolng").val(lng);
-    $("#updatelolat_online").val(lat);
-    $("#updatelolng_online").val(lng);
     $("#lat").val(lat);
     $("#lng").val(lng);
+    $("#mark_lat").val(lat);
+    $("#mark_lng").val(lng);
+  },
+  setMarkLatLng: function (lat, lng) {
     $("#mark_lat").val(lat);
     $("#mark_lng").val(lng);
   }
