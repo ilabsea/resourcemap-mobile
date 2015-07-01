@@ -48,7 +48,7 @@ var SiteOfflineController = {
         SiteList.add(new SiteObj(site.id, site.name()));
         siteofflineData.push(item);
       });
-      SiteOffline.countByUserId(userId, function(count){
+      SiteOffline.countByUserId(userId, function (count) {
         var siteLength = sites.length + offset;
         var hasMoreSites = false;
         if (siteLength < count) {
@@ -112,7 +112,9 @@ var SiteOfflineController = {
   },
   processToServerByCollectionIdUserId: function (cId, uId) {
     if (App.isOnline()) {
-      SiteOffline.fetchByCollectionIdUserId(cId, uId, function (sites) {
+      Site.all()
+          .filter('collection_id', "=", cId)
+          .filter('user_id', '=', uId).list(function (sites) {
         if (sites.length > 0)
           SiteOfflineController.processingToServer(sites);
       });
