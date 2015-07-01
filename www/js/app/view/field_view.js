@@ -17,7 +17,6 @@ FieldView = {
   display: function (templateURL, element, fieldData) {
     App.Template.process(templateURL, fieldData, function (content) {
       element.html(content);
-      App.log('field Data : ', fieldData);
       FieldView.displayHierarchy(fieldData);
       element.trigger("create");
       FieldView.displayUiDisabled(fieldData);

@@ -28,10 +28,10 @@ var FieldOfflineController = {
     FieldOffline.fetchByCollectionId(cId, function (layers) {
       var field_collections = FieldHelper.buildFieldsUpdate(layers, site, false, "");
       FieldView.displayLayerMenu("layer/menu.html", $('#ui-btn-layer-menu-update'),
-          {field_collections: field_collections}, "update_");
-      FieldView.display("field/updateOffline.html",
-          $('#div_update_field_collection'), "update_",
-          {field_collections: field_collections}, true);
+          {field_collections: field_collections});
+      FieldView.display("field/add.html",
+          $('#div_update_field_offline'),
+          {field_collections: field_collections});
     });
   }
 };

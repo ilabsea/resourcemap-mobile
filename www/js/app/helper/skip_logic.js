@@ -1,16 +1,14 @@
 SkipLogic = {
   skipLogicNumber: function(element) {
     var val = $(element).val();
-    var idElement = $(element).attr('id');
-    var prefixIdElement = idElement.substr(0, idElement.lastIndexOf("_") + 1);
-    var id = idElement.substr(idElement.lastIndexOf("_") + 1);
+    var id = $(element).attr('id');
     var config = JSON.parse(
         App.DataStore.get("configNumberSkipLogic_" + id));
     if (config) {
       $.map(config, function(field_logic) {
         var op = field_logic.condition_type;
         if (Operators[op](val, field_logic.value)) {
-          SkipLogic.handleSkipLogic(prefixIdElement + field_logic.field_id);
+          SkipLogic.handleSkipLogic(field_logic.field_id);
           return false;
         }
       });
@@ -33,7 +31,7 @@ SkipLogic = {
   },
   handleSkipLogic: function(field_id) {
     var id = "";
-    if (field_id) id = field_id.substr(field_id.lastIndexOf("_") + 1);
+    if (field_id) id = field_id;
     if (id) {
       var skipToId = "#wrapper_" + field_id;
       var $parent = $(skipToId).parent().parent();
@@ -51,9 +49,7 @@ SkipLogic = {
   skipLogicSelectMany: function(element) {
     var selectedValue = element.val();
     if (selectedValue) {
-      var idElement = element.attr('id');
-      var id = idElement.substr(idElement.lastIndexOf("_") + 1);
-      var wrapper_skip = idElement.slice(0, idElement.lastIndexOf("_") + 1);
+      var id = element.attr('id');
       var configOption = JSON.parse(
           App.DataStore.get("configSelectManyForSkipLogic_" + id));
 
@@ -87,7 +83,7 @@ SkipLogic = {
               }
             }
             if (all_condi) {
-              var field_id = wrapper_skip + field_logic.field_id;
+              var field_id = "wrapper_" + field_logic.field_id;
               SkipLogic.handleSkipLogic(field_id);
               return false;
             }

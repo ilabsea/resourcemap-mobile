@@ -93,8 +93,8 @@ var SiteOfflineController = {
         lat: site.lat(),
         lng: site.lng()
       };
-      SiteView.displayUpdateLatLng("site/updateOffline.html",
-          $('#div-site-update-name'), "", siteUpdateData);
+      FieldView.displayUpdateDefaultLayer("site/add.html",
+          $('#div-default-layer-offline'), siteUpdateData);
       FieldOfflineController.renderUpdate(site);
     });
   },

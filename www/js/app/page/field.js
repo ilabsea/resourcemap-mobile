@@ -12,7 +12,7 @@ $(function () {
   $(document).delegate('.ui-selectmenu', 'popupafterclose pagehide', function () {
     var start = this.id.search("-");
     var ele = this.id.substring(0, start);
-    var element = $("#" + ele);
+    var element = $("#" + this.id);
     if (element.attr('data-is_enable_field_logic')) {
       if (element.attr('multiple'))
         SkipLogic.skipLogicSelectMany(element);
