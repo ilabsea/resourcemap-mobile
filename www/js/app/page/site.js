@@ -28,7 +28,7 @@ $(function () {
       SiteOnlineController.getByCollectionId();
     } else {
       App.DataStore.set("sId", sId);
-      requireReload(SiteOnlineController.renderUpdateSiteForm);
+      SiteOnlineController.renderUpdateSiteForm();
     }
   });
 
