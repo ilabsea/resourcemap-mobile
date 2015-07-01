@@ -102,16 +102,4 @@ $(function () {
       });
     });
   });
-
-  $(document).delegate('#updatelolat, #updatelolng', 'change', function () {
-    FieldController.renderLocationField("#updatelolat", "#updatelolng", "update_");
-  });
-
-  $(document).delegate('#updatelolat_online, #updatelolng_online', 'change', function () {
-    FieldController.renderLocationField("#updatelolat_online", "#updatelolng_online", "update_online_");
-  });
-
-  $(document).delegate('#lat, #lng', 'change', function () {
-    FieldController.renderLocationField("#lat", "#lng", "");
-  });
 });

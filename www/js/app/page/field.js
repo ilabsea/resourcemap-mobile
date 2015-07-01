@@ -42,6 +42,7 @@ $(function () {
 #page-update-site-online", "pageshow", function () {
     Location.page = 0;
     var cId = App.DataStore.get("cId");
+    $(".autocomplete").addClass("ui-screen-hidden");
     var members = [];
     MembershipOffline.fetchByCollectionId(cId, function (results) {
       results.forEach(function (result) {
@@ -84,6 +85,7 @@ $(function () {
     } else {
       AutoCompleteList.getLi(this);
       $(".autocomplete").html("");
+      Location.page = 0;
     }
   });
 

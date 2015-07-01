@@ -116,7 +116,7 @@ FieldController = {
     var config = JSON.parse(App.DataStore.get("configLocations_" + id));
     var locationOptions = LocationHelper.getLocations(lat, lng, config);
 
-    if (offset == 0 || (offset != 0 && !isFocus)) {
+    if ((offset == 0 && isFocus) || (offset != 0 && !isFocus)) {
       var hasMoreLocation = false;
       if (Location.limit + offset < locationOptions.length) {
         hasMoreLocation = true;

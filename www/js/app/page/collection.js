@@ -1,5 +1,4 @@
 $(function () {
-
   $(document).delegate('#page-collection-list', 'pageshow', function () {
     App.emptyHTML();
     SiteList.clear();

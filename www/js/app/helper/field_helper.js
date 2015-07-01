@@ -250,7 +250,6 @@ FieldHelper = {
   },
   setFieldLocationValue: function (item, value) {
     item.__value = value;
-    App.log('item.__value : ', item.__value);
     for (var k = 0; k < item.config.locationOptions.length; k++) {
       if (item.config.locationOptions[k].code == item.__value) {
         item.__valueLabel = item.config.locationOptions[k].name;
