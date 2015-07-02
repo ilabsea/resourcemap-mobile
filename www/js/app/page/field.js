@@ -84,7 +84,6 @@ $(function () {
       FieldController.renderLocationField("#lat", "#lng", id, false);
     } else {
       AutoCompleteList.getLi(this);
-      $(".autocomplete").html("");
       Location.page = 0;
     }
   });

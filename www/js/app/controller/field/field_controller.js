@@ -46,16 +46,17 @@ FieldController = {
   },
   updateFieldLocationValue: function (item, propertiesFile) {
     var $node = $("#" + item["idfield"]);
-    var value = $node.attr('data-code');
-    if (value == null)
+    var value = "";
+    if ($node.val() == "")
       value = "";
+    else
+      value = $node.attr('data-code');
     propertiesFile.properties[item["idfield"]] = value;
-
   },
   updateFieldSearchValue: function (item, propertiesFile) {
     propertiesFile.properties[item["idfield"]] = SearchList.getFieldValue(item["idfield"]);
   },
-  updateFieldDefaultValue: function ( item, propertiesFile) {
+  updateFieldDefaultValue: function (item, propertiesFile) {
     var $node = $("#" + item["idfield"]);
     var value = $node.val();
     if (value == null)
@@ -115,6 +116,9 @@ FieldController = {
     var lng = $(textLng).val();
     var config = JSON.parse(App.DataStore.get("configLocations_" + id));
     var locationOptions = LocationHelper.getLocations(lat, lng, config);
+
+    if (offset == 0)
+      $ul.html("");
 
     if ((offset == 0 && isFocus) || (offset != 0 && !isFocus)) {
       var hasMoreLocation = false;
