@@ -51,7 +51,7 @@ $(function () {
     });
 
     $(document).delegate("#user_autocomplete", "filterablebeforefilter", function (e, data) {
-      App.log("user_autocomplete : ", this);
+      $(this).removeClass("ui-screen-hidden");
       UserFieldController.autoComplete(this, data, members);
     });
 
