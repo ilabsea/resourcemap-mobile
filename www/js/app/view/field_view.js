@@ -1,7 +1,6 @@
 FieldView = {
   displayUpdateDefaultLayer: function (templateURL, element, siteUpdateData) {
     App.Template.process(templateURL, siteUpdateData, function (content) {
-      App.log("siteUpdateData : ", siteUpdateData);
       element.html(content);
       element.trigger("create");
       InvisibleLayer.invisibleNameLatLng("wrapSiteLocation_" + siteUpdateData.state,
