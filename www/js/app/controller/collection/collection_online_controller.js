@@ -4,7 +4,6 @@ var CollectionOnlineController = {
     CollectionModel.fetch(function (collections) {
       var collectionData = [];
       $.each(collections, function (key, collection) {
-        var currentUser = SessionHelper.currentUser();
         SiteOffline.countByCollectionIdUserId(collection.id, currentUser.id, function (count) {
           var item = CollectionHelper.dataCollection(collection, currentUser, count, true);
           collectionData.push(item);

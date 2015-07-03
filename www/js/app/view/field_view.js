@@ -30,8 +30,8 @@ FieldView = {
       element.trigger("updatelayout");
     });
   },
-  displayLayerMenu: function (path, element, layers_collection) {
-    App.Template.process(path, layers_collection, function (content) {
+  displayLayerMenu: function (templateURL, element, layers_collection) {
+    App.Template.process(templateURL, layers_collection, function (content) {
       element.html(content);
       element.trigger("create");
     });

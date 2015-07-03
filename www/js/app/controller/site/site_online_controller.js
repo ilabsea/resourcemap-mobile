@@ -75,7 +75,7 @@ var SiteOnlineController = {
         lng: response.lng
       };
       FieldView.displayUpdateDefaultLayer("site/add.html",
-          $('#div-default-layer-online'), siteOnlineUpdateData);
+          $("#div-default-layer-online"), siteOnlineUpdateData);
       FieldOnlineController.renderUpdate(response);
     });
   }
