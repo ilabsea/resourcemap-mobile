@@ -15,7 +15,6 @@ $(function () {
   });
 
   $(document).delegate('#btn_create_site', 'click', function () {
-    FieldView.displayDefaultLayer("site/add.html", $("#div-default-layer"), "");
     FieldController.getByCollectionId();
     $('#form_create_site')[0].reset();
   });

@@ -91,9 +91,10 @@ var SiteOfflineController = {
       var siteUpdateData = {
         name: site.name(),
         lat: site.lat(),
-        lng: site.lng()
+        lng: site.lng(),
+        state: "offline"
       };
-      FieldView.displayUpdateDefaultLayer("site/add.html",
+      FieldView.displayUpdateDefaultLayer("site/update.html",
           $('#div-default-layer-offline'), siteUpdateData);
       FieldOfflineController.renderUpdate(site);
     });

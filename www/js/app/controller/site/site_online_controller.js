@@ -72,9 +72,10 @@ var SiteOnlineController = {
       var siteOnlineUpdateData = {
         name: response.name,
         lat: response.lat,
-        lng: response.lng
+        lng: response.lng,
+        state: "online"
       };
-      FieldView.displayUpdateDefaultLayer("site/add.html",
+      FieldView.displayUpdateDefaultLayer("site/update.html",
           $("#div-default-layer-online"), siteOnlineUpdateData);
       FieldOnlineController.renderUpdate(response);
     });

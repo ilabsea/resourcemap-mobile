@@ -1,16 +1,11 @@
 FieldView = {
-  displayDefaultLayer: function (templateURL, element, data) {
-    App.Template.process(templateURL, data, function (content) {
-      element.html(content);
-      element.trigger("create");
-    });
-  },
   displayUpdateDefaultLayer: function (templateURL, element, siteUpdateData) {
     App.Template.process(templateURL, siteUpdateData, function (content) {
+      App.log("siteUpdateData : ", siteUpdateData);
       element.html(content);
       element.trigger("create");
-      InvisibleLayer.invisibleNameLatLng("wrapSiteLocation",
-          "wrapSiteName", function () {
+      InvisibleLayer.invisibleNameLatLng("wrapSiteLocation_" + siteUpdateData.state,
+          "wrapSiteName_" + siteUpdateData.state, function () {
           });
     });
   },
