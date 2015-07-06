@@ -160,6 +160,7 @@ FieldHelper = {
         if (field.kind === "location") {
           var fieldId = fromServer ? field.id : field.idfield;
           location_fields_id.push(fieldId);
+          Location.pageID[fieldId] = 0;
         }
       });
       var item = FieldHelper.buildFieldsLayer(layer, site, fromServer, layerMemberships);

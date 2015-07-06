@@ -8,8 +8,11 @@ var FieldOfflineController = {
       fields.forEach(function (field) {
         $.map(field.fields(), function (fieldsInfield) {
           field_id_arr.push(fieldsInfield.idfield);
-          if (fieldsInfield.kind === "location")
+          if (fieldsInfield.kind === "location") {
             location_fields_id.push(fieldsInfield.idfield);
+            //prevent page increase when the focus is in different nearby field
+            Location.pageID[fieldsInfield.idfield] = 0;
+          }
         });
         var item = FieldHelper.buildField(field._data,
             {fromServer: false}, "");

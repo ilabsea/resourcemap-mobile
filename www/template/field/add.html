@@ -69,9 +69,10 @@
          data-type="search" 
          value ="{{__valueLabel}}" 
          data-code ="{{__value}}"
+         data-kind = "{{kind}}"
          name="{{name}}" 
          {{required}} 
-         class="search_location">
+         class="search_input">
   <label id="label_{{idfield}}" class="errorSearch" style="display: none">{{t "validation.user_email"}}</label>
   <ul id="autocomplete_{{idfield}}"
       data-role="listview" 
@@ -89,6 +90,7 @@
          data-type="search"
          value ="{{__value}}" 
          name="{{name}}" 
+         data-kind = "{{kind}}"
          {{required}}
          class="search_input">
   <label id="label_{{idfield}}" class="errorSearch" style="display: none">{{t "validation.user_email"}}</label>

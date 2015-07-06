@@ -8,8 +8,11 @@ var FieldOnlineController = {
         var field_collections = $.map(layers, function (layer) {
           $.map(layer.fields, function (field) {
             field_id_arr.push(field.id);
-            if (field.kind === "location")
+            if (field.kind === "location") {
               location_fields_id.push(field.id);
+              //prevent page increase when the focus is in different nearby field
+              Location.pageID[field.id] = 0;
+            }
           });
           var fields = FieldHelper.buildField(layer, {fromServer: true},
           layerMemberships);

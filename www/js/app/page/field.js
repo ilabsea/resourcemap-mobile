@@ -40,7 +40,6 @@ $(function () {
   $(document).delegate("#page-create-site, \n\
 #page-update-site, \n\
 #page-update-site-online", "pageshow", function () {
-    Location.page = 0;
     var cId = App.DataStore.get("cId");
     $(".autocomplete").addClass("ui-screen-hidden");
     var members = [];
@@ -69,22 +68,22 @@ $(function () {
     });
   });
 
-  $(document).delegate(".search_location", "focus", function () {
-    FieldController.renderLocationField("#lat", "#lng", this.id, true);
+  $(document).delegate(".search_input", "focus", function () {
+    if ($(this).attr("data-kind") == "location")
+      FieldController.renderLocationField("#lat", "#lng", this.id, true);
   });
 
   $(document).delegate(".autocomplete li", "click", function () {
+    var id = $(this).closest("ul").attr("data-input");
+    id = id.substring(1, id.length);
     if (this.id == "load_more_location") {
-      Location.page++;
-      var id = $(this).closest("ul").attr("data-input");
-      id = id.substring(1, id.length);
-
+      Location.pageID[id] += 1;
       $("#load_more_location").remove();
-      $(".autocomplete").listview("refresh");
+      $("#autocomplete_" + id).listview("refresh");
       FieldController.renderLocationField("#lat", "#lng", id, false);
     } else {
       AutoCompleteList.getLi(this);
-      Location.page = 0;
+      Location.pageID[id] = 0;
     }
   });
 

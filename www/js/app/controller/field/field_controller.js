@@ -110,12 +110,13 @@ FieldController = {
     propertiesFile.properties[item["idfield"]] = value;
   },
   renderLocationField: function (textLat, textLng, id, isFocus) {
-    var offset = Location.page * Location.limit;
+    var offset = Location.pageID[id] * Location.limit;
     var $ul = $("#autocomplete_" + id);
     var lat = $(textLat).val();
     var lng = $(textLng).val();
     var config = JSON.parse(App.DataStore.get("configLocations_" + id));
     var locationOptions = LocationHelper.getLocations(lat, lng, config);
+    
 
     if (offset == 0)
       $ul.html("");
@@ -126,6 +127,7 @@ FieldController = {
         hasMoreLocation = true;
       }
       config.locationOptions = locationOptions.slice(offset, Location.limit + offset);
+      
       FieldView.displayLocationField("field/location.html", $ul,
           {hasMoreLocation: hasMoreLocation, config: config});
     }
