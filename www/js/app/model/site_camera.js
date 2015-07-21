@@ -41,7 +41,8 @@ SiteCamera = {
     return  imageId;
   },
   imagePath: function (imgFileName) {
-    return App.IMG_PATH + imgFileName;
+    var endpoint = getEndPoint();
+    return endpoint.IMG_PATH + imgFileName;
   },
   onFail: function () {
   }

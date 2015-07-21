@@ -1,5 +1,5 @@
 function EndPoint(URL, END_POINT) {
-  this.IMG_PATH = URL + "photo_field/";
+  this.IMG_PATH = URL + "/photo_field/";
   this.AUTH_URL = END_POINT + "/users/sign_in.json";
   this.LIST_COLLECTION = END_POINT + "/collections?auth_token=";
   this.URL_LOGOUT = END_POINT + "/users/sign_out.json?auth_token=";
