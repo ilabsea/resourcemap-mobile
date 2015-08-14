@@ -54,6 +54,6 @@ var AutoCompleteList = {
 
     id = id.substring(1, id.length);
     var idfield = id.substring(id.lastIndexOf('_') + 1);
-    SearchList.add(new SearchField(idfield, liElement.id));
+    SearchList.add(new SearchField(idfield, $(liElement).attr('data-id')));
   }
 };
