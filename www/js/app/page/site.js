@@ -14,6 +14,12 @@ $(function () {
     ValidList.clear();
   });
 
+  $(document).delegate('#page-site-list', 'pagehide', function () {
+    if ($.mobile.activePage.is("#page-create-site")) {
+      ViewBinding.setBusy(true);
+    }
+  });
+
   $(document).delegate('#btn_create_site', 'click', function () {
     FieldController.getByCollectionId();
     $('#form_create_site')[0].reset();
