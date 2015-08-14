@@ -29,9 +29,6 @@ FieldController = {
         case "hierarchy":
           FieldController.updateFieldHierarchy(item, propertiesFile);
           break;
-        case "number":
-          FieldController.updateFieldNumberValue(item, propertiesFile);
-          break;
         case 'search':
           FieldController.updateFieldSearchValue(item, propertiesFile);
           break;
@@ -95,16 +92,6 @@ FieldController = {
     var value = $node.val();
     if (value != "") {
       value = convertDateWidgetToParam(value);
-    }
-    propertiesFile.properties[item["idfield"]] = value;
-  },
-  updateFieldNumberValue: function (item, propertiesFile) {
-    var config = JSON.parse(App.DataStore.get("configNumber_" + item["idfield"]));
-    var $node = $("#" + item["idfield"]);
-    var value = $node.val();
-    if (config.digits_precision) {
-      value = parseInt(value * Math.pow(10, parseInt(config.digits_precision)))
-          / Math.pow(10, parseInt(config.digits_precision));
     }
     propertiesFile.properties[item["idfield"]] = value;
   },

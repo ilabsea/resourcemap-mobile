@@ -49,8 +49,6 @@ FieldHelper = {
           App.DataStore.set("configNumberSkipLogic_" + id,
               JSON.stringify(config.field_logics));
         }
-        App.DataStore.set("configNumber_" + id,
-            JSON.stringify(config));
         break;
       case "select_one":
         if (is_enable_field_logic) {

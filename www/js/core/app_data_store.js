@@ -28,7 +28,6 @@ App.DataStore = {
   },
   clearAllSiteFormData: function () {
     App.DataStore.clearConfig("configNumberSkipLogic");
-    App.DataStore.clearConfig("configNumber");
     App.DataStore.clearConfig("configSelectManyForSkipLogic");
     App.DataStore.clearConfig("configLocations");
     App.DataStore.remove("field_id_arr");

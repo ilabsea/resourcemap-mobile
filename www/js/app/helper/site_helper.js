@@ -37,15 +37,6 @@ var SiteHelper = {
             data = "";
           properties[each_field] = data;
         }
-        else if ($field.length > 0 && $field[0].getAttribute("type") === 'number') {
-          var config = JSON.parse(App.DataStore.get("configNumber_" + each_field));
-          var value = $field.val();
-          if (config.digits_precision) {
-            value = parseInt(value * Math.pow(10, parseInt(config.digits_precision)))
-                / Math.pow(10, parseInt(config.digits_precision));
-          }
-          properties["" + each_field + ""] = value;
-        }
         else if ($field.length > 0 && $field[0].getAttribute("data-type") === 'search') {
           properties[each_field] = SearchList.getFieldValue(each_field);
         }
