@@ -1,7 +1,19 @@
 var mapObject = {
   map: null,
   marker: null,
+  heightMapCanvas: "",
+  setHeightContent: function () {
+    var $content = $("#map_canvas");
+    var mapCanvasTop = $content.offset().top;
+    this.heightMapCanvas = $(window).height() - mapCanvasTop;
+    $content.height(this.heightMapCanvas);
+    if (this.map) {
+      this.map.setCenter(this.getLatLng());
+      google.maps.event.trigger(map_canvas, 'resize');
+    }
+  },
   render: function () {
+    this.setHeightContent();
     if (this.map == null) {
       this.loadMap();
     }
