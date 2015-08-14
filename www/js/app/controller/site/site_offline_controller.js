@@ -125,7 +125,7 @@ var SiteOfflineController = {
   },
   processToServerByUserId: function (userId) {
     if (App.isOnline()) {
-      SiteOffline.fetchByUserId(userId, function (sites) {
+      Site.all().filter('user_id', '=', userId).list(function (sites) {
         if (sites.length > 0)
           SiteOfflineController.processingToServer(sites);
       });
