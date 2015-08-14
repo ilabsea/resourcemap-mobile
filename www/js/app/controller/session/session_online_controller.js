@@ -39,6 +39,9 @@ var SessionOnlineController = {
     UserModel.create(endpoint.AUTH_URL, data, function () {
       App.redirectTo("#page-collection-list");
     }, function (x, t, m) {
+      if (!x.responseJSON.success) {
+        App.redirectTo("#page-login");
+      }
       if (t === "timeout" || t === "notmodified") {
         alert("Internet connection problem");
       }
