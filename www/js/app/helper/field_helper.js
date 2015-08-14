@@ -198,6 +198,7 @@ FieldHelper = {
           break;
         case "select_many":
         case "select_one":
+        case "yes_no":
           FieldHelper.setFieldSelectValue(item, pValue);
           break;
         case "location":
