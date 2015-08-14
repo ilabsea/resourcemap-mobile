@@ -14,6 +14,8 @@ FieldView = {
       FieldView.displayHierarchy(fieldData);
       element.trigger("create");
       FieldView.displayUiDisabled(fieldData);
+      
+      DigitAllowance.prepareEventListenerOnKeyPress();
     });
   },
   displayLocationField: function (templateURL, element, configData) {

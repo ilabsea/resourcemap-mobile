@@ -111,7 +111,7 @@
          {{required}} >  
   {{else}}
   {{#ifCond widgetType "number"}}
-  <input type="number" 
+  <input type="tel" 
          id="{{idfield}}" 
          value ="{{__value}}" 
          name="{{name}}" 
@@ -119,6 +119,7 @@
          max="{{config.range.maximum}}"
          data-is_enable_field_logic="{{is_enable_field_logic}}"
          class="skipLogicNumber"
+         data-previous-value ="{{_value}}"
          {{required}} 
          {{readonly}}>  
   {{else}}

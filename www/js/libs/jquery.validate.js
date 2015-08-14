@@ -1,4 +1,12 @@
 /*!
+ * modify function attributeRules to allow on min max range on type='tel' validation
+ * code original 
+ * if (/min|max/.test(method) && (type === null || /number|range|text/.test(type))) {
+ *    value = Number(value);
+ * }
+ */
+
+/*!
  * jQuery Validation Plugin 1.11.1
  *
  * http://bassistance.de/jquery-plugins/jquery-plugin-validation/
@@ -815,7 +823,7 @@
 
         // convert the value to a number for number inputs, and for text for backwards compability
         // allows type="date" and others to be compared as strings
-        if (/min|max/.test(method) && (type === null || /number|range|text/.test(type))) {
+        if (/min|max/.test(method) && (type === null || /number|range|text|tel/.test(type))) {
           value = Number(value);
         }
 
