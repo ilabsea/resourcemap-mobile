@@ -65,18 +65,14 @@ $(function () {
     SiteOfflineController.deleteBySiteId(sId);
   });
 
-  $(document).delegate('#page-site-list-all', 'pagebeforeshow', function () {
+  $(document).delegate('#page-site-list-all', 'pageshow', function () {
+    App.emptyHTML();
     var currentUser = SessionHelper.currentUser();
     SiteOffline.sitePage = 0;
     SiteOfflineController.getByUserId(currentUser.id);
     PhotoList.clear();
     SearchList.clear();
     ValidList.clear();
-  });
-
-  $(document).delegate('#page-site-list-all', 'pageshow', function () {
-    $("#offlinesite-list").show();
-    $("#offlinesite-list").listview("refresh");
   });
 
   $(document).delegate(
