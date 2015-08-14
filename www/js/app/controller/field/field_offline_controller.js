@@ -10,7 +10,7 @@ var FieldOfflineController = {
           field_id_arr.push(fieldsInfield.idfield);
           if (fieldsInfield.kind === "location") {
             location_fields_id.push(fieldsInfield.idfield);
-            //prevent page increase when the focus is in different nearby field
+            
             Location.pageID[fieldsInfield.idfield] = 0;
           }
         });
