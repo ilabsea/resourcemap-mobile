@@ -222,6 +222,17 @@ FieldHelper = {
             item.__value = site.name;
           }
           break;
+        case "numeric":
+          if (pValue) {
+            if (item.config.allows_decimals == "true"
+                && item.config.digits_precision
+                && !isNaN(parseFloat(pValue))) {
+              pValue = parseFloat(pValue);
+              pValue = Number(pValue.toFixed(parseInt((item.config.digits_precision))));
+            }
+          }
+          item.__value = pValue;
+          break;
         default:
           item.__value = pValue;
       }
