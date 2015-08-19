@@ -161,7 +161,7 @@ var SiteOfflineController = {
         showElement($("#info_sign_in"));
         App.redirectTo("#page-login");
       } else {
-        var error = SiteHelper.buildSubmitError(err["responseJSON"], data["site"]);
+        var error = SiteHelper.buildSubmitError(err["responseJSON"], data["site"], true);
         SiteView.displayError("site/errorUpload.html", $('#page-error-submit-site'),
             error);
       }

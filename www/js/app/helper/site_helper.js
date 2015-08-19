@@ -58,7 +58,7 @@ var SiteHelper = {
     };
     return data;
   },
-  buildSubmitError: function (error, site) {
+  buildSubmitError: function (error, site, state) {
     var p = [];
     if (error.properties) {
       $.map(error.properties, function (error) {
@@ -70,6 +70,7 @@ var SiteHelper = {
     var result = {
       isLat: error["lat"] ? true : false,
       isLng: error["lng"] ? true : false,
+      isSubmitSites: state,
       lat: error["lat"],
       lng: error["lng"],
       name: site["name"],

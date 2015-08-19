@@ -61,8 +61,12 @@ var SiteOnlineController = {
         App.Cache.resetValue();
         App.DataStore.clearAllSiteFormData();
         App.redirectTo("#page-site-list");
-      }, function () {
-        alert(i18n.t("global.please_reupdate_your_site"));
+      }, function (err) {
+        if (err["responseJSON"]) {
+          var error = SiteHelper.buildSubmitError(err["responseJSON"], data["site"], false);
+          SiteView.displayError("site/errorUpload.html", $('#page-error-submit-site'),
+            error);
+        }
       });
     });
   },
