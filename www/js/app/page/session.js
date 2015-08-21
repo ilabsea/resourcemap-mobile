@@ -1,6 +1,5 @@
 App.initialize();
-//App.onDeviceReady(); //disable when install on device
-App.initialPage(); //choose page when app start 
+App.onDeviceReady(); 
 $(function () {
   FastClick.attach(document.body);
   Translation.setLang(Translation.getLang());
