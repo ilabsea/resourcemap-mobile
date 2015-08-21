@@ -1,15 +1,22 @@
 App = App || {};
 App.Cache = {
-  get: function(template) {
+  get: function (template) {
     return App.DataStore.get(template);
   },
-  set: function(templateURL, content) {
+  set: function (templateURL, content) {
     App.DataStore.set(templateURL, content);
   },
-  clearAll: function() {
+  clearAll: function () {
     App.DataStore.clearAll();
   },
-  resetValue: function(){
+  clearTemplate: function () {
+    Object.keys(localStorage).forEach(function(key){
+      if (JSHelper.endWith(key, ".html")){
+        localStorage.removeItem(key);
+      }
+    });
+  },
+  resetValue: function () {
     $("#updatesitename_online").val("");
     $("#updatelolat_online").val("");
     $("#updatelolng_online").val("");

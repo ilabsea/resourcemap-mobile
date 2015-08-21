@@ -8,8 +8,8 @@ App = {
       console.log(text, data);
   },
   initialize: function () {
-    this.bindEvents();
-    this.setUp();
+    App.bindEvents();
+    App.setUp();
     App.onBackPress();
   },
   resetDb: function () {
@@ -20,13 +20,15 @@ App = {
     App.Cache.clearAll();
   },
   bindEvents: function () {
-    document.addEventListener('deviceready', this.onDeviceReady, false);
+    document.addEventListener('deviceready', App.onDeviceReady, false);
   },
   onDeviceReady: function () {
     connectionDB(App.DB_NAME, App.DB_SIZE);
     createTables();
-    FastClick.attach(document.body);
+    App.Cache.clearTemplate();
     App.initialPage();
+    FastClick.attach(document.body);
+
     App.setDefaultEndPoint();
     var url = App.DataStore.get("URL");
     EndPointView.display($("#page-about-release"), {url: url});

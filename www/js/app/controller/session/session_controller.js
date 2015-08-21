@@ -13,12 +13,10 @@ SessionController = {
       SessionOnlineController.logout();
   },
   storeSessionLogin: function (email, password) {
-    setTimeout(function () {
-      var isOnline = App.isOnline();
-      if (!isOnline)
-        SessionOfflineController.storeSession(email, password);
-      else
-        SessionOnlineController.storeSession(email, password);
-    }, 500);
+    var isOnline = App.isOnline();
+    if (!isOnline)
+      SessionOfflineController.storeSession(email, password);
+    else
+      SessionOnlineController.storeSession(email, password);
   }
 };
