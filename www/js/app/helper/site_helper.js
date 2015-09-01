@@ -83,7 +83,7 @@ var SiteHelper = {
     PhotoList.clear();
     SearchList.clear();
     App.DataStore.clearAllSiteFormData();
-    $('#form_create_site')[0].reset();
+    $('#form_site')[0].reset();
     App.redirectTo("#page-site-list");
   }
 };

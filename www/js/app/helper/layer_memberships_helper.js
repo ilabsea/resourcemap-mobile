@@ -13,8 +13,8 @@ LayerMembershipsHelper = {
             true, layerMemberships);
         FieldView.displayLayerMenu("layer/menu.html", $('#ui-btn-layer-menu-update-online'),
             {field_collections: field_collections});
-        FieldView.display("field/add.html",
-            $('#div_update_field_online'),
+        FieldView.display("field/form.html",
+            $('#div_field_collection'),
              {field_collections: field_collections});
       });
     });
@@ -47,8 +47,8 @@ LayerMembershipsHelper = {
           siteData, true, layerMemberships);
       FieldView.displayLayerMenu("layer/menu.html", $('#ui-btn-layer-menu-update-online'),
           {field_collections: field_collections});
-      FieldView.display("field/add.html",
-          $('#div_update_field_online'),
+      FieldView.display("field/form.html",
+          $('#div_field_collection'),
          {field_collections: field_collections});
       if (rw === 'none')
         $('#div_update_field_online').hide();

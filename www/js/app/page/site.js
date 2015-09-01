@@ -15,14 +15,15 @@ $(function () {
   });
 
   $(document).delegate('#page-site-list', 'pagehide', function () {
-    if ($.mobile.activePage.is("#page-create-site")) {
+    if ($.mobile.activePage.is("#page-form-site")) {
       ViewBinding.setBusy(true);
     }
   });
 
   $(document).delegate('#btn_create_site', 'click', function () {
-    FieldController.getByCollectionId();
-    $('#form_create_site')[0].reset();
+    SiteController.form = "new";
+    SiteController.renderForm();
+    $('#form_site')[0].reset();
   });
 
   $(document).delegate('#page-site-list #site-list-online li', 'click', function () {
@@ -32,6 +33,7 @@ $(function () {
       SiteModel.sitePage++;
       SiteOnlineController.getByCollectionId();
     } else {
+      SiteController.form = "update_online";
       App.DataStore.set("sId", sId);
       SiteOnlineController.renderUpdateSiteForm();
     }
@@ -45,9 +47,7 @@ $(function () {
       SiteOfflineController.getByCollectionId();
     } else {
       App.DataStore.set("sId", sId);
-      $("#btn_back_site_list_all").hide();
-      $("#btn_back_site_list").show();
-      requireReload(SiteOfflineController.renderUpdateSiteForm);
+      SiteOfflineController.renderUpdateSiteForm();
     }
   });
 
@@ -59,10 +59,9 @@ $(function () {
       SiteOffline.sitePage++;
       SiteOfflineController.getByUserId(uId);
     } else {
+      SiteController.form = "update_offline";
       App.DataStore.set("sId", sId);
-      $("#btn_back_site_list_all").show();
-      $("#btn_back_site_list").hide();
-      requireReload(SiteOfflineController.renderUpdateSiteForm);
+      SiteOfflineController.renderUpdateSiteForm();
     }
   });
 
@@ -81,19 +80,8 @@ $(function () {
     ValidList.clear();
   });
 
-  $(document).delegate(
-      '#btn_back_site_in_create , #btn_back_site_list_online , \n\
-#btn_back_site_list_all , #btn_back_site_list', 'click', function () {
-        if ($(this).attr("id") === "btn_back_site_in_create")
-          ValidationHelper.resetFormValidate("#form_create_site");
-        PhotoList.clear();
-        SearchList.clear();
-        App.DataStore.clearAllSiteFormData();
-        App.Cache.resetValue();
-      });
-
-  $(document).delegate('#page-create-site', 'pagebeforeshow', function () {
-    InvisibleLayer.invisibleNameLatLng("wrapSiteLocation", "wrapSiteName", function () {
+  $(document).delegate('#page-form-site', 'pagebeforeshow', function () {
+    InvisibleLayer.invisibleNameLatLng("wrapper_site_location", "wrapper_site_name", function () {
       requireReload(function () {
         var lat = $("#lat").val();
         var lng = $("#lng").val();

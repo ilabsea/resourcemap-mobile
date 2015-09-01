@@ -5,6 +5,15 @@ var SiteView = {
       element.listview("refresh");
     });
   },
+  displayDefaultLayer: function (templateURL, element, siteData) {
+    App.Template.process(templateURL, siteData, function (content) {
+      element.html(content);
+      element.trigger("create");
+      InvisibleLayer.invisibleNameLatLng("wrapper_site_location",
+          "wrapper_site_name_", function () {
+          });
+    });
+  },
   displayError: function (templateURL, element, fieldData) {
     App.Template.process(templateURL, fieldData, function (content) {
       element.html(content);

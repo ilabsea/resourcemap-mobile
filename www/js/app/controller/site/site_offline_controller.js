@@ -16,7 +16,7 @@ var SiteOfflineController = {
           name: site.name(),
           collectionName: "offline",
           date: fullDate,
-          link: "#page-update-site"
+          link: "#page-form-site"
         });
       });
       SiteOffline.countByCollectionIdUserId(cId, uId, function (count) {
@@ -43,7 +43,7 @@ var SiteOfflineController = {
           name: site.name(),
           collectionName: site.collection_name(),
           date: fullDate,
-          link: "#page-update-site"
+          link: "#page-form-site"
         };
         SiteList.add(new SiteObj(site.id, site.name()));
         siteofflineData.push(item);
@@ -88,14 +88,13 @@ var SiteOfflineController = {
   renderUpdateSiteForm: function () {
     var sId = App.DataStore.get("sId");
     SiteOffline.fetchBySiteId(sId, function (site) {
-      var siteUpdateData = {
+      var siteData = {
         name: site.name(),
         lat: site.lat(),
-        lng: site.lng(),
-        state: "offline"
+        lng: site.lng()
       };
-      FieldView.displayUpdateDefaultLayer("site/update.html",
-          $('#div-default-layer-offline'), siteUpdateData);
+      SiteView.displayDefaultLayer("site/form.html",
+          $('#div_default_layer'), siteData);
       FieldOfflineController.renderUpdate(site);
     });
   },

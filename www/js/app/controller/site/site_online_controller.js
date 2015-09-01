@@ -19,7 +19,7 @@ var SiteOnlineController = {
           name: data.name ? data.name : "\u00A0",
           collectionName: "",
           date: date,
-          link: "#page-update-site-online"
+          link: "#page-form-site"
         };
         siteOnlineData.push(item);
         SiteList.add(new SiteObj(item.id, item.name));
@@ -48,9 +48,9 @@ var SiteOnlineController = {
         "_method": "put",
         "auth_token": App.Session.getAuthToken(),
         "site": {
-          "name": $("#updatesitename_online").val(),
-          "lat": $("#updatelolat_online").val(),
-          "lng": $("#updatelolng_online").val(),
+          "name": $("#name").val(),
+          "lat": $("#lat").val(),
+          "lng": $("#lng").val(),
           "properties": propertiesFile.properties,
           "files": propertiesFile.files
         }
@@ -73,14 +73,13 @@ var SiteOnlineController = {
   renderUpdateSiteForm: function () {
     ViewBinding.setBusy(true);
     SiteModel.fetchOne(function (response) {
-      var siteOnlineUpdateData = {
+      var siteData = {
         name: response.name,
         lat: response.lat,
-        lng: response.lng,
-        state: "online"
+        lng: response.lng
       };
-      FieldView.displayUpdateDefaultLayer("site/update.html",
-          $("#div-default-layer-online"), siteOnlineUpdateData);
+      SiteView.displayDefaultLayer("site/form.html",
+          $("#div_default_layer"), siteData);
       FieldOnlineController.renderUpdate(response);
     });
   }

@@ -20,51 +20,23 @@ $(document).ready(function () {
     }
   });
 
-  $('#form_create_site').validate({
+  $('#form_site').validate({
     errorPlacement: function (error, element) {
       ValidationHelper.AddClassSelectError(element);
       error.insertAfter($(element).parent());
     },
     invalidHandler: function (e, validator) {
-      ValidationHelper.invalidHandler(validator, "#validation_create-site");
+      ValidationHelper.invalidHandler(validator, "#validation_form_site");
     },
     submitHandler: function () {
-      ValidationHelper.handleSubmitHandler("#validation_create-site",
+      ValidationHelper.handleSubmitHandler("#validation_form_site",
           function () {
-            SiteController.add();
-            App.DataStore.clearPartlyAfterCreateSite();
-          });
-    }
-  });
-
-  $('#form_update_site').validate({
-    errorPlacement: function (error, element) {
-      ValidationHelper.AddClassSelectError(element);
-      error.insertAfter($(element).parent());
-    },
-    invalidHandler: function (e, validator) {
-      ValidationHelper.invalidHandler(validator, "#validation_update-site");
-    },
-    submitHandler: function () {
-      ValidationHelper.handleSubmitHandler("#validation_update-site",
-          function () {
-            SiteOfflineController.updateBySiteId();
-          });
-    }
-  });
-
-  $('#form_update_site_online').validate({
-    errorPlacement: function (error, element) {
-      ValidationHelper.AddClassSelectError(element);
-      error.insertAfter($(element).parent());
-    },
-    invalidHandler: function (e, validator) {
-      ValidationHelper.invalidHandler(validator, "#validation_update-site-online");
-    },
-    submitHandler: function () {
-      ValidationHelper.handleSubmitHandler("#validation_update-site-online",
-          function () {
-            SiteOnlineController.updateBySiteId();
+            if (SiteController.form == 'new')
+              SiteController.add();
+            else if (SiteController.form == 'update_online')
+              SiteOnlineController.updateBySiteId();
+            else if (SiteController.form == 'update_offline')
+              SiteOfflineController.updateBySiteId();
           });
     }
   });

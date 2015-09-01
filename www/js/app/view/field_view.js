@@ -1,13 +1,4 @@
 FieldView = {
-  displayUpdateDefaultLayer: function (templateURL, element, siteUpdateData) {
-    App.Template.process(templateURL, siteUpdateData, function (content) {
-      element.html(content);
-      element.trigger("create");
-      InvisibleLayer.invisibleNameLatLng("wrapSiteLocation_" + siteUpdateData.state,
-          "wrapSiteName_" + siteUpdateData.state, function () {
-          });
-    });
-  },
   display: function (templateURL, element, fieldData) {
     App.Template.process(templateURL, fieldData, function (content) {
       element.html(content);

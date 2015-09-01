@@ -36,9 +36,7 @@ $(function () {
     $("#" + ele).val("");
   });
 
-  $(document).delegate("#page-create-site, \n\
-#page-update-site, \n\
-#page-update-site-online", "pageshow", function () {
+  $(document).delegate("#page-form-site", "pageshow", function () {
     var cId = App.DataStore.get("cId");
     $(".autocomplete").addClass("ui-screen-hidden");
     var members = [];
