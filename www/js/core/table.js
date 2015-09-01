@@ -42,25 +42,4 @@ function createTables() {
     user_email: "TEXT",
     admin: "BOOL"
   });
-
-  persistence.defineMigration(1, {
-    up: function () {
-      this.addColumn('sites', 'start_entry_date', 'TEXT');
-      this.addColumn('sites', 'end_entry_date', 'TEXT');
-      this.executeSql('UPDATE sites SET start_entry_date = ""');
-      this.executeSql('UPDATE sites SET end_entry_date = ""');
-    }
-  });
-  migrate();
 }
-
-function migrate() {
-  console.log('migrating...');
-  persistence.migrations.init(function () {
-    console.log('migration init');
-    persistence.migrate(function () {
-      console.debug('migration complete!');
-    });
-  });
-}
-;
