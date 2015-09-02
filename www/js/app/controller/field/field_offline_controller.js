@@ -10,7 +10,7 @@ var FieldOfflineController = {
           field_id_arr.push(fieldsInfield.idfield);
           if (fieldsInfield.kind === "location") {
             location_fields_id.push(fieldsInfield.idfield);
-            
+
             Location.pageID[fieldsInfield.idfield] = 0;
           }
         });
@@ -36,6 +36,7 @@ var FieldOfflineController = {
       FieldView.display("field/form.html",
           $('#div_field_collection'),
           {field_collections: field_collections});
+      ViewBinding.setBusy(false);
     });
   }
 };

@@ -6,6 +6,9 @@ CollectionModel = {
       url: endpoint.LIST_COLLECTION + App.Session.getAuthToken(),
       dataType: "json",
       success: successCallback,
+      complete: function () {
+        ViewBinding.setBusy(false);
+      },
       error: function (error, t) {
         if (t === "timeout" || t === "notmodified") {
           alert('Internet connection problem.');

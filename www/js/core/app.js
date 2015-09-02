@@ -67,9 +67,6 @@ App = {
   },
   setUp: function () {
     $.ajaxSetup({
-      complete: function () {
-        ViewBinding.setBusy(false);
-      },
       timeout: 120000,
       cache: true
     });

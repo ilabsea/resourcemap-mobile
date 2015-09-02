@@ -13,7 +13,6 @@ SiteController = {
       SiteOnlineController.getByCollectionId();
   },
   renderForm: function () {
-    ViewBinding.setBusy(true);
     var data = {name: "", lat: "", lng: ""};
     SiteView.displayDefaultLayer("site/form.html",
         $('#div_default_layer'), data);

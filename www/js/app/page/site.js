@@ -73,4 +73,9 @@ $(function () {
     SearchList.clear();
     ValidList.clear();
   });
+
+  $(document).delegate('#page-site-list', 'pagehide', function () {
+    if ($.mobile.activePage.is("#page-form-site"))
+      ViewBinding.setBusy(true);
+  });
 });

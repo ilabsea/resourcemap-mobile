@@ -1,9 +1,9 @@
 var SiteHelper = {
   buildDataForSite: function () {
     var cId = App.DataStore.get("cId");
-    var sname = $('#siteName').val();
-    var slat = $('#lat').val();
-    var slng = $('#lng').val();
+    var name = $('#name').val();
+    var lat = $('#lat').val();
+    var lng = $('#lng').val();
     var properties = {};
     var files = {};
     var field_id_arr = App.DataStore.get("field_id_arr");
@@ -50,9 +50,9 @@ var SiteHelper = {
     }
     var data = {
       collection_id: cId,
-      name: sname,
-      lat: slat,
-      lng: slng,
+      name: name,
+      lat: lat,
+      lng: lng,
       properties: properties,
       files: files
     };

@@ -11,6 +11,9 @@ SiteModel = {
       type: "POST",
       data: {site: attr},
       datatype: 'json',
+      complete: function(){
+        ViewBinding.setBusy(false);
+      },
       success: successCallback,
       error: errorCallback
     });
@@ -26,7 +29,9 @@ SiteModel = {
       type: "GET",
       datatype: 'json',
       success: successCallback,
-      timeout: 600000,
+      complete: function () {
+        ViewBinding.setBusy(false);
+      },
       error: function (error) {
         App.log("Retriving sites from server : ", error);
       }
