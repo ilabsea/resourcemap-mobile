@@ -6,7 +6,9 @@ LayerMembership = {
       type: "GET",
       datatype: 'json',
       success: successCallback,
-      cache: false,
+      complete: function () {
+        ViewBinding.setBusy(true);
+      },
       error: function(error) {
         console.log("Retriving sites from server : ", error);
       }

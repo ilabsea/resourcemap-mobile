@@ -14,12 +14,6 @@ $(function () {
     ValidList.clear();
   });
 
-  $(document).delegate('#page-site-list', 'pagehide', function () {
-    if ($.mobile.activePage.is("#page-form-site")) {
-      ViewBinding.setBusy(true);
-    }
-  });
-
   $(document).delegate('#btn_create_site', 'click', function () {
     SiteController.form = "new";
     SiteController.renderForm();
@@ -78,17 +72,5 @@ $(function () {
     PhotoList.clear();
     SearchList.clear();
     ValidList.clear();
-  });
-
-  $(document).delegate('#page-form-site', 'pagebeforeshow', function () {
-    InvisibleLayer.invisibleNameLatLng("wrapper_site_location", "wrapper_site_name", function () {
-      requireReload(function () {
-        var lat = $("#lat").val();
-        var lng = $("#lng").val();
-        if (lat == "" && lng == "") {
-          LocationHelper.getCurrentLocation();
-        }
-      });
-    });
   });
 });

@@ -9,9 +9,15 @@ var SiteView = {
     App.Template.process(templateURL, siteData, function (content) {
       element.html(content);
       element.trigger("create");
-      InvisibleLayer.invisibleNameLatLng("wrapper_site_location",
-          "wrapper_site_name_", function () {
-          });
+      InvisibleLayer.invisibleNameLatLng("wrapper_site_location", "wrapper_site_name", function () {
+        requireReload(function () {
+          var lat = $("#lat").val();
+          var lng = $("#lng").val();
+          if (lat == "" && lng == "" && SiteController.form == 'new') {
+            LocationHelper.getCurrentLocation();
+          }
+        });
+      });
     });
   },
   displayError: function (templateURL, element, fieldData) {

@@ -71,7 +71,6 @@ var SiteOnlineController = {
     });
   },
   renderUpdateSiteForm: function () {
-    ViewBinding.setBusy(true);
     SiteModel.fetchOne(function (response) {
       var siteData = {
         name: response.name,

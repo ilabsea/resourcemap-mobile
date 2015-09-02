@@ -6,7 +6,6 @@ SitesPermission = {
       type: "GET",
       datatype: 'json',
       success: successCallback,
-      cache: false,
       error: function(error) {
         console.log("Retriving sites from server : ", error);
       }
