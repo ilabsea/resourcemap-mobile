@@ -40,6 +40,7 @@ $(function () {
       SiteOffline.sitePage++;
       SiteOfflineController.getByCollectionId();
     } else {
+      SiteController.form = "update_offline";
       App.DataStore.set("sId", sId);
       SiteOfflineController.renderUpdateSiteForm();
     }

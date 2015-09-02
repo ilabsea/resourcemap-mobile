@@ -20,6 +20,12 @@ var SiteView = {
       });
     });
   },
+  displayBtnSubmit: function (templateURL,element, btnData) {
+    App.Template.process(templateURL, btnData, function (content) {
+      element.append(content);
+      element.trigger("create");
+    });
+  },
   displayError: function (templateURL, element, fieldData) {
     App.Template.process(templateURL, fieldData, function (content) {
       element.html(content);

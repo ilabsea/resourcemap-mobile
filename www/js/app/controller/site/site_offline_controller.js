@@ -93,8 +93,10 @@ var SiteOfflineController = {
         lat: site.lat(),
         lng: site.lng()
       };
+      var btnData = {title: "global.update", isUpdateOffline: true};
       SiteView.displayDefaultLayer("site/form.html",
           $('#div_default_layer'), siteData);
+      SiteView.displayBtnSubmit("site/submit.html", $("#btn_submit_site"), btnData);
       FieldOfflineController.renderUpdate(site);
     });
   },

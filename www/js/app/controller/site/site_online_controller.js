@@ -65,7 +65,7 @@ var SiteOnlineController = {
         if (err["responseJSON"]) {
           var error = SiteHelper.buildSubmitError(err["responseJSON"], data["site"], false);
           SiteView.displayError("site/errorUpload.html", $('#page-error-submit-site'),
-            error);
+              error);
         }
       });
     });
@@ -77,8 +77,10 @@ var SiteOnlineController = {
         lat: response.lat,
         lng: response.lng
       };
+      var btnData = {title: "global.update", isUpdateOffline: false};
       SiteView.displayDefaultLayer("site/form.html",
           $("#div_default_layer"), siteData);
+      SiteView.displayBtnSubmit("site/submit.html", $("#btn_submit_site"), btnData);
       FieldOnlineController.renderUpdate(response);
     });
   }

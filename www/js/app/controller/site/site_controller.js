@@ -14,8 +14,10 @@ SiteController = {
   },
   renderForm: function () {
     var data = {name: "", lat: "", lng: ""};
+    var btnData = {title: "global.save_site", isUpdateOffline: false};
     SiteView.displayDefaultLayer("site/form.html",
         $('#div_default_layer'), data);
+    SiteView.displayBtnSubmit("site/submit.html", $("#btn_submit_site"), btnData);
     FieldController.getByCollectionId();
   }
 };

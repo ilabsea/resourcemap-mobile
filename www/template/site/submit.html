@@ -1,0 +1,19 @@
+{{#if isUpdateOffline}}
+<div class="ui-grid-a">
+ <div class="ui-block-a">
+  <button>{{t "global.update"}}</button>
+ </div>
+ <div class="ui-block-b">
+  <a data-role="button" 
+     href="#confirm_delete_site" 
+     data-rel="dialog" 
+     data-i18n="global.delete">
+   {{t "global.delete"}}
+  </a>
+ </div>	   
+</div>
+{{else}}
+<button data-inset="true">
+ {{t title}}
+</button>
+{{/if}}
