@@ -224,7 +224,8 @@ FieldHelper = {
           break;
         case "numeric":
           if (pValue) {
-            if (item.config.allows_decimals == "true"
+            if (item.config 
+                && item.config.allows_decimals == "true"
                 && item.config.digits_precision
                 && !isNaN(parseFloat(pValue))) {
               pValue = parseFloat(pValue);
