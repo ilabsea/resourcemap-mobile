@@ -22,7 +22,7 @@ var SiteView = {
   },
   displayBtnSubmit: function (templateURL,element, btnData) {
     App.Template.process(templateURL, btnData, function (content) {
-      element.append(content);
+      element.html(content);
       element.trigger("create");
     });
   },

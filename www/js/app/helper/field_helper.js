@@ -45,7 +45,7 @@ FieldHelper = {
     switch (widgetType) {
       case "numeric":
         widgetType = "number";
-        if (config.field_logics) {
+        if (config && config.field_logics) {
           App.DataStore.set("configNumberSkipLogic_" + id,
               JSON.stringify(config.field_logics));
         }
