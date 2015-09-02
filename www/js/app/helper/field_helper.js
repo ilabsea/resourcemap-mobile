@@ -209,7 +209,10 @@ FieldHelper = {
         case "date":
           if (pValue) {
             var date = pValue.split("T")[0];
-            item.__value = convertDateWidgetToParam(date);
+            if (!fromServer)
+              item.__value = convertDateWidgetToParam(date);
+            else
+              item.__value = date;
           }
           break;
         case "user":
@@ -224,7 +227,7 @@ FieldHelper = {
           break;
         case "numeric":
           if (pValue) {
-            if (item.config 
+            if (item.config
                 && item.config.allows_decimals == "true"
                 && item.config.digits_precision
                 && !isNaN(parseFloat(pValue))) {
