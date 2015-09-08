@@ -7,7 +7,7 @@
         "lng": "រយៈបណ្តោយ<span class='requiredAsteric'>*</span>",
         "logout": "ចាកចេញ",
         "back": "ត្រឡប់ក្រោយ",
-        "send_to_server": "ផ្ញើទៅម៉ាស៊ីនមេ",
+        "upload_to_server": "ផ្ញើទៅម៉ាស៊ីនមេ",
         "name": "ឈ្មោះ<span class='requiredAsteric'>*</span>",
         "update": "កែប្រែ",
         "delete": "លុប",

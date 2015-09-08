@@ -9,7 +9,7 @@
         "longitude": "Location'lng",
         "logout": "Sign out",
         "back": "Back",
-        "send_to_server": "Send to server",
+        "upload_to_server": "Upload to server",
         "name": "Name<span class='requiredAsteric'>*</span>",
         "update": "Update",
         "delete": "Delete",
