@@ -32,24 +32,47 @@ xmlns:android="http://schemas.android.com/apk/res/android"
     <issue>https://issues.apache.org/jira/browse/CB/component/12320638</issue>
 
     <!-- android -->
-    <platform name="android">
+    <!-- <platform name="android">
 
         <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
             <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
         </config-file>
 
-    </platform>
+    </platform> -->
 
-     <!-- amazon-fireos -->
-    <platform name="amazon-fireos">
+  <!-- amazon-fireos change to android-->
+  <platform name="android"> 
 
-        <config-file target="AndroidManifest.xml" parent="/*">
-            <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-            <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-        </config-file>
-        
-    </platform>
+    <js-module src="www/Coordinates.js" name="Coordinates">
+        <clobbers target="Coordinates" />
+    </js-module>
+
+    <js-module src="www/PositionError.js" name="PositionError">
+        <clobbers target="PositionError" />
+    </js-module>
+
+    <js-module src="www/Position.js" name="Position">
+        <clobbers target="Position" />
+    </js-module>
+
+    <js-module src="www/geolocation.js" name="geolocation">
+        <clobbers target="navigator.geolocation" />
+    </js-module>
+
+    <config-file target="res/xml/config.xml" parent="/*">
+        <feature name="Geolocation">
+            <param name="android-package" value="org.apache.cordova.geolocation.GeoBroker"/>
+        </feature>
+    </config-file>
+
+    <config-file target="AndroidManifest.xml" parent="/*">
+        <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+        <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+        <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    </config-file>
+
+  </platform>
     
     <!-- ios -->
     <platform name="ios">

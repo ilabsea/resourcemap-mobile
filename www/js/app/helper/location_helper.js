@@ -37,8 +37,9 @@ var LocationHelper = {
       $("#lng").val(lng);
       $("#mark_lat").val(lat);
       $("#mark_lng").val(lng);
-    }, function () {
+    }, function (error) {
       alert("Your current location cannot be found.");
+      App.log("cannot get current location : ", error.message);
     }, {
       enableHighAccuracy: true
     });
