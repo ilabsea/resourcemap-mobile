@@ -27,8 +27,8 @@
     },
     "org.apache.cordova.geolocation": {
         "source": {
-            "type": "local",
-            "path": "/Users/mann/Desktop/org.apache.cordova.geolocation"
+            "type": "registry",
+            "id": "org.apache.cordova.geolocation"
         }
     },
     "org.apache.cordova.network-information": {
