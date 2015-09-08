@@ -4,9 +4,9 @@ $(function () {
     App.emptyHTML();
     $("#btn_sendToServer").hide();
     var cId = App.DataStore.get("cId");
-    SiteOfflineController.countByCollectionId(cId);
     SiteModel.sitePage = 0;
     SiteOffline.sitePage = 0;
+    SiteOfflineController.disabledOptionMenu(cId);
     SiteController.getAllByCollectionId();
     $("#site-list-menu").get(0).selectedIndex = 0;
     PhotoList.clear();

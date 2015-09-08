@@ -177,15 +177,23 @@ var SiteOfflineController = {
       }
     });
   },
-  countByCollectionId: function (cId) {
+  disabledOptionMenu: function (cId) {
     var currentUser = SessionHelper.currentUser();
     SiteOffline.countByCollectionIdUserId(cId, currentUser.id, function (count) {
-      var offline = "#site-list-menu option[value='2']";
+      var offline = "#site-list-menu option[value=";
       if (count == 0) {
-        $(offline).attr('disabled', true);
+        $(offline + "'2']").attr('disabled', true);
         $("#site-list-menu").change();
       } else {
-        $(offline).removeAttr('disabled');
+        $(offline + "'2']").removeAttr('disabled');
+      }
+      if (App.isOnline()) {
+        $(offline + "'1']").removeAttr('disabled');
+        $(offline + "'3']").removeAttr('disabled');
+      } else {
+        $(offline + "'1']").attr('disabled', true);
+        $(offline + "'3']").attr('disabled', true);
+        $("#site-list-menu").change();
       }
       $("#site-list-menu").selectmenu("refresh", true);
     });
