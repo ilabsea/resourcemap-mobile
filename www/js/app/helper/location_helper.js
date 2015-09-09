@@ -37,11 +37,24 @@ var LocationHelper = {
       $("#lng").val(lng);
       $("#mark_lat").val(lat);
       $("#mark_lng").val(lng);
-    }, function (error) {
-      alert("Your current location cannot be found.");
-      App.log("cannot get current location : ", error.message);
+    }, function () {
+      navigator.geolocation.getCurrentPosition(function (pos) { 
+        var lat = pos.coords.latitude;
+        var lng = pos.coords.longitude;
+        $("#lat").val(lat);
+        $("#lng").val(lng);
+
+        $("#mark_lat").val(lat);
+        $("#mark_lng").val(lng);
+      }, function (error) {
+        alert("Your current location cannot be found.");
+      }, {
+        enableHighAccuracy: true,
+        timeout: 90000 
+      });
     }, {
-      enableHighAccuracy: true
+      enableHighAccuracy: false,
+      timeout: 30000
     });
   }
 };

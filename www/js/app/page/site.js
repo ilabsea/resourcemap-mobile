@@ -16,8 +16,8 @@ $(function () {
 
   $(document).delegate('#btn_create_site', 'click', function () {
     SiteController.form = "new";
-    SiteController.renderForm();
     $('#form_site')[0].reset();
+    SiteController.renderForm();
   });
 
   $(document).delegate('#page-site-list #site-list-online li', 'click', function () {

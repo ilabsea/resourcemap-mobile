@@ -32,6 +32,14 @@ App = {
     App.setDefaultEndPoint();
     var url = App.DataStore.get("URL");
     EndPointView.display($("#page-about-release"), {url: url});
+//    App.log('navigator : ', navigator.geolocation);
+//    navigator.geolocation.getCurrentPosition(function (pos) {
+//      App.log('pos : ', pos);
+//    }, function (error) {
+//      App.log('error : ', error);
+//    }, {
+//      enableHighAccuracy: true
+//    });
   },
   setDefaultEndPoint: function () {
     var url = App.DataStore.get("URL");
