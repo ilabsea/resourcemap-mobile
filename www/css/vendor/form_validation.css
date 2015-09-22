@@ -5,8 +5,8 @@ label.errorSelect,
 label.errorSearch
 {
     color: red;
-    font-size: 10px !important;
-    font-weight: normal;
+    font-size: 14px !important;
+    font-style: italic;
     margin-top: 5px !important;
 }
 
