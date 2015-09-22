@@ -84,11 +84,11 @@ SiteMenu = {
       case "1":
         SiteController.getAllByCollectionId(cId);
         break;
-      case "2":
+      case "3":
         SiteOfflineController.getByCollectionId();
         $("#btn_sendToServer").show();
         break;
-      case "3":
+      case "2":
         SiteOnlineController.getByCollectionId();
         break;
       case "4":

@@ -34,5 +34,11 @@ var SiteView = {
       }, 50);
       element.css("z-index", 200000);
     });
+  },
+  displaySiteListMenu: function(templateURL, element, options){
+    App.Template.process(templateURL, options, function (content) {
+      element.html(content);
+      element.trigger("create");
+    });
   }
 };

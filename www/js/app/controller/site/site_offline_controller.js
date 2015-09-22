@@ -180,22 +180,18 @@ var SiteOfflineController = {
   disabledOptionMenu: function (cId) {
     var currentUser = SessionHelper.currentUser();
     SiteOffline.countByCollectionIdUserId(cId, currentUser.id, function (count) {
-      var offline = "#site-list-menu option[value=";
-      if (count == 0) {
-        $(offline + "'2']").attr('disabled', true);
-        $("#site-list-menu").change();
-      } else {
-        $(offline + "'2']").removeAttr('disabled');
+      var options = [];
+      if (App.isOnline()) 
+        options.push({value: 1, label: "View all", selected: "selected"}, {value: 2, label: "View online"});
+      if (count > 0) {
+        var optionHash = {value: 3, label: "View offline"};
+        if(!App.isOnline()){
+          optionHash.selected = "selected";
+          $("#btn_sendToServer").show();
+        }
+        options.push(optionHash);
       }
-      if (App.isOnline()) {
-        $(offline + "'1']").removeAttr('disabled');
-        $(offline + "'3']").removeAttr('disabled');
-      } else {
-        $(offline + "'1']").attr('disabled', true);
-        $(offline + "'3']").attr('disabled', true);
-        $("#site-list-menu").change();
-      }
-      $("#site-list-menu").selectmenu("refresh", true);
+      SiteView.displaySiteListMenu("site/menu.html", $("#div-site-list-menu"),{options: options});
     });
   }
 };

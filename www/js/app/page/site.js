@@ -8,7 +8,6 @@ $(function () {
     SiteOffline.sitePage = 0;
     SiteOfflineController.disabledOptionMenu(cId);
     SiteController.getAllByCollectionId();
-    $("#site-list-menu").get(0).selectedIndex = 0;
     PhotoList.clear();
     SearchList.clear();
     ValidList.clear();

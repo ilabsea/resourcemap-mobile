@@ -1,0 +1,9 @@
+<select data-theme="a" data-native-menu="false" data-iconpos="notext" 
+        data-icon="bullets" name="site-list-menu" id="site-list-menu" 
+        onchange="SiteMenu.menu()" > 
+ <option value="">{{t "global.menu"}}</option>
+ {{#each options}}
+ <option value={{value}} {{selected}}>{{label}}</option>
+ {{/each}}
+ <option value="4">{{t "global.logout"}}</option>
+</select>
