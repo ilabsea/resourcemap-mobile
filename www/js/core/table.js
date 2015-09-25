@@ -32,8 +32,16 @@ function createTables() {
     user_id: "INT",
     name_wrapper: "TEXT",
     id_wrapper: "INT",
-    layer_membership: "JSON",
     fields: "JSON"
+  });
+
+  LayerMembership = persistence.define('layer_memberships', {
+    collection_id: "INT",
+    user_id: "INT",
+    user_offline_id: "INT",
+    layer_id: "INT",
+    read: "BOOL",
+    write: "BOOL"
   });
 
   Membership = persistence.define('memberships', {

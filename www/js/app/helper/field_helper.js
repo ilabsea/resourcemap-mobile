@@ -1,11 +1,11 @@
 FieldHelper = {
-  buildField: function (fieldObj, options, layerMemberships) {
+  buildField: function (cId, fieldObj, options) {
     options = options || {};
     var fromServer = options["fromServer"];
     var pf = null;
     var fieldsBuild = [];
     var fieldsWrapper = {
-      cId: localStorage.getItem("cId"),
+      cId: cId,
       userId: SessionHelper.currentUser().id,
       fields: fieldsBuild,
       name_wrapper: fromServer ? fieldObj.name : fieldObj.name_wrapper,
@@ -14,16 +14,10 @@ FieldHelper = {
     if (fromServer) {
       fieldsWrapper.name_wrapper = fieldObj.name;
       fieldsWrapper.id_wrapper = fieldObj.id;
-      if (layerMemberships)
-        $.map(layerMemberships, function (layerMembership) {
-          if (fieldObj.id === layerMembership.layer_id)
-            fieldsWrapper.layer_membership = layerMembership;
-        });
     }
     else {
       fieldsWrapper.name_wrapper = fieldObj.name_wrapper;
       fieldsWrapper.id_wrapper = fieldObj.id_wrapper;
-      fieldsWrapper.layer_membership = fieldObj.layer_membership;
     }
     $.map(fieldObj.fields, function (fields) {
       pf = FieldHelper.buildFieldProperties(fields, fromServer);

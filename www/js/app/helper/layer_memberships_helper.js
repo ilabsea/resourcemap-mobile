@@ -8,7 +8,7 @@ LayerMembershipsHelper = {
   },
   buildAllLayersOfSite: function (cId, siteData) {
     LayerMembership.fetch(cId, function (layerMemberships) {
-      FieldModel.fetch(function (layers) {
+      FieldModel.fetch(cId, function (layers) {
         var field_collections = FieldHelper.buildFieldsUpdate(layers, siteData,
             true, layerMemberships);
         FieldView.displayLayerMenu("layer/menu.html", $('#ui-btn-layer-menu-update-online'),
@@ -17,6 +17,9 @@ LayerMembershipsHelper = {
             $('#div_field_collection'),
             {field_collections: field_collections});
         ViewBinding.setBusy(false);
+      }, function () {
+        if (!App.isOnline())
+          FieldOfflineController.renderByCollectionId();
       });
     });
   },

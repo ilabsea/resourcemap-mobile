@@ -3,11 +3,10 @@ FieldOffline = {
     $.map(fields, function (field) {
       var fieldParams = {
         collection_id: field.cId,
-        user_id: field.user_id,
+        user_id: field.userId,
         name_wrapper: field.name_wrapper,
         id_wrapper: field.id_wrapper,
-        fields: field.fields,
-        layer_membership: field.layer_membership
+        fields: field.fields
       };
       var fieldObj = new Field(fieldParams);
       persistence.add(fieldObj);

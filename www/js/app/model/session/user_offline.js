@@ -5,7 +5,7 @@ var UserOffline = {
     this.__email = email;
     this.password = password;
   },
-  add: function (email, password) {
+  add: function (email, password, userId) {
     userParams = {
       email: email,
       password: password

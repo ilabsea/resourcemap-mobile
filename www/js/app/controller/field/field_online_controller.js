@@ -1,35 +1,19 @@
 var FieldOnlineController = {
-  renderByCollectionId: function () {
-    var cId = App.DataStore.get("cId");
-    LayerMembership.fetch(cId, function (layerMemberships) {
-      FieldModel.fetch(function (layers) {
-        var field_id_arr = new Array();
-        var location_fields_id = new Array();
-        var field_collections = $.map(layers, function (layer) {
-          $.map(layer.fields, function (field) {
-            field_id_arr.push(field.id);
-            if (field.kind === "location") {
-              location_fields_id.push(field.id);
-              //prevent page increase when the focus is in different nearby field
-              Location.pageID[field.id] = 0;
-            }
-          });
-          var fields = FieldHelper.buildField(layer, {fromServer: true},
-          layerMemberships);
-          return fields;
-        });
-        App.DataStore.set("field_id_arr", JSON.stringify(field_id_arr));
-        App.DataStore.set("location_fields_id", JSON.stringify(location_fields_id));
-
-        FieldController.synForCurrentCollection(field_collections);
-        FieldView.displayLayerMenu("layer/menu.html", $('#ui-btn-layer-menu'),
-            {field_collections: field_collections});
-        FieldView.display("field/form.html", $('#div_field_collection'),
-            {field_collections: field_collections});
-
-        ViewBinding.setBusy(false);
+  getByCollectionId: function(cId){
+    FieldModel.fetch(cId, function (layers) {
+      var field_collections = $.map(layers, function (layer) {
+        return FieldHelper.buildField(cId, layer, {fromServer: true});
       });
+
+      FieldController.synForCurrentCollection(cId, field_collections);
+    }, function (error) {
+      App.log('error : ', error);
     });
+  },
+  renderByCollectionId: function () {
+    var uId = SessionHelper.currentUser().id;
+    var cId = App.DataStore.get("cId");
+    FieldOfflineController.renderByCollectionId(cId);
   },
   renderUpdate: function (siteData) {
     var cId = App.DataStore.get("cId");

@@ -1,12 +1,8 @@
 FieldController = {
   getByCollectionId: function () {
-    if (App.isOnline())
-      FieldOnlineController.renderByCollectionId();
-    else
-      FieldOfflineController.renderByCollectionId();
+    FieldOfflineController.renderByCollectionId();
   },
-  synForCurrentCollection: function (newFields) {
-    var cId = App.DataStore.get("cId");
+  synForCurrentCollection: function (cId, newFields) {
     FieldOffline.fetchByCollectionId(cId, function (fields) {
       FieldOffline.remove(fields);
       FieldOffline.add(newFields);
@@ -102,7 +98,7 @@ FieldController = {
     var lng = $(textLng).val();
     var config = JSON.parse(App.DataStore.get("configLocations_" + id));
     var locationOptions = LocationHelper.getLocations(lat, lng, config);
-    
+
 
     if (offset == 0)
       $ul.html("");
@@ -113,7 +109,7 @@ FieldController = {
         hasMoreLocation = true;
       }
       config.locationOptions = locationOptions.slice(offset, Location.limit + offset);
-      
+
       FieldView.displayLocationField("field/location.html", $ul,
           {hasMoreLocation: hasMoreLocation, config: config});
     }

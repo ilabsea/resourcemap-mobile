@@ -4,7 +4,6 @@ FieldView = {
       element.html(content);
       FieldView.displayHierarchy(fieldData);
       element.trigger("create");
-      FieldView.displayUiDisabled(fieldData);
       
       DigitAllowance.prepareEventListenerOnKeyPress();
     });
@@ -35,14 +34,12 @@ FieldView = {
       });
     });
   },
-  displayUiDisabled: function (fieldData) {
-    $.map(fieldData.field_collections, function (properties) {
-      if (properties.layer_membership) {
-        if (!properties.layer_membership.write) {
-          var ele = "collapsable_" + properties.layer_membership.layer_id;
-          $($("#" + ele).children()[1]).addClass("ui-disabled");
-        }
+  displayUiDisabled: function (layermembership) {
+    if (layermembership) {
+      if (!layermembership.write()) {
+        var ele = "collapsable_" + layermembership.layer_id();
+        $($("#" + ele).children()[1]).addClass("ui-disabled");
       }
-    });
+    }
   }
 };

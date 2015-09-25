@@ -1,9 +1,12 @@
 var CollectionOnlineController = {
   getByUserId: function (currentUser) {
-    ViewBinding.setBusy(true);  
+    ViewBinding.setBusy(true);
     CollectionModel.fetch(function (collections) {
       var collectionData = [];
       $.each(collections, function (key, collection) {
+        var cId = collection.id;
+        LayerMembershipOnlineController.getByCollectionId(cId);
+        FieldOnlineController.getByCollectionId(cId);
         SiteOffline.countByCollectionIdUserId(collection.id, currentUser.id, function (count) {
           var item = CollectionHelper.dataCollection(collection, currentUser, count, true);
           collectionData.push(item);
