@@ -1,6 +1,6 @@
 var FieldOfflineController = {
-  renderByCollectionId: function (cId) {
-    var cId = App.DataStore.get('cId');
+  renderByCollectionId: function (site) {
+    var cId = CollectionController.getCurrentId();
     FieldOffline.fetchByCollectionId(cId, function (layers) {
       var field_id_arr = new Array();
       var field_collections = [], location_fields_id = [];
@@ -13,7 +13,7 @@ var FieldOfflineController = {
             Location.pageID[field.idfield] = 0;
           }
         });
-        var item = FieldHelper.buildField(cId, layer._data,{fromServer: false});
+        var item = FieldHelper.buildField(cId, layer._data, site, {fromServer: false});
         field_collections.push(item);
       });
       App.DataStore.set("field_id_arr", JSON.stringify(field_id_arr));

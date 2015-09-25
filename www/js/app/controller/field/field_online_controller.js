@@ -10,11 +10,6 @@ var FieldOnlineController = {
       App.log('error : ', error);
     });
   },
-  renderByCollectionId: function () {
-    var uId = SessionHelper.currentUser().id;
-    var cId = App.DataStore.get("cId");
-    FieldOfflineController.renderByCollectionId(cId);
-  },
   renderUpdate: function (siteData) {
     var cId = App.DataStore.get("cId");
     var sId = App.DataStore.get("sId");

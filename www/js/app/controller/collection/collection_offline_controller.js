@@ -17,8 +17,8 @@ var CollectionOfflineController = {
       });
     });
   },
-  getOne: function (cId) {
-    CollectionOffline.fetchOne(cId, function (collection) {
+  getOne: function () {
+    CollectionOffline.fetchOne(CollectionController.id, function (collection) {
       App.DataStore.set("collection", JSON.stringify(collection));
     });
   }

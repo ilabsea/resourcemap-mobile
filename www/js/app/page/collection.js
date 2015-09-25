@@ -10,12 +10,12 @@ $(function () {
 
   $(document).delegate('#page-collection-list li', 'click', function () {
     var cId = $(this).attr("data-id");
-    App.DataStore.set("cId", cId);
+    CollectionController.setCurrentId(cId);
     var cName = $(this).attr("data-name");
     App.DataStore.set("collectionName", cName);
     CollectionView.displayName({name: cName});
-    CollectionController.getOne(cId);
-    if (App.isOnline())
-      MembershipOnlineController.getByCollectionId(cId);
+    CollectionController.getOne();
+    // if (App.isOnline())
+      // MembershipOnlineController.getByCollectionId(cId);
   });
 });

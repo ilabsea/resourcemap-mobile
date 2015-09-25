@@ -1,5 +1,5 @@
 FieldHelper = {
-  buildField: function (cId, fieldObj, options) {
+  buildField: function (cId, fieldObj, site, options) {
     options = options || {};
     var fromServer = options["fromServer"];
     var pf = null;
@@ -20,12 +20,12 @@ FieldHelper = {
       fieldsWrapper.id_wrapper = fieldObj.id_wrapper;
     }
     $.map(fieldObj.fields, function (fields) {
-      pf = FieldHelper.buildFieldProperties(fields, fromServer);
+      pf = FieldHelper.buildFieldProperties(fields, site, fromServer);
       fieldsWrapper.fields.push(pf);
     });
     return fieldsWrapper;
   },
-  buildFieldProperties: function (fields, fromServer) {
+  buildFieldProperties: function (fields, site, fromServer) {
     var id = fromServer ? fields.id : fields.idfield;
     var kind = fields.kind;
     var widgetType = kind;
@@ -35,16 +35,25 @@ FieldHelper = {
     var is_required = "";
     var is_mandatory = fields.is_mandatory;
     var is_enable_field_logic = fields.is_enable_field_logic;
+    var value;
 
     switch (widgetType) {
       case "numeric":
         widgetType = "number";
+        if (site) {
+          value = site.properties ? site.properties[id] : ""
+          value = FieldHelper.getFieldNumberValue(config, value);
+        }
         if (config && config.field_logics) {
           App.DataStore.set("configNumberSkipLogic_" + id,
               JSON.stringify(config.field_logics));
         }
         break;
       case "select_one":
+        if(site){
+          value = site.properties[id];
+          FieldHelper.setSelectedFieldSelectOne(config , value);
+        }
         if (is_enable_field_logic) {
           config = FieldHelper.buildFieldSelectOne(config);
           if (!config.field_logics)
@@ -52,6 +61,10 @@ FieldHelper = {
         }
         break;
       case "select_many":
+        if(site){
+          value = site.properties[id];
+          FieldHelper.setSelectedFieldSelectMany(config , value);
+        }
         if (is_enable_field_logic) {
           App.DataStore.set("configSelectManyForSkipLogic_" + id,
               JSON.stringify(fields));
@@ -59,12 +72,14 @@ FieldHelper = {
         break;
       case "yes_no":
         widgetType = "select_one";
-        config = FieldHelper.buildFieldYesNo(config, fromServer);
+        value = site.properties ? site.properties[id] : false
+        config = FieldHelper.buildFieldYesNo(config, fromServer, value);
         slider = "slider";
         ctrue = "true";
         break
       case "phone":
         widgetType = "tel";
+        value = site.properties ? site.properties[id] : ""
         break;
       case "location":
         widgetType = "location";
@@ -72,18 +87,45 @@ FieldHelper = {
             JSON.stringify(config));
         break;
       case "site":
+        widgetType = "search";
+        if(site){
+          value = site.properties ? site.properties[id] : ""
+          if (value ){
+            var siteData = SiteList.getSite(value);
+            value = siteData.name;
+          }
+        }
+        break;
       case "user":
         widgetType = "search";
+        if(site){
+          value = site.properties ? site.properties[id] : ""
+          SearchList.add(new SearchField(id, value));
+        }
         break;
-      case "identifier":
+      case "date":
+        widgetType = "date";
+        if (site) {
+          value = site.properties ? site.properties[id] : ""
+          if (value){
+            App.log('value : ', value)
+            var date = value.split("T")[0];
+            // value = fromServer ? date : convertDateWidgetToParam(date)
+            value = convertDateWidgetToParam(date);
+          }
+        }
+        break;
+      default:
         widgetType = "text";
-        break;
+        value = site.properties ? site.properties[id] : ""
+        break
     }
 
     if (is_mandatory)
       is_required = "required";
 
     var fieldProperties = {
+      __value: value,
       idfield: id,
       name: fields.name,
       kind: kind,
@@ -114,7 +156,7 @@ FieldHelper = {
     });
     return config;
   },
-  buildFieldYesNo: function (config, fromServer) {
+  buildFieldYesNo: function (config, fromServer, value) {
     var field_id0, field_id1;
     if (fromServer) {
       if (config) {
@@ -133,53 +175,18 @@ FieldHelper = {
           id: 0,
           label: "NO",
           code: "1",
-          field_id: field_id0
+          field_id: field_id0,
+          selected: value ? "" : "selected"
         },
         {id: 1,
           label: "YES",
           code: "2",
-          field_id: field_id1
+          field_id: field_id1,
+          selected: value ? "selected" : ""
         }]
     };
 
     return config;
-  },
-  buildFieldsUpdate: function (layers, site, fromServer, layerMemberships) {
-    var location_fields_id = [];
-    var field_collections = $.map(layers, function (layer) {
-      var fields = fromServer ? layer.fields : layer.fields();
-      $.map(fields, function (field) {
-        if (field.kind === "location") {
-          var fieldId = fromServer ? field.id : field.idfield;
-          location_fields_id.push(fieldId);
-          Location.pageID[fieldId] = 0;
-        }
-      });
-      var item = FieldHelper.buildFieldsLayer(layer, site, fromServer, layerMemberships);
-      return item;
-    });
-    App.DataStore.set("location_fields_id", JSON.stringify(location_fields_id));
-
-    return field_collections;
-  },
-  buildFieldsLayer: function (layer, site, fromServer, layerMemberships) {
-    if (fromServer) {
-      var itemLayer = FieldHelper.buildField(layer, {fromServer: fromServer}, layerMemberships);
-      var p = site.properties;
-    }
-    else {
-      var itemLayer = FieldHelper.buildField(layer._data, {fromServer: fromServer}, "");
-      var p = site.properties();
-    }
-
-    for (var propertyCode in p) {
-      $.map(itemLayer.fields, function (item) {
-        var propertyValue = p[propertyCode];
-        FieldHelper.setFieldsValue(item, propertyCode,
-            propertyValue, site, fromServer);
-      });
-    }
-    return itemLayer;
   },
   setFieldsValue: function (item, propertyCode, pValue, site, fromServer) {
     if (item.code === propertyCode || parseInt(item["idfield"])
@@ -187,11 +194,6 @@ FieldHelper = {
       switch (item.kind) {
         case "photo" :
           FieldHelper.setFieldPhotoValue(item, pValue, site, fromServer);
-          break;
-        case "select_many":
-        case "select_one":
-        case "yes_no":
-          FieldHelper.setFieldSelectValue(item, pValue);
           break;
         case "location":
           FieldHelper.buildFieldLocationUpdate(site, item, fromServer);
@@ -232,9 +234,18 @@ FieldHelper = {
           item.__value = pValue;
           break;
         default:
+          App.log('pValue : ', pValue);
           item.__value = pValue;
       }
     }
+  },
+  getFieldNumberValue: function(config, value){
+    if (config && config.allows_decimals == "true"
+        && config.digits_precision && !isNaN(parseFloat(value))) {
+      value = parseFloat(value);
+      value = Number(value.toFixed(parseInt((config.digits_precision))));
+    }
+    return value;
   },
   setFieldPhotoValue: function (item, value, site, fromServer) {
     var sId = App.DataStore.get("sId");
@@ -263,31 +274,22 @@ FieldHelper = {
       }
     }
   },
-  setFieldSelectValue: function (item, value) {
-    item.__value = value;
-    for (var k = 0; k < item.config.options.length; k++) {
-      item.config.options[k]["selected"] = "";
-      if (typeof (item.__value) === "boolean") {
-        if (item.config.options[k].id == item.__value
-            || item.config.options[k].code == item.__value[j]) {
-          item.config.options[k]["selected"] = "selected";
+  setSelectedFieldSelectMany: function(config, value){
+    $.map(config.options, function(option){
+      option["selected"] = "";
+      $.map(value , function(v){
+        if (option.id == v || option.code == v) {
+          option["selected"] = "selected";
         }
-      } else {
-        if (item.__value instanceof Array) {
-          for (var j = 0; j < item.__value.length; j++) {
-            if (item.config.options[k].id == item.__value[j]
-                || item.config.options[k].code == item.__value[j]) {
-              item.config.options[k]["selected"] = "selected";
-            }
-          }
-        } else {
-          if (item.config.options[k].id == item.__value
-              || item.config.options[k].code == item.__value) {
-            item.config.options[k]["selected"] = "selected";
-          }
-        }
-      }
-    }
+      });
+    });
+  },
+  setSelectedFieldSelectOne: function (config, value) {
+    $.map(config.options, function(option){
+      option["selected"] = "";
+      if (option.id == value || option.code == value) 
+        option["selected"] = "selected";
+    });
   },
   setFieldHierarchyValue: function (item, value) {
     item.__value = value;

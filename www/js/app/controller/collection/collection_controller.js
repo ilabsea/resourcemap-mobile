@@ -1,4 +1,11 @@
 CollectionController = {
+  id: "",
+  setCurrentId: function(id){
+    CollectionController.id = id;
+  },
+  getCurrentId: function(){
+    return CollectionController.id;
+  },
   get: function() {
     var currentUser = SessionHelper.currentUser();
     if (!App.isOnline()) {
@@ -14,11 +21,11 @@ CollectionController = {
       CollectionOffline.add(newCollections);
     });
   },
-  getOne: function(cId) {
+  getOne: function() {
     if (App.isOnline()) {
       CollectionOnlineController.getOne();
     } else {
-      CollectionOfflineController.getOne(cId);
+      CollectionOfflineController.getOne();
     }
   }
 };
