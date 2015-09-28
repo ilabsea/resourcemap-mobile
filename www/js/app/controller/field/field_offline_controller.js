@@ -31,7 +31,7 @@ var FieldOfflineController = {
     });
   },
   renderUpdate: function (site) {
-    var cId = App.DataStore.get("cId");
+    var cId = CollectionController.id;
     FieldOffline.fetchByCollectionId(cId, function (layers) {
       var field_collections = FieldHelper.buildFieldsUpdate(layers, site, false, "");
       FieldView.displayLayerMenu("layer/menu.html", $('#ui-btn-layer-menu-update'),

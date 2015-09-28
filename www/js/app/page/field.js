@@ -37,7 +37,7 @@ $(function () {
   });
 
   $(document).delegate("#page-form-site", "pageshow", function () {
-    var cId = App.DataStore.get("cId");
+    var cId = CollectionController.id;
     $(".autocomplete").addClass("ui-screen-hidden");
     var members = [];
     MembershipOffline.fetchByCollectionId(cId, function (results) {

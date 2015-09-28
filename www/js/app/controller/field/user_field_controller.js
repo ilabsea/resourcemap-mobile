@@ -9,7 +9,6 @@ var UserFieldController = {
     var idfield = id.substring(id.lastIndexOf('_') + 1);
     var matches = UserFieldController.matchStart(members, value);
     var match_value = "";
-
     if (value && value.length > 0) {
       if (matches.length === 0) {
         ValidList.addValid(new Valid(id, false));

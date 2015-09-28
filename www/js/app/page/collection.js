@@ -4,7 +4,7 @@ $(function () {
     SiteList.clear();
     hideElement($("#info_sign_in"));
     CollectionController.get();
-    CollectionController.id = "";
+    CollectionController.setCurrentId("");
     var currentUser = SessionHelper.currentUser();
     SiteOfflineController.countByUserId(currentUser.id);
   });
@@ -16,7 +16,8 @@ $(function () {
     App.DataStore.set("collectionName", cName);
     CollectionView.displayName({name: cName});
     CollectionController.getOne();
-    // if (App.isOnline())
-      // MembershipOnlineController.getByCollectionId(cId);
+    //for user field
+    if (App.isOnline())
+      MembershipOnlineController.getByCollectionId(cId);
   });
 });

@@ -11,7 +11,7 @@ var FieldOnlineController = {
     });
   },
   renderUpdate: function (siteData) {
-    var cId = App.DataStore.get("cId");
+    var cId = CollectionController.id;
     var sId = App.DataStore.get("sId");
 
     SitesPermission.fetch(cId, function (site) {

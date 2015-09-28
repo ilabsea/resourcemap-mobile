@@ -4,7 +4,7 @@ var SiteOfflineController = {
     SiteHelper.resetForm();
   },
   getByCollectionId: function () {
-    var cId = App.DataStore.get("cId");
+    var cId = CollectionController.id;
     var uId = SessionHelper.currentUser().id;
     var offset = SiteOffline.sitePage * SiteOffline.limit;
     SiteOffline.fetchByCollectionIdUserId(cId, uId, offset, function (sites) {
@@ -68,7 +68,7 @@ var SiteOfflineController = {
       site.name($("#siteName").val());
       site.lat($("#lat").val());
       site.lng($("#lng").val());
-      var cId = App.DataStore.get("cId");
+      var cId = CollectionController.id;
       FieldOffline.fetchByCollectionId(cId, function (fields) {
         var propertiesFile = {properties: {}, files: {}};
         fields.forEach(function (field) {
@@ -104,7 +104,7 @@ var SiteOfflineController = {
     SiteOffline.deleteBySiteId(sId);
   },
   submitAllToServerByCollectionIdUserId: function () {
-    var cId = App.DataStore.get("cId");
+    var cId = CollectionController.id;
     var user = SessionHelper.currentUser();
     SiteOfflineController.processToServerByCollectionIdUserId(cId, user.id);
   },

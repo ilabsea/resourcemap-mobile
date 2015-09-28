@@ -3,7 +3,7 @@ $(function () {
   $(document).delegate('#page-site-list', 'pageshow', function () {
     App.emptyHTML();
     $("#btn_sendToServer").hide();
-    var cId = App.DataStore.get("cId");
+    var cId = CollectionController.id;
     SiteModel.sitePage = 0;
     SiteOffline.sitePage = 0;
     SiteOfflineController.disabledOptionMenu(cId);

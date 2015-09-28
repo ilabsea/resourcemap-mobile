@@ -2,6 +2,7 @@ SiteModel = {
   limit: 15,
   sitePage: 0,
   create: function (attr, successCallback, errorCallback) {
+    App.log('attr : ', attr)
     var cId = attr.collection_id;
     var endpoint = getEndPoint();
     var url = endpoint.URL_SITE + cId
@@ -77,7 +78,7 @@ SiteModel = {
 SiteMenu = {
   menu: function () {
     App.emptyHTML();
-    var cId = App.DataStore.get("cId");
+    var cId = CollectionController.id;
     var value = $('#site-list-menu').val();
     $("#btn_sendToServer").hide();
     switch (value) {

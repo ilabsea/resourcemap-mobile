@@ -1,6 +1,5 @@
 var SiteHelper = {
   buildDataForSite: function () {
-    var cId = App.DataStore.get("cId");
     var name = $('#name').val();
     var lat = $('#lat').val();
     var lng = $('#lng').val();
@@ -49,7 +48,7 @@ var SiteHelper = {
       }
     }
     var data = {
-      collection_id: cId,
+      collection_id: CollectionController.id,
       name: name,
       lat: lat,
       lng: lng,
