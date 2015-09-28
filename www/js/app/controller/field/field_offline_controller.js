@@ -2,11 +2,9 @@ var FieldOfflineController = {
   renderByCollectionId: function (site) {
     var cId = CollectionController.getCurrentId();
     FieldOffline.fetchByCollectionId(cId, function (layers) {
-      var field_id_arr = new Array();
       var field_collections = [], location_fields_id = [];
       layers.forEach(function (layer) {
         $.map(layer.fields(), function (field) {
-          field_id_arr.push(field.idfield);
           if (field.kind === "location") {
             location_fields_id.push(field.idfield);
 
@@ -16,7 +14,6 @@ var FieldOfflineController = {
         var item = FieldHelper.buildField(cId, layer._data, site, {fromServer: false});
         field_collections.push(item);
       });
-      App.DataStore.set("field_id_arr", JSON.stringify(field_id_arr));
       App.DataStore.set("location_fields_id", JSON.stringify(location_fields_id));
 
       FieldView.displayLayerMenu("layer/menu.html", $('#ui-btn-layer-menu'),
@@ -32,14 +29,8 @@ var FieldOfflineController = {
   },
   renderUpdate: function (site) {
     var cId = CollectionController.id;
-    FieldOffline.fetchByCollectionId(cId, function (layers) {
-      var field_collections = FieldHelper.buildFieldsUpdate(layers, site, false, "");
-      FieldView.displayLayerMenu("layer/menu.html", $('#ui-btn-layer-menu-update'),
-          {field_collections: field_collections});
-      FieldView.display("field/form.html",
-          $('#div_field_collection'),
-          {field_collections: field_collections});
-      ViewBinding.setBusy(false);
-    });
+    site.fromServer = false;
+    App.log('site : ', site.properties());
+    FieldOfflineController.renderByCollectionId(site);
   }
 };

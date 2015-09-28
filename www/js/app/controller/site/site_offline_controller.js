@@ -65,24 +65,19 @@ var SiteOfflineController = {
   updateBySiteId: function () {
     var sId = App.DataStore.get("sId");
     SiteOffline.fetchBySiteId(sId, function (site) {
-      site.name($("#siteName").val());
-      site.lat($("#lat").val());
-      site.lng($("#lng").val());
-      var cId = CollectionController.id;
-      FieldOffline.fetchByCollectionId(cId, function (fields) {
-        var propertiesFile = {properties: {}, files: {}};
-        fields.forEach(function (field) {
-          propertiesFile = FieldController.updateFieldValueBySiteId(propertiesFile, field, false);
-        });
-        site.properties(propertiesFile.properties);
-        site.files(propertiesFile.files);
-        persistence.flush();
-        PhotoList.clear();
-        SearchList.clear();
-        App.DataStore.clearAllSiteFormData();
-        App.Cache.resetValue();
-        App.redirectTo("index.html#page-site-list");
-      });
+      var siteAttr = SiteHelper.buildDataForSite();
+      site.name(siteAttr.name);
+      site.lat(siteAttr.lat);
+      site.lng(siteAttr.lng);
+      site.properties(siteAttr.properties);
+      site.files(siteAttr.files);
+      App.log('site.properties : ', site.properties());
+      persistence.flush();
+      PhotoList.clear();
+      SearchList.clear();
+      App.DataStore.clearAllSiteFormData();
+      App.Cache.resetValue();
+      App.redirectTo("index.html#page-site-list");
     });
   },
   renderUpdateSiteForm: function () {

@@ -36,7 +36,7 @@ FieldHelper = {
     var is_mandatory = field.is_mandatory;
     var is_enable_field_logic = field.is_enable_field_logic;
     var value = "", configHierarchy = "", selected = "";
-    var properties = site.properties;
+    var properties = site.fromServer ? site.properties : site.properties();
     value = properties ? properties[id] : ""
 
     switch (widgetType) {
@@ -66,8 +66,8 @@ FieldHelper = {
         break;
       case "yes_no":
         widgetType = "select_one";
-        value = properties ? properties[id] : false
-        config = FieldHelper.buildFieldYesNo(config, fromServer, value);
+        value = properties ? properties[id] : 0
+        config = FieldHelper.buildFieldYesNo(config, site.fromServer, value);
         slider = "slider";
         ctrue = "true";
         break
@@ -94,9 +94,8 @@ FieldHelper = {
         break;
       case "date":
         widgetType = "date";
-        if (value){
+        if (value)
           value = FieldHelper.getFieldDateValue(site, id);
-        }
         break;
       case "hierarchy": 
         configHierarchy = Hierarchy.generateField(config, value,id);
@@ -173,20 +172,21 @@ FieldHelper = {
           label: "NO",
           code: "1",
           field_id: field_id0,
-          selected: value ? "" : "selected"
+          selected: (value == 0 || value == false) ? "" : "selected"
         },
         {id: 1,
           label: "YES",
           code: "2",
           field_id: field_id1,
-          selected: value ? "selected" : ""
+          selected: (value == 1 || value == true) ? "selected" : ""
         }]
     };
 
     return config;
   },
   getFieldDateValue: function(site, idfield){
-    value = site.properties ? site.properties[idfield] : ""
+    var properties = site.fromServer ? site.properties : site.properties();
+    var value = properties ? properties[idfield] : "";
     if (value){
       var date = value.split("T")[0];
       value = site.fromServer ? date : convertDateWidgetToParam(date);

@@ -37,37 +37,25 @@ var SiteOnlineController = {
     });
   },
   updateBySiteId: function () {
-    var data;
-    ViewBinding.setBusy(true);
-    VisibleLayersFor.fetch(function (fields) {
-      var propertiesFile = {properties: {}, files: {}};
-      $.map(fields, function (field) {
-        propertiesFile = FieldController.updateFieldValueBySiteId(propertiesFile, field, true);
-      });
-      data = {
-        "_method": "put",
-        "auth_token": App.Session.getAuthToken(),
-        "site": {
-          "name": $("#name").val(),
-          "lat": $("#lat").val(),
-          "lng": $("#lng").val(),
-          "properties": propertiesFile.properties,
-          "files": propertiesFile.files
-        }
-      };
-      SiteModel.update(data, function () {
-        PhotoList.clear();
-        SearchList.clear();
-        App.Cache.resetValue();
-        App.DataStore.clearAllSiteFormData();
-        App.redirectTo("#page-site-list");
-      }, function (err) {
-        if (err["responseJSON"]) {
-          var error = SiteHelper.buildSubmitError(err["responseJSON"], data["site"], false);
-          SiteView.displayError("site/errorUpload.html", $('#page-error-submit-site'),
-              error);
-        }
-      });
+    var data = SiteHelper.buildDataForSite();
+    App.log('data : ' , data);
+    attr = {
+      "_method": "put",
+      "auth_token": App.Session.getAuthToken(),
+      "site": data
+    };
+    SiteModel.update(attr, function () {
+      PhotoList.clear();
+      SearchList.clear();
+      App.Cache.resetValue();
+      App.DataStore.clearAllSiteFormData();
+      App.redirectTo("#page-site-list");
+    }, function (err) {
+      if (err["responseJSON"]) {
+        var error = SiteHelper.buildSubmitError(err["responseJSON"], data, false);
+        SiteView.displayError("site/errorUpload.html", $('#page-error-submit-site'),
+            error);
+      }
     });
   },
   renderUpdateSiteForm: function () {

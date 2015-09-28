@@ -8,11 +8,6 @@ var LayerMembershipModel = {
       datatype: 'json',
       success: successCallback,
       error: errorCallback
-      // error: function (error) {
-      //   if (error.readyState == 0) {
-      //     FieldOfflineController.renderByCollectionId();
-      //   }
-      // }
     });
   }
 };

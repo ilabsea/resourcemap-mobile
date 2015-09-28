@@ -61,7 +61,7 @@ SiteModel = {
     });
   },
   update: function (data, successCallback, errorCallback) {
-    var cId = localStorage.getItem("cId");
+    var cId = CollectionController.getCurrentId();
     var sId = localStorage.getItem("sId");
     var endpoint = getEndPoint();
     $.ajax({
