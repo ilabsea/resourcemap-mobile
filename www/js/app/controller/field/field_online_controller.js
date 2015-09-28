@@ -2,7 +2,7 @@ var FieldOnlineController = {
   getByCollectionId: function(cId){
     FieldModel.fetch(cId, function (layers) {
       var field_collections = $.map(layers, function (layer) {
-        return FieldHelper.buildField(cId, layer, {fromServer: true});
+        return FieldHelper.buildField(cId, layer, "" , {fromServer: true});
       });
 
       FieldController.synForCurrentCollection(cId, field_collections);

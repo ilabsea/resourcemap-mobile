@@ -7,34 +7,8 @@ LayerMembershipsHelper = {
     return layerMemberships;
   },
   buildAllLayersOfSite: function (cId, siteData) {
+    siteData.fromServer = true;
     FieldOfflineController.renderByCollectionId(siteData);
-    
-      // $.map(layers, function (layer) {
-      //   layer.fields().forEach
-      //   $.map(layer.fields(), function(field){
-
-      //   })
-      //   App.log('field : ', field);
-      //   var propertyValue = properties[propertyCode];
-      //   FieldHelper.setFieldsValue(field, propertyCode,
-      //       propertyValue, siteData, fromServer);
-      // });
-    // }
-    // LayerMembership.fetch(cId, function (layerMemberships) {
-    //   FieldModel.fetch(cId, function (layers) {
-    //     var field_collections = FieldHelper.buildFieldsUpdate(layers, siteData,
-    //         true, layerMemberships);
-    //     FieldView.displayLayerMenu("layer/menu.html", $('#ui-btn-layer-menu-update-online'),
-    //         {field_collections: field_collections});
-    //     FieldView.display("field/form.html",
-    //         $('#div_field_collection'),
-    //         {field_collections: field_collections});
-    //     ViewBinding.setBusy(false);
-    //   }, function () {
-    //     if (!App.isOnline())
-    //       FieldOfflineController.renderByCollectionId();
-    //   });
-    // });
   },
   buildCustomerSitePermission: function (site, siteData, cId, sId) {
     if (site.write.some_sites.length !== 0)

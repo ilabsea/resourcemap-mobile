@@ -20,7 +20,7 @@ CollectionModel = {
     var endpoint = getEndPoint();
     $.ajax({
       type: "get",
-      url: endpoint.URL_COLLECTION + App.DataStore.get("cId") + ".json?auth_token=" + App.Session.getAuthToken(),
+      url: endpoint.URL_COLLECTION + CollectionController.id + ".json?auth_token=" + App.Session.getAuthToken(),
       dataType: "json",
       success: callback
     });

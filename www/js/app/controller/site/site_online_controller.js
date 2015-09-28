@@ -6,7 +6,7 @@ var SiteOnlineController = {
     });
   },
   getByCollectionId: function () {
-    var cId = App.DataStore.get("cId");
+    var cId = CollectionController.id;
     var offset = SiteModel.sitePage * SiteModel.limit;
     ViewBinding.setBusy(true);
     SiteModel.fetch(cId, offset, function (response) {

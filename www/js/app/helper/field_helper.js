@@ -25,35 +25,32 @@ FieldHelper = {
     });
     return fieldsWrapper;
   },
-  buildFieldProperties: function (fields, site, fromServer) {
-    var id = fromServer ? fields.id : fields.idfield;
-    var kind = fields.kind;
+  buildFieldProperties: function (field, site, fromServer) {
+    var id = fromServer ? field.id : field.idfield;
+    var kind = field.kind;
     var widgetType = kind;
-    var config = fields.config;
+    var config = field.config;
     var slider = "";
     var ctrue = "";
     var is_required = "";
-    var is_mandatory = fields.is_mandatory;
-    var is_enable_field_logic = fields.is_enable_field_logic;
-    var value;
+    var is_mandatory = field.is_mandatory;
+    var is_enable_field_logic = field.is_enable_field_logic;
+    var value = "", configHierarchy = "", selected = "";
+    var properties = site.properties;
+    value = properties ? properties[id] : ""
 
     switch (widgetType) {
       case "numeric":
         widgetType = "number";
-        if (site) {
-          value = site.properties ? site.properties[id] : ""
+        if(properties)
           value = FieldHelper.getFieldNumberValue(config, value);
-        }
         if (config && config.field_logics) {
           App.DataStore.set("configNumberSkipLogic_" + id,
               JSON.stringify(config.field_logics));
         }
         break;
       case "select_one":
-        if(site){
-          value = site.properties[id];
-          FieldHelper.setSelectedFieldSelectOne(config , value);
-        }
+        FieldHelper.setSelectedFieldSelectOne(config , value);
         if (is_enable_field_logic) {
           config = FieldHelper.buildFieldSelectOne(config);
           if (!config.field_logics)
@@ -61,25 +58,21 @@ FieldHelper = {
         }
         break;
       case "select_many":
-        if(site){
-          value = site.properties[id];
-          FieldHelper.setSelectedFieldSelectMany(config , value);
-        }
+        FieldHelper.setSelectedFieldSelectMany(config , value);
         if (is_enable_field_logic) {
           App.DataStore.set("configSelectManyForSkipLogic_" + id,
-              JSON.stringify(fields));
+              JSON.stringify(field));
         }
         break;
       case "yes_no":
         widgetType = "select_one";
-        value = site.properties ? site.properties[id] : false
+        value = properties ? properties[id] : false
         config = FieldHelper.buildFieldYesNo(config, fromServer, value);
         slider = "slider";
         ctrue = "true";
         break
       case "phone":
         widgetType = "tel";
-        value = site.properties ? site.properties[id] : ""
         break;
       case "location":
         widgetType = "location";
@@ -88,36 +81,40 @@ FieldHelper = {
         break;
       case "site":
         widgetType = "search";
-        if(site){
-          value = site.properties ? site.properties[id] : ""
-          if (value ){
-            var siteData = SiteList.getSite(value);
-            value = siteData.name;
-          }
+        if (value ){
+          var siteData = SiteList.getSite(value);
+          value = siteData.name;
         }
         break;
       case "user":
         widgetType = "search";
-        if(site){
-          value = site.properties ? site.properties[id] : ""
+        if(value){
           SearchList.add(new SearchField(id, value));
         }
         break;
       case "date":
         widgetType = "date";
-        if (site) {
-          value = site.properties ? site.properties[id] : ""
-          if (value){
-            App.log('value : ', value)
-            var date = value.split("T")[0];
-            // value = fromServer ? date : convertDateWidgetToParam(date)
-            value = convertDateWidgetToParam(date);
-          }
+        if (value){
+          value = FieldHelper.getFieldDateValue(site, id);
+        }
+        break;
+      case "hierarchy": 
+        configHierarchy = Hierarchy.generateField(config, value,id);
+        if ( value ) selected = Hierarchy._selected
+        break;
+      case "photo" :
+        if(value){
+          value = FieldHelper.getFieldPhotoValue(site, id);
+        }
+        break;
+      case "location":
+        if(value){
+          FieldHelper.buildFieldLocationUpdate(site, field);
+          FieldHelper.setFieldLocationValue(value);
         }
         break;
       default:
         widgetType = "text";
-        value = site.properties ? site.properties[id] : ""
         break
     }
 
@@ -126,10 +123,11 @@ FieldHelper = {
 
     var fieldProperties = {
       __value: value,
+      _selected: selected,
       idfield: id,
-      name: fields.name,
+      name: field.name,
       kind: kind,
-      code: fields.code,
+      code: field.code,
       multiple: (kind === "select_many" ? "multiple" : ""),
       isPhoto: (kind === "photo" ? true : false),
       widgetType: widgetType,
@@ -139,8 +137,7 @@ FieldHelper = {
       is_mandatory: is_mandatory,
       required: is_required,
       isHierarchy: (kind === "hierarchy" ? true : false),
-      configHierarchy: (kind === "hierarchy" ?
-          Hierarchy.generateField(fields.config, "", id) : ""),
+      configHierarchy: configHierarchy,
       is_enable_field_logic: is_enable_field_logic
     };
     return fieldProperties;
@@ -188,56 +185,13 @@ FieldHelper = {
 
     return config;
   },
-  setFieldsValue: function (item, propertyCode, pValue, site, fromServer) {
-    if (item.code === propertyCode || parseInt(item["idfield"])
-        === parseInt(propertyCode)) {
-      switch (item.kind) {
-        case "photo" :
-          FieldHelper.setFieldPhotoValue(item, pValue, site, fromServer);
-          break;
-        case "location":
-          FieldHelper.buildFieldLocationUpdate(site, item, fromServer);
-          FieldHelper.setFieldLocationValue(item, pValue);
-          break;
-        case "hierarchy":
-          FieldHelper.setFieldHierarchyValue(item, pValue);
-          break;
-        case "date":
-          if (pValue) {
-            var date = pValue.split("T")[0];
-            if (!fromServer)
-              item.__value = convertDateWidgetToParam(date);
-            else
-              item.__value = date;
-          }
-          break;
-        case "user":
-          SearchList.add(new SearchField(item["idfield"], pValue));
-          item.__value = pValue;
-          break;
-        case "site":
-          if (pValue) {
-            var site = SiteList.getSite(pValue);
-            item.__value = site.name;
-          }
-          break;
-        case "numeric":
-          if (pValue) {
-            if (item.config
-                && item.config.allows_decimals == "true"
-                && item.config.digits_precision
-                && !isNaN(parseFloat(pValue))) {
-              pValue = parseFloat(pValue);
-              pValue = Number(pValue.toFixed(parseInt((item.config.digits_precision))));
-            }
-          }
-          item.__value = pValue;
-          break;
-        default:
-          App.log('pValue : ', pValue);
-          item.__value = pValue;
-      }
+  getFieldDateValue: function(site, idfield){
+    value = site.properties ? site.properties[idfield] : ""
+    if (value){
+      var date = value.split("T")[0];
+      value = site.fromServer ? date : convertDateWidgetToParam(date);
     }
+    return value;
   },
   getFieldNumberValue: function(config, value){
     if (config && config.allows_decimals == "true"
@@ -247,41 +201,44 @@ FieldHelper = {
     }
     return value;
   },
-  setFieldPhotoValue: function (item, value, site, fromServer) {
+  getFieldPhotoValue: function (site, id) {
+    value = site.properties ? site.properties[id] : ""
     var sId = App.DataStore.get("sId");
+    var fromServer = site.fromServer;
     if (fromServer) {
-      App.DataStore.set(sId + "_" + item["idfield"], value);
-      item.__value = SiteCamera.imagePath(value);
+      App.DataStore.set(sId + "_" + id, value);
+      value = SiteCamera.imagePath(value);
     }
     else {
       var files = site.files();
       var imageData = files[value];
       if (imageData == null)
-        item.__value = "";
+        value = "";
       else {
-        item.__value = SiteCamera.dataWithMimeType(imageData);
-        var photo = new Photo(item["idfield"], imageData, SiteCamera.format);
+        value = SiteCamera.dataWithMimeType(imageData);
+        var photo = new Photo(id, imageData, SiteCamera.format);
         PhotoList.add(photo);
       }
     }
+    return value;
   },
-  setFieldLocationValue: function (item, value) {
-    item.__value = value;
-    for (var k = 0; k < item.config.locationOptions.length; k++) {
-      if (item.config.locationOptions[k].code == item.__value) {
-        item.__valueLabel = item.config.locationOptions[k].name;
-        break;
+  setFieldLocationValue: function (field, value) {
+    $.each(field.config.locationOptions, function(i, option){
+      if (option.code == value) {
+        field.__valueLabel = option.name;
+        return;
       }
-    }
+    });
   },
   setSelectedFieldSelectMany: function(config, value){
     $.map(config.options, function(option){
       option["selected"] = "";
-      $.map(value , function(v){
-        if (option.id == v || option.code == v) {
-          option["selected"] = "selected";
-        }
-      });
+      if(value)
+        $.map(value , function(v){
+          if (option.id == v || option.code == v) {
+            option["selected"] = "selected";
+          }
+        });
     });
   },
   setSelectedFieldSelectOne: function (config, value) {
@@ -291,15 +248,9 @@ FieldHelper = {
         option["selected"] = "selected";
     });
   },
-  setFieldHierarchyValue: function (item, value) {
-    item.__value = value;
-    item.configHierarchy = Hierarchy.generateField(item.config, item.__value,
-        item.idfield);
-    item._selected = Hierarchy._selected;
-  },
-  buildFieldLocationUpdate: function (site, item, fromServer) {
-    var lat = fromServer ? site.lat : site.lat();
-    var lng = fromServer ? site.lng : site.lng();
+  buildFieldLocationUpdate: function (site, item) {
+    var lat = site.fromServer ? site.lat : site.lat();
+    var lng = site.fromServer ? site.lng : site.lng();
     item.config.locationOptions = LocationHelper.getLocations(lat, lng, item.config);
   }
 };

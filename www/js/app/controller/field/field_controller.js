@@ -1,6 +1,7 @@
 FieldController = {
   getByCollectionId: function () {
-    FieldOfflineController.renderByCollectionId();
+    var site = {site: {fromServer : App.isOnline()}};
+    FieldOfflineController.renderByCollectionId(site);
   },
   synForCurrentCollection: function (cId, newFields) {
     FieldOffline.fetchByCollectionId(cId, function (fields) {

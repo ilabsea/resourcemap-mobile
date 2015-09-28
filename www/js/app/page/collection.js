@@ -4,6 +4,7 @@ $(function () {
     SiteList.clear();
     hideElement($("#info_sign_in"));
     CollectionController.get();
+    CollectionController.id = "";
     var currentUser = SessionHelper.currentUser();
     SiteOfflineController.countByUserId(currentUser.id);
   });
