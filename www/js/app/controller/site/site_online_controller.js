@@ -37,7 +37,6 @@ var SiteOnlineController = {
   },
   updateBySiteId: function () {
     var data = SiteHelper.buildDataForSite();
-    App.log('data : ' , data);
     attr = {
       "_method": "put",
       "auth_token": App.Session.getAuthToken(),

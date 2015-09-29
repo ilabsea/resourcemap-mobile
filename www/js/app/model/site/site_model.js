@@ -2,7 +2,6 @@ SiteModel = {
   limit: 15,
   sitePage: 0,
   create: function (attr, successCallback, errorCallback) {
-    App.log('attr : ', attr)
     var cId = attr.collection_id;
     var endpoint = getEndPoint();
     var url = endpoint.URL_SITE + cId

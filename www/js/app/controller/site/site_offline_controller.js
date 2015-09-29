@@ -70,7 +70,6 @@ var SiteOfflineController = {
       site.lng(siteAttr.lng);
       site.properties(siteAttr.properties);
       site.files(siteAttr.files);
-      App.log('site.properties : ', site.properties());
       persistence.flush();
       PhotoList.clear();
       App.DataStore.clearAllSiteFormData();

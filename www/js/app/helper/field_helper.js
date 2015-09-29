@@ -75,8 +75,7 @@ var FieldHelper = {
       case "location":
         widgetType = "location";
         if(value){
-          FieldHelper.buildFieldLocationUpdate(site, field);
-          FieldHelper.setFieldLocationValue(config, value);
+          valueLabel = FieldHelper.getFieldLocationValue(config, value);
         }
         App.DataStore.set("configLocations_" + id,
             JSON.stringify(config));
@@ -227,14 +226,15 @@ var FieldHelper = {
     }
     return value;
   },
-  setFieldLocationValue: function (config, value) {
-    $.map(config.locationOptions, function(option){
+  getFieldLocationValue: function (config, value) {
+    var valueLabel = "";
+    $.each(config.locations, function(i, option){
       if (option.code == value) {
-        App.log(' value : ', option.name);
-        field.__valueLabel = option.name;
+        valueLabel = option.name;
         return;
       }
     });
+    return valueLabel
   },
   setSelectedFieldSelectMany: function(config, value){
     $.map(config.options, function(option){
@@ -254,9 +254,4 @@ var FieldHelper = {
         option["selected"] = "selected";
     });
   },
-  buildFieldLocationUpdate: function (site, item) {
-    var lat = site.fromServer ? site.lat : site.lat();
-    var lng = site.fromServer ? site.lng : site.lng();
-    item.config.locationOptions = LocationHelper.getLocations(lat, lng, item.config);
-  }
 };

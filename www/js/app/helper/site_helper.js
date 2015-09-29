@@ -42,8 +42,8 @@ var SiteHelper = {
             var value = $field.val();
             if (value)
               value = $field.attr('data-code');
-            App.log('$field : ', value)
-            properties[idfield] = value;
+
+           properties[idfield] = value;
             break;
           default:
             var value = $field.val();

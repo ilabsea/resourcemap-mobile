@@ -30,7 +30,6 @@ var FieldOfflineController = {
   renderUpdate: function (site) {
     var cId = CollectionController.id;
     site.fromServer = false;
-    App.log('site : ', site.properties());
     FieldOfflineController.renderByCollectionId(site);
   }
 };
