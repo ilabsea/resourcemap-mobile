@@ -19,5 +19,14 @@ SiteController = {
         $('#div_default_layer'), data);
     SiteView.displayBtnSubmit("site/submit.html", $("#btn_submit_site"), btnData);
     FieldController.getByCollectionId();
+  },
+  setSitesByTermForSiteField: function(){
+    if(App.isOnline()){
+      SitesByTerm.fetchAll(function(sites){
+        SitesByTerm.set(sites);
+      }); 
+    }else{
+      SitesByTerm.set([]);
+    }
   }
 };

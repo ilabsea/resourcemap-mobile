@@ -22,7 +22,6 @@ var SiteOnlineController = {
           link: "#page-form-site"
         };
         siteOnlineData.push(item);
-        SiteList.add(new SiteObj(item.id, item.name));
       });
       var hasMoreSites = false;
       var siteLength = response["sites"].length + offset;
@@ -46,7 +45,6 @@ var SiteOnlineController = {
     };
     SiteModel.update(attr, function () {
       PhotoList.clear();
-      SearchList.clear();
       App.Cache.resetValue();
       App.DataStore.clearAllSiteFormData();
       App.redirectTo("#page-site-list");
@@ -59,7 +57,8 @@ var SiteOnlineController = {
     });
   },
   renderUpdateSiteForm: function () {
-    SiteModel.fetchOne(function (response) {
+    var sId = App.DataStore.get('sId');
+    SiteModel.fetchOne(sId, function (response) {
       var siteData = {
         name: response.name,
         lat: response.lat,

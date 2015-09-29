@@ -38,9 +38,8 @@ SiteModel = {
       }
     });
   },
-  fetchOne: function (successCallback) {
+  fetchOne: function (sId, successCallback) {
     var cId = CollectionController.id;
-    var sId = localStorage.getItem("sId");
     var endpoint = getEndPoint();
     $.ajax({
       url: endpoint.URL_SITE + cId + "/sites/" + sId + ".json",
@@ -56,7 +55,7 @@ SiteModel = {
         }
       },
       complete: function () {
-        ViewBinding.setBusy(true);
+        ViewBinding.setBusy(false);
       }
     });
   },

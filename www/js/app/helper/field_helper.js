@@ -1,4 +1,4 @@
-FieldHelper = {
+var FieldHelper = {
   buildField: function (cId, fieldObj, site, options) {
     options = options || {};
     var fromServer = options["fromServer"];
@@ -30,12 +30,10 @@ FieldHelper = {
     var kind = field.kind;
     var widgetType = kind;
     var config = field.config;
-    var slider = "";
-    var ctrue = "";
-    var is_required = "";
+    var slider = "", ctrue = "" , is_required = "";
     var is_mandatory = field.is_mandatory;
     var is_enable_field_logic = field.is_enable_field_logic;
-    var value = "", configHierarchy = "", selected = "";
+    var value = "", configHierarchy = "", selected = "", valueLabel="";
     var properties = site.fromServer ? site.properties : site.properties();
     value = properties ? properties[id] : ""
 
@@ -76,21 +74,22 @@ FieldHelper = {
         break;
       case "location":
         widgetType = "location";
+        if(value){
+          FieldHelper.buildFieldLocationUpdate(site, field);
+          FieldHelper.setFieldLocationValue(config, value);
+        }
         App.DataStore.set("configLocations_" + id,
             JSON.stringify(config));
         break;
       case "site":
         widgetType = "search";
-        if (value ){
-          var siteData = SiteList.getSite(value);
-          value = siteData.name;
+        if(value){
+          valueLabel = FieldHelper.getFieldSiteValue(value);
         }
         break;
       case "user":
         widgetType = "search";
-        if(value){
-          SearchList.add(new SearchField(id, value));
-        }
+        valueLabel = value
         break;
       case "date":
         widgetType = "date";
@@ -106,12 +105,6 @@ FieldHelper = {
           value = FieldHelper.getFieldPhotoValue(site, id);
         }
         break;
-      case "location":
-        if(value){
-          FieldHelper.buildFieldLocationUpdate(site, field);
-          FieldHelper.setFieldLocationValue(value);
-        }
-        break;
       default:
         widgetType = "text";
         break
@@ -122,6 +115,7 @@ FieldHelper = {
 
     var fieldProperties = {
       __value: value,
+      __valueLabel: valueLabel,
       _selected: selected,
       idfield: id,
       name: field.name,
@@ -184,6 +178,17 @@ FieldHelper = {
 
     return config;
   },
+  getFieldSiteValue: function(value){
+    valueLabel = "";
+    sitesByTerm = SitesByTerm.get();
+    $.each(sitesByTerm, function(i, siteByTerm){
+      if(siteByTerm.id == value ){
+        valueLabel = siteByTerm.name;
+        return;
+      }
+    });
+    return valueLabel;
+  },
   getFieldDateValue: function(site, idfield){
     var properties = site.fromServer ? site.properties : site.properties();
     var value = properties ? properties[idfield] : "";
@@ -222,9 +227,10 @@ FieldHelper = {
     }
     return value;
   },
-  setFieldLocationValue: function (field, value) {
-    $.each(field.config.locationOptions, function(i, option){
+  setFieldLocationValue: function (config, value) {
+    $.map(config.locationOptions, function(option){
       if (option.code == value) {
+        App.log(' value : ', option.name);
         field.__valueLabel = option.name;
         return;
       }

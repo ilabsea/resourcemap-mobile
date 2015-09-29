@@ -45,7 +45,6 @@ var SiteOfflineController = {
           date: fullDate,
           link: "#page-form-site"
         };
-        SiteList.add(new SiteObj(site.id, site.name()));
         siteofflineData.push(item);
       });
       SiteOffline.countByUserId(userId, function (count) {
@@ -74,7 +73,6 @@ var SiteOfflineController = {
       App.log('site.properties : ', site.properties());
       persistence.flush();
       PhotoList.clear();
-      SearchList.clear();
       App.DataStore.clearAllSiteFormData();
       App.Cache.resetValue();
       App.redirectTo("index.html#page-site-list");

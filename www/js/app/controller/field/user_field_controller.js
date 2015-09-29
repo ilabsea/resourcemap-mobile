@@ -22,8 +22,6 @@ var UserFieldController = {
       AutoComplete.display("field/user.html", $ul, {members: matches});
     } else
       ValidationHelper.removeClassUserError(id);
-
-    SearchList.add(new SearchField(idfield, match_value));
   },
   matchStart: function (members, inputValue) {
     var matches = $.map(members, function (member) {
@@ -47,12 +45,13 @@ var AutoCompleteList = {
   getLi: function (liElement) {
     var text = $(liElement).text();
     var ul = $(liElement).closest("ul");
-    var id = $(ul).attr("data-input");
+    var id = $(ul).attr("data-input"); 
     $(id).val(text);
+    var valueId =  $(liElement).attr('data-id')
+    $(id).attr('data-code', valueId);
     ul.addClass('ui-screen-hidden');
-
-    id = id.substring(1, id.length);
-    var idfield = id.substring(id.lastIndexOf('_') + 1);
-    SearchList.add(new SearchField(idfield, $(liElement).attr('data-id')));
   }
 };
+
+
+

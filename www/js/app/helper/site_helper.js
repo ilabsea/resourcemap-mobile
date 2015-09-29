@@ -38,20 +38,18 @@ var SiteHelper = {
             break;
           case "user":
           case "site":
-            properties[idfield] = SearchList.getFieldValue(idfield);
-            break;
           case "location":
-            if ($field.val() == "")
-              value = "";
-            else
-              value = $node.attr('data-code');
+            var value = $field.val();
+            if (value)
+              value = $field.attr('data-code');
+            App.log('$field : ', value)
             properties[idfield] = value;
             break;
           default:
-            var data = $field.val();
-            if (data == null)
-              data = "";
-            properties[idfield] = data;
+            var value = $field.val();
+            if (value == null)
+              value = "";
+            properties[idfield] = value;
             break;
         }
       })
@@ -91,7 +89,6 @@ var SiteHelper = {
   },
   resetForm: function () {
     PhotoList.clear();
-    SearchList.clear();
     App.DataStore.clearAllSiteFormData();
     $('#form_site')[0].reset();
     App.redirectTo("#page-site-list");

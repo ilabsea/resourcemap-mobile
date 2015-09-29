@@ -8,8 +8,8 @@ $(function () {
     SiteOffline.sitePage = 0;
     SiteOfflineController.disabledOptionMenu(cId);
     SiteController.getAllByCollectionId();
+    SiteController.setSitesByTermForSiteField();
     PhotoList.clear();
-    SearchList.clear();
     ValidList.clear();
   });
 
@@ -70,7 +70,6 @@ $(function () {
     SiteOffline.sitePage = 0;
     SiteOfflineController.getByUserId(currentUser.id);
     PhotoList.clear();
-    SearchList.clear();
     ValidList.clear();
   });
 

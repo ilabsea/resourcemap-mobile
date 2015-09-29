@@ -28,11 +28,11 @@ FieldController = {
   //     }
   //   }
   // },
-  renderLocationField: function (textLat, textLng, id, isFocus) {
+  renderLocationField: function (id, isFocus) {
     var offset = Location.pageID[id] * Location.limit;
     var $ul = $("#autocomplete_" + id);
-    var lat = $(textLat).val();
-    var lng = $(textLng).val();
+    var lat = $("#lat").val();
+    var lng = $("#lng").val();
     var config = JSON.parse(App.DataStore.get("configLocations_" + id));
     var locationOptions = LocationHelper.getLocations(lat, lng, config);
 
