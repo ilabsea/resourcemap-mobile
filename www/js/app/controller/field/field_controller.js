@@ -1,6 +1,6 @@
 FieldController = {
   getByCollectionId: function () {
-    var site = {fromServer : App.isOnline()};
+    var site = {fromServer: App.isOnline(), onUpdate: false};
     FieldOfflineController.renderByCollectionId(site);
   },
   synForCurrentCollection: function (cId, newFields) {
@@ -9,25 +9,6 @@ FieldController = {
       FieldOffline.add(newFields);
     });
   },
-  // updateFieldPhotoValue: function (item, propertiesFile, fromServer) {
-  //   var idfield = item["idfield"];
-  //   var lPhotoList = PhotoList.count();
-
-  //   if (fromServer) {
-  //     var sId = App.DataStore.get('sId');
-  //     var filePath = App.DataStore.get(sId + "_" + item["idfield"]);
-  //     propertiesFile.properties[idfield] = filePath;
-  //   }
-
-  //   for (var i = 0; i < lPhotoList; i++) {
-  //     if (PhotoList.getPhotos()[i].id == idfield) {
-  //       var fileName = PhotoList.getPhotos()[i].name;
-  //       propertiesFile.properties[idfield] = fileName;
-  //       propertiesFile.files[fileName] = PhotoList.getPhotos()[i].data;
-  //       break;
-  //     }
-  //   }
-  // },
   renderLocationField: function (id, isFocus) {
     var offset = Location.pageID[id] * Location.limit;
     var $ul = $("#autocomplete_" + id);

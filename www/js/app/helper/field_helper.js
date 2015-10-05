@@ -34,8 +34,10 @@ var FieldHelper = {
     var is_mandatory = field.is_mandatory;
     var is_enable_field_logic = field.is_enable_field_logic;
     var value = "", configHierarchy = "", selected = "", valueLabel="";
-    var properties = site.fromServer ? site.properties : site.properties();
-    value = properties ? properties[id] : ""
+    if(site.onUpdate){
+      var properties = site.fromServer ? site.properties : site.properties();
+      value = properties ? properties[id] : ""
+    }
 
     switch (widgetType) {
       case "numeric":

@@ -8,6 +8,7 @@ LayerMembershipsHelper = {
   },
   buildAllLayersOfSite: function (cId, siteData) {
     siteData.fromServer = true;
+    siteData.onUpdate = true;
     FieldOfflineController.renderByCollectionId(siteData);
   },
   buildCustomerSitePermission: function (site, siteData, cId, sId) {
