@@ -1,4 +1,5 @@
 SiteCamera = {
+  id: "",
   format: "jpeg",
   dataWithMimeType: function (data) {
     return 'data:image/jpeg;base64,' + data;

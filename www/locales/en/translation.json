@@ -82,5 +82,8 @@
     "nav": {
         "online": "Online",
         "offline": "Offline"
+    },
+    "fields": {
+        "no_fields": "There is no field for this collection, or fields have not been yet downloaded from server."
     }
 }

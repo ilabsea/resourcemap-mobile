@@ -1,7 +1,12 @@
 FieldController = {
+  hasFields: false, //use to detect if collection has fields 
   getByCollectionId: function () {
     var site = {fromServer: App.isOnline(), onUpdate: false};
-    FieldOfflineController.renderByCollectionId(site);
+    if(App.isOnline()){
+      FieldOnlineController.renderByCollectionId(site);
+    }else{
+      FieldOfflineController.renderByCollectionId(site);
+    }
   },
   synForCurrentCollection: function (cId, newFields) {
     FieldOffline.fetchByCollectionId(cId, function (fields) {

@@ -6,10 +6,10 @@ LayerMembershipsHelper = {
     });
     return layerMemberships;
   },
-  buildAllLayersOfSite: function (cId, siteData) {
-    siteData.fromServer = true;
-    siteData.onUpdate = true;
-    FieldOfflineController.renderByCollectionId(siteData);
+  buildAllLayersOfSite: function (cId, site) {
+    site.fromServer = true;
+    site.onUpdate = true;
+    FieldOnlineController.renderByCollectionId(site);
   },
   buildCustomerSitePermission: function (site, siteData, cId, sId) {
     if (site.write.some_sites.length !== 0)

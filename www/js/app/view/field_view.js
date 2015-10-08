@@ -1,4 +1,13 @@
 FieldView = {
+  displayNoFields: function (templateURL, element) {
+    App.Template.process(templateURL, {}, function (content) {
+      element.html(content);
+      setTimeout(function () {
+        Dialog.showDialog("page-pop-up-no-fields");
+      }, 50);
+      element.css("z-index", 200000);
+    });
+  },
   display: function (templateURL, element, fieldData) {
     App.Template.process(templateURL, fieldData, function (content) {
       element.html(content);

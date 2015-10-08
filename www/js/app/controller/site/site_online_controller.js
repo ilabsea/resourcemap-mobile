@@ -36,6 +36,7 @@ var SiteOnlineController = {
     });
   },
   updateBySiteId: function () {
+    ViewBinding.setBusy(true);
     var data = SiteHelper.buildDataForSite();
     attr = {
       "_method": "put",
@@ -57,6 +58,7 @@ var SiteOnlineController = {
   },
   renderUpdateSiteForm: function () {
     var sId = App.DataStore.get('sId');
+    ViewBinding.setBusy(true);
     SiteModel.fetchOne(sId, function (response) {
       var siteData = {
         name: response.name,

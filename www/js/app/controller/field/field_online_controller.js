@@ -1,4 +1,15 @@
 var FieldOnlineController = {
+  renderByCollectionId: function(site){
+    var cId = CollectionController.getCurrentId();
+    //detect if collection's fields syn to local 
+    if (!FieldController.hasFields){
+      $.when(FieldModel.fetchOne(cId)).then(function(){
+        FieldController.hasFields = true;
+        FieldOfflineController.renderByCollectionId(site);
+      });
+    } else
+      FieldOfflineController.renderByCollectionId(site);
+  },
   getByCollectionId: function(cId){
     FieldModel.fetch(cId, function (layers) {
       var field_collections = $.map(layers, function (layer) {

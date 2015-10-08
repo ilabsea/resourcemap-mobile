@@ -52,9 +52,6 @@ SiteModel = {
           alert('Internet connection problem.');
           App.redirectTo('#page-site-list');
         }
-      },
-      complete: function () {
-        ViewBinding.setBusy(false);
       }
     });
   },

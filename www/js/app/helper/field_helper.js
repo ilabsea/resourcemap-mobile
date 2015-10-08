@@ -208,14 +208,12 @@ var FieldHelper = {
     return value;
   },
   getFieldPhotoValue: function (site, id) {
-    value = site.properties ? site.properties[id] : ""
-    var sId = App.DataStore.get("sId");
-    var fromServer = site.fromServer;
-    if (fromServer) {
-      App.DataStore.set(sId + "_" + id, value);
+    if (site.fromServer) {
+      value = site.properties ? site.properties[id] : ""
       value = SiteCamera.imagePath(value);
     }
     else {
+      value = site.properties() ? site.properties()[id] : ""
       var files = site.files();
       var imageData = files[value];
       if (imageData == null)

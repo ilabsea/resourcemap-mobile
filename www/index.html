@@ -209,7 +209,7 @@
   <div data-role="page" id="page-site-list" data-theme="b">
    <div data-role="header" data-position="fixed">
     <a data-role="button" 
-       data-rel='back'
+       href="#page-collection-list" 
        data-theme="a" 
        data-icon="carat-l" 
        class="ui-btn-left" 
@@ -341,6 +341,11 @@
   <!--Dialog page when sites submit errors-->
   <div data-role="dialog" id="page-error-submit-site" 
        data-theme="b" data-url="page-error-submit-site" tabindex="0" 
+       class="ui-page ui-page-theme-b ui-dialog ui-page-active" 
+       style="display:none; position:fixed; min-height: 435px; top:50%; margin-top: -207px;"></div>
+
+  <div data-role="dialog" id="page-pop-up-no-fields" 
+       data-theme="b" data-url="page-pop-up-no-fields" tabindex="0" 
        class="ui-page ui-page-theme-b ui-dialog ui-page-active" 
        style="display:none; position:fixed; min-height: 435px; top:50%; margin-top: -207px;"></div>
 
