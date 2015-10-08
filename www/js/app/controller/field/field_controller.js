@@ -8,10 +8,9 @@ FieldController = {
       FieldOfflineController.renderByCollectionId(site);
     }
   },
-  synForCurrentCollection: function (cId, newFields) {
-    FieldOffline.fetchByCollectionId(cId, function (fields) {
-      FieldOffline.remove(fields);
-      FieldOffline.add(newFields);
+  synForCurrentCollection: function (cId, newLayers) {
+    FieldOffline.fetchByCollectionId(cId, function (layers) {
+      FieldOffline.update(layers,newLayers);
     });
   },
   renderLocationField: function (id, isFocus) {

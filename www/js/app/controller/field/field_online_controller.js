@@ -16,7 +16,6 @@ var FieldOnlineController = {
         var site = {fromServer : true, onUpdate : false};
         return FieldHelper.buildField(cId, layer, site , {fromServer: true});
       });
-
       FieldController.synForCurrentCollection(cId, field_collections);
     }, function (error) {
       App.log('error : ', error);
