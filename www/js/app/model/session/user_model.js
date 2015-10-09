@@ -4,6 +4,9 @@ UserModel = {
       url: url,
       type: "POST",
       data: attr,
+      complete: function(){
+        ViewBinding.setBusy(false);
+      },
       success: successCallback,
       error: errorCallback
     });
