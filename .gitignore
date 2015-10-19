@@ -2,6 +2,4 @@
 /platforms/*
 /nbproject/*
 *DS_Store*
-/www/test.html
-/plugins/android.json
-/plugins/ios.json
+/plugins/*

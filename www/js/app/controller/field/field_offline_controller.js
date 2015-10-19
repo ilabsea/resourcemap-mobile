@@ -1,6 +1,6 @@
 var FieldOfflineController = {
   renderByCollectionId: function (site) {
-    var cId = CollectionController.getCurrentId();
+    var cId = site.fromServer ? CollectionController.getCurrentId() : site.collection_id();
     FieldOffline.fetchByCollectionId(cId, function (layers) {
       if (layers.length == 0) {
         if(!App.isOnline())
@@ -33,7 +33,8 @@ var FieldOfflineController = {
   },
   renderUpdate: function (site) {
     var cId = CollectionController.id;
-    site.fromServer = false; site.onUpdate = true;
+    site.fromServer = false; 
+    site.onUpdate = true;
     FieldOfflineController.renderByCollectionId(site);
   }
 };

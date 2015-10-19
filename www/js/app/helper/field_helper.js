@@ -106,9 +106,6 @@ var FieldHelper = {
           value = FieldHelper.getFieldPhotoValue(site, id);
         }
         break;
-      default:
-        widgetType = "text";
-        break
     }
 
     if (is_mandatory)
