@@ -5,7 +5,8 @@ FieldController = {
     if(App.isOnline()){
       FieldOnlineController.renderByCollectionId(site);
     }else{
-      FieldOfflineController.renderByCollectionId(site);
+      var cId = CollectionController.getCurrentId();
+      FieldOfflineController.renderByCollectionId(site, cId);
     }
   },
   synForCurrentCollection: function (cId, newLayers) {

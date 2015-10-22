@@ -35,7 +35,12 @@ SiteOffline = {
     SiteOffline.fetchBySiteId(sId, function(site) {
       persistence.remove(site);
       persistence.flush();
-      App.redirectTo("#page-site-list");
+      if (SiteController.form == 'update_offline'){
+        App.redirectTo("#page-site-list");
+      }
+      else if(SiteController.form == 'update_offline_all'){
+        App.redirectTo("#page-site-list-all");
+      }
     });
   },
   countByCollectionIdUserId: function(idcollection, userId, callback) {

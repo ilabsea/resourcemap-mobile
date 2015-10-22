@@ -53,7 +53,7 @@ $(function () {
       SiteOffline.sitePage++;
       SiteOfflineController.getByUserId(uId);
     } else {
-      SiteController.form = "update_offline";
+      SiteController.form = "update_offline_all";
       App.DataStore.set("sId", sId);
       SiteOfflineController.renderUpdateSiteForm();
     }

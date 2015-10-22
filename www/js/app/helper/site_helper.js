@@ -54,6 +54,7 @@ var SiteHelper = {
         }
       })
     });
+    App.log('properties : ', properties);
   
     var data = {
       collection_id: CollectionController.id,

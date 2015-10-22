@@ -35,8 +35,16 @@ $(document).ready(function () {
               SiteController.add();
             else if (SiteController.form == 'update_online')
               SiteOnlineController.updateBySiteId();
-            else if (SiteController.form == 'update_offline')
-              SiteOfflineController.updateBySiteId();
+            else if (SiteController.form == 'update_offline'){
+              SiteOfflineController.updateBySiteId(function(){
+                App.redirectTo("#page-site-list");
+              });
+            }
+            else if(SiteController.form == 'update_offline_all'){
+              SiteOfflineController.updateBySiteId(function(){
+                App.redirectTo("#page-site-list-all");
+              });
+            }
           });
     }
   });

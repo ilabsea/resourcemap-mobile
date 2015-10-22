@@ -61,7 +61,7 @@ var SiteOfflineController = {
       });
     });
   },
-  updateBySiteId: function () {
+  updateBySiteId: function (callback) {
     var sId = App.DataStore.get("sId");
     SiteOffline.fetchBySiteId(sId, function (site) {
       var siteAttr = SiteHelper.buildDataForSite();
@@ -71,10 +71,10 @@ var SiteOfflineController = {
       site.properties(siteAttr.properties);
       site.files(siteAttr.files);
       persistence.flush();
+      callback();
       PhotoList.clear();
       App.DataStore.clearAllSiteFormData();
       App.Cache.resetValue();
-      App.redirectTo("index.html#page-site-list");
     });
   },
   renderUpdateSiteForm: function () {

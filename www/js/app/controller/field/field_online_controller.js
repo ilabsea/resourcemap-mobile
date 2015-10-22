@@ -5,10 +5,10 @@ var FieldOnlineController = {
     if (!FieldController.hasFields){
       $.when(FieldModel.fetchOne(cId)).then(function(){
         FieldController.hasFields = true;
-        FieldOfflineController.renderByCollectionId(site);
+        FieldOfflineController.renderByCollectionId(site, cId);
       });
     } else
-      FieldOfflineController.renderByCollectionId(site);
+      FieldOfflineController.renderByCollectionId(site, cId);
   },
   getByCollectionId: function(cId){
     FieldModel.fetch(cId, function (layers) {
