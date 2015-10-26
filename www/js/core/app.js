@@ -9,7 +9,6 @@ App = {
   },
   initialize: function () {
     App.bindEvents();
-    App.setUp();
     App.onBackPress();
   },
   resetDb: function () {
@@ -64,12 +63,6 @@ App = {
   },
   emptyHTML: function () {
     $(".clearPreviousDisplay").html("");
-  },
-  setUp: function () {
-    $.ajaxSetup({
-      timeout: 120000,
-      cache: true
-    });
   },
   redirectTo: function (url) {
     $.mobile.changePage(url);

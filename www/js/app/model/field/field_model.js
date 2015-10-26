@@ -1,4 +1,4 @@
-FieldModel = {
+var FieldModel = {
   fetch: function(cId, successCallback, errorCallback) {
     var endpoint = getEndPoint();
     $.ajax({

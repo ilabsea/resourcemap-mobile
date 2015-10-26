@@ -7,10 +7,13 @@ SessionController = {
   },
   logout: function () {
     $('#form_login')[0].reset();
-    if (!App.isOnline())
+    if (!App.isOnline()){
       SessionOfflineController.logout();
-    else
+    }
+    else{
+      $.xhrPool.abortAll();
       SessionOnlineController.logout();
+    }
   },
   storeSessionLogin: function (email, password) {
     var isOnline = App.isOnline();
