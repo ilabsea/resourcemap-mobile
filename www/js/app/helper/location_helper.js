@@ -37,7 +37,8 @@ var LocationHelper = {
       $("#lng").val(lng);
       $("#mark_lat").val(lat);
       $("#mark_lng").val(lng);
-    }, function () {
+    }, function (er) {
+      App.log("first error : ", er);
       navigator.geolocation.getCurrentPosition(function (pos) { 
         var lat = pos.coords.latitude;
         var lng = pos.coords.longitude;
@@ -47,14 +48,15 @@ var LocationHelper = {
         $("#mark_lat").val(lat);
         $("#mark_lng").val(lng);
       }, function (error) {
+        App.log('error : ', error);
         alert("Your current location cannot be found.");
       }, {
         enableHighAccuracy: true,
-        timeout: 90000 
+        timeout: 120000 
       });
     }, {
       enableHighAccuracy: false,
-      timeout: 30000
+      timeout: 60000
     });
   }
 };
