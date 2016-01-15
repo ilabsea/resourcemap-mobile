@@ -1,9 +1,11 @@
 UserModel = {
   create: function(url, attr, successCallback, errorCallback) {
+    var email = attr["user"]["email"];
+    var password = attr["user"]["password"];
     $.ajax({
       url: url,
       type: "POST",
-      data: attr,
+      headers: {'Authorization': 'Basic ' + btoa(email + ":" + password)},
       complete: function(){
         ViewBinding.setBusy(false);
       },
