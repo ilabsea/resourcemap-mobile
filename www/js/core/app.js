@@ -36,7 +36,7 @@ App = {
   setDefaultEndPoint: function () {
     var url = App.DataStore.get("URL");
     if (url == null || url == "" || url == "undefined") {
-      url = "http://resourcemap-sea.instedd.org";
+      url = "https://resourcemap.ilabsea.org";
       App.DataStore.set("URL", url);
     }
   },
