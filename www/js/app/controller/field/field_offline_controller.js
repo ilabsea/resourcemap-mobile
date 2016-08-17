@@ -32,7 +32,7 @@ var FieldOfflineController = {
   },
   renderUpdate: function (site) {
     var cId = site.collection_id();
-    site.fromServer = false; 
+    site.fromServer = false;
     site.onUpdate = true;
     FieldOfflineController.renderByCollectionId(site, cId);
   }

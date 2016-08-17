@@ -34,6 +34,8 @@ var FieldHelper = {
     var is_mandatory = field.is_mandatory;
     var is_enable_field_logic = field.is_enable_field_logic;
     var value = "", configHierarchy = "", selected = "", valueLabel="";
+    var invisible = "", readonly = "";
+    var is_display_field = field.is_display_field;
     if(site.onUpdate){
       var properties = site.fromServer ? site.properties : site.properties();
       value = properties ? properties[id] : ""
@@ -97,7 +99,7 @@ var FieldHelper = {
         if (value)
           value = FieldHelper.getFieldDateValue(site, id);
         break;
-      case "hierarchy": 
+      case "hierarchy":
         configHierarchy = Hierarchy.generateField(config, value,id);
         if ( value ) selected = Hierarchy._selected
         break;
@@ -105,6 +107,13 @@ var FieldHelper = {
         if(value){
           value = FieldHelper.getFieldPhotoValue(site, id);
         }
+        break;
+      case "calculation":
+        widgetType = "text";
+        readonly = 'readonly';
+        !is_display_field ? invisible = "invisible-div" : "";
+        if(properties)
+          value = FieldHelper.getFieldCalculationValue(config, value);
         break;
     }
 
@@ -122,6 +131,9 @@ var FieldHelper = {
       multiple: (kind === "select_many" ? "multiple" : ""),
       isPhoto: (kind === "photo" ? true : false),
       widgetType: widgetType,
+      readonly: readonly,
+      is_display_field: is_display_field,
+      invisible: invisible,
       config: config,
       slider: slider,
       ctrue: ctrue,
@@ -223,6 +235,14 @@ var FieldHelper = {
     }
     return value;
   },
+  getFieldCalculationValue: function (config, value) {
+    if (config && config.allows_decimals == "true"
+        && config.digits_precision && !isNaN(parseFloat(value))) {
+      value = parseInt(value * Math.pow(10, parseInt(config.digits_precision)))
+                 / Math.pow(10, parseInt(config.digits_precision));
+    }
+    return value;
+  },
   getFieldLocationValue: function (config, value) {
     var valueLabel = "";
     $.each(config.locations, function(i, option){
@@ -247,7 +267,7 @@ var FieldHelper = {
   setSelectedFieldSelectOne: function (config, value) {
     $.map(config.options, function(option){
       option["selected"] = "";
-      if (option.id == value || option.code == value) 
+      if (option.id == value || option.code == value)
         option["selected"] = "selected";
     });
   },

@@ -36,7 +36,7 @@ App = {
   setDefaultEndPoint: function () {
     var url = App.DataStore.get("URL");
     if (url == null || url == "" || url == "undefined") {
-      url = "https://resourcemap.ilabsea.org";
+      url = "http://localhost:3000";
       App.DataStore.set("URL", url);
     }
   },

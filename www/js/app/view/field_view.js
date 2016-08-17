@@ -13,8 +13,27 @@ FieldView = {
       element.html(content);
       FieldView.displayHierarchy(fieldData);
       element.trigger("create");
-      
+      FieldView.displayCalculationField(fieldData);
+
       DigitAllowance.prepareEventListenerOnKeyPress();
+    });
+  },
+  displayCalculationField: function (fieldData) {
+    var fieldCal = [];
+
+    $.map(fieldData.field_collections, function (properties) {
+      $.map(properties.fields, function (fieldsInside) {
+        if (fieldsInside.kind === "calculation") {
+          if (fieldsInside.config.dependent_fields) {
+            $.map(fieldsInside.config.dependent_fields, function (dependent_field) {
+              var e = "#" + dependent_field.id;
+              $(e).addClass('calculation');
+            });
+          }
+          fieldCal.push(fieldsInside);
+        }
+      });
+      App.DataStore.set('fields_cal', JSON.stringify(fieldCal));
     });
   },
   displayLocationField: function (templateURL, element, configData) {

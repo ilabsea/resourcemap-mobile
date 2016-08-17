@@ -1,22 +1,22 @@
 {{#each field_collections}}
-<div data-role="collapsible" 
-     data-inset="true" 
-     data-theme="a" 
+<div data-role="collapsible"
+     data-inset="true"
+     data-theme="a"
      data-collapsed="true"
      id="collapsable_{{id_wrapper}}">
  <h3>{{name_wrapper}}</h3>
  {{#each fields}}
- {{#if config.options}} 
+ {{#if config.options}}
  <div id="wrapper_{{idfield}}" tabindex="0" class="wrapper_{{widgetType}}">
   <label>{{name}} {{#if required}} <span class="requiredAsteric">*</span> {{/if}} </label>
-  <select id="{{idfield}}" 
-          name="{{idfield}}" 
-          data-theme="a" 
-          data-native-menu="false" 
-          {{multiple}} 
-          data-role="{{slider}}" 
-          data-mini="{{ctrue}}" 
-          {{required}} 
+  <select id="{{idfield}}"
+          name="{{idfield}}"
+          data-theme="a"
+          data-native-menu="false"
+          {{multiple}}
+          data-role="{{slider}}"
+          data-mini="{{ctrue}}"
+          {{required}}
           data-is_enable_field_logic="{{is_enable_field_logic}}"
           class="validateSelectFields needsclick">
    {{#if multiple}}
@@ -25,7 +25,7 @@
    <option value="{{id}}" {{selected}}>{{label}}</option>
    {{/config.options}}
    {{else}}
-   {{#if slider}} 
+   {{#if slider}}
    {{else}}
    <option value="">Option</option>
    <option value="" selected>(no value)</option>
@@ -37,12 +37,12 @@
   </select>
   <label id="label_{{idfield}}" class="errorSelect" style="display: none">{{t "validation.required"}}</label>
  </div>
- {{else}}  
+ {{else}}
  {{#if isHierarchy}}
  <div id="wrapper_{{idfield}}" tabindex="0">
   <label>{{name}} {{#if required}} <span class="requiredAsteric">*</span> {{/if}}</label>
-  <div id="{{idfield}}" 
-       class="tree" 
+  <div id="{{idfield}}"
+       class="tree"
        {{required}}>
   </div>
   <label id="label_{{idfield}}" class="errorHierarchy" style="display: none">{{t "validation.required"}}</label>
@@ -51,12 +51,12 @@
  {{#if isPhoto}}
  <div id="wrapper_{{idfield}}" tabindex="0">
   <span style='display:inline; margin-top:10px'>{{name}} {{#if required}} <span class="requiredAsteric">*</span>{{/if}}</span>
-  <div onclick="CameraModel.openCameraDialog({{idfield}}, '')" 
-       id='property_{{idfield}}_container' 
-       class="photo"> 
-   <img class="image" 
-        src='{{__value}}' 
-        id='{{idfield}}' 
+  <div onclick="CameraModel.openCameraDialog({{idfield}}, '')"
+       id='property_{{idfield}}_container'
+       class="photo">
+   <img class="image"
+        src='{{__value}}'
+        id='{{idfield}}'
         {{required}} />
   </div>
   <label id="label_{{idfield}}" class="errorImage" style="display: none">{{t "validation.required"}}</label>
@@ -65,73 +65,73 @@
  {{#if config.locations}}
  <div id="wrapper_{{idfield}}" tabindex="0" class="wrapper_autocomplete">
   <label>{{name}} {{#if required}} <span class="requiredAsteric">*</span>  {{/if}} </label>
-  <input id="{{idfield}}" 
-         data-type="search" 
-         value ="{{__valueLabel}}" 
+  <input id="{{idfield}}"
+         data-type="search"
+         value ="{{__valueLabel}}"
          data-code ="{{__value}}"
          data-kind = "{{kind}}"
-         name="{{name}}" 
-         {{required}} 
+         name="{{name}}"
+         {{required}}
          class="search_input">
   <label id="label_{{idfield}}" class="errorSearch" style="display: none">{{t "validation.user_email"}}</label>
   <ul id="autocomplete_{{idfield}}"
-      data-role="listview" 
-      data-filter="true" 
-      data-input="#{{idfield}}"  
+      data-role="listview"
+      data-filter="true"
+      data-input="#{{idfield}}"
       data-inset="true"
       class="autocomplete">
   </ul>
  </div>
  {{else}}
- <div id="wrapper_{{idfield}}" tabindex="0">
+ <div id="wrapper_{{idfield}}" tabindex="0" class="{{invisible}}">
   <label for='name'>{{name}} {{#if required}} <span class="requiredAsteric">*</span>{{/if}} </label>
   {{#ifCond widgetType "search"}}
-  <input id="{{idfield}}" 
+  <input id="{{idfield}}"
          data-type="search"
          data-code ="{{__value}}"
-         value ="{{__valueLabel}}" 
-         name="{{name}}" 
+         value ="{{__valueLabel}}"
+         name="{{name}}"
          data-kind = "{{kind}}"
          {{required}}
          class="search_input">
   <label id="label_{{idfield}}" class="errorSearch" style="display: none">{{t "validation.user_email"}}</label>
   <ul id="{{kind}}_autocomplete"
-      data-role="listview" 
-      data-filter="true" 
-      data-input="#{{idfield}}"  
+      data-role="listview"
+      data-filter="true"
+      data-input="#{{idfield}}"
       data-inset="true"
       class="autocomplete">
   </ul>
   {{else}}
   {{#ifCond widgetType "date"}}
-  <input type="{{widgetType}}" 
-         id="{{idfield}}" 
-         value ="{{__value}}" 
-         name="{{name}}" 
-         class="date" 
-         {{required}} >  
+  <input type="{{widgetType}}"
+         id="{{idfield}}"
+         value ="{{__value}}"
+         name="{{name}}"
+         class="date"
+         {{required}} >
   {{else}}
   {{#ifCond widgetType "number"}}
-  <input type="tel" 
-         id="{{idfield}}" 
-         value ="{{__value}}" 
-         name="{{name}}" 
+  <input type="tel"
+         id="{{idfield}}"
+         value ="{{__value}}"
+         name="{{name}}"
          min="{{config.range.minimum}}"
          max="{{config.range.maximum}}"
          data-is_enable_field_logic="{{is_enable_field_logic}}"
          class="skipLogicNumber"
-         data-allows_decimals= {{config.allows_decimals}} 
+         data-allows_decimals= {{config.allows_decimals}}
          data-digits_precision="{{config.digits_precision}}"
          data-previous-value ="{{__value}}"
-         {{required}} 
-         {{readonly}}>  
+         {{required}}
+         {{readonly}}>
   {{else}}
-  <input type="{{widgetType}}" 
-         id="{{idfield}}" 
-         value ="{{__value}}" 
-         name="{{name}}" 
-         {{required}} 
-         {{readonly}}>  
+  <input type="{{widgetType}}"
+         id="{{idfield}}"
+         value ="{{__value}}"
+         name="{{name}}"
+         {{required}}
+         {{readonly}}>
   {{/ifCond}}
   {{/ifCond}}
   {{/ifCond}}

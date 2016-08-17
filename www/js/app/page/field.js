@@ -1,4 +1,8 @@
 $(function () {
+  $(document).delegate('.calculation', 'keyup blur', function () {
+    Calculation.calculate(this);
+  });
+  
   $(document).delegate('.skipLogicNumber', 'change', function () {
     SkipLogic.skipLogicNumber(this);
   });
