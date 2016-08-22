@@ -57,13 +57,13 @@ var SiteOnlineController = {
     });
   },
   renderUpdateSiteForm: function () {
-    var sId = App.DataStore.get('sId');
+    var sId = SiteController.id;
     ViewBinding.setBusy(true);
-    SiteModel.fetchOne(sId, function (response) {
+    SiteModel.fetchOne(sId, function (site) {
       var siteData = {
-        name: response.name,
-        lat: response.lat,
-        lng: response.lng
+        name: site.name,
+        lat: site.lat,
+        lng: site.lng
       };
       var btnData = {title: "global.update", isUpdateOffline: false};
       SiteView.displayDefaultLayer("site/form.html",

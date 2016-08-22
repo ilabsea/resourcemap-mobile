@@ -14,7 +14,7 @@ var FieldOfflineController = {
               Location.pageID[field.idfield] = 0;
             }
           });
-          var item = FieldHelper.buildField(cId, layer._data, site, {fromServer: false});
+          var item = FieldHelper.buildLayerFields(layer._data, false);
           field_collections.push(item);
         });
         App.DataStore.set("location_fields_id", JSON.stringify(location_fields_id));
@@ -24,8 +24,8 @@ var FieldOfflineController = {
         FieldView.display("field/form.html", $('#div_field_collection'),
             {field_collections: field_collections});
 
-        LayerController.set(layers);
-        LayerController.handleLayerMembership();
+        FieldController.layers = layers;
+        FieldController.handleLayerMembership();
       }
       ViewBinding.setBusy(false);
     });

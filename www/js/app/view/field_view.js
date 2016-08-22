@@ -22,15 +22,15 @@ FieldView = {
     var fieldCal = [];
 
     $.map(fieldData.field_collections, function (properties) {
-      $.map(properties.fields, function (fieldsInside) {
-        if (fieldsInside.kind === "calculation") {
-          if (fieldsInside.config.dependent_fields) {
-            $.map(fieldsInside.config.dependent_fields, function (dependent_field) {
+      $.map(properties.fields, function (field) {
+        if (field.kind === "calculation") {
+          if (field.config.dependent_fields) {
+            $.map(field.config.dependent_fields, function (dependent_field) {
               var e = "#" + dependent_field.id;
               $(e).addClass('calculation');
             });
           }
-          fieldCal.push(fieldsInside);
+          fieldCal.push(field);
         }
       });
       App.DataStore.set('fields_cal', JSON.stringify(fieldCal));
@@ -52,12 +52,11 @@ FieldView = {
   },
   displayHierarchy: function (fieldData) {
     $.map(fieldData.field_collections, function (properties) {
-      $.map(properties.fields, function (fieldsInside) {
-        if (fieldsInside.kind === "hierarchy") {
-          var data = fieldsInside.configHierarchy;
-          var id = fieldsInside.idfield;
-          Hierarchy.renderDisplay(id, data);
-          Hierarchy.selectedNode(id, fieldsInside._selected);
+      $.map(properties.fields, function (field) {
+        if (field.kind === "hierarchy") {
+          var configHierarchy = Hierarchy.generateField(field.config, "" , field.id);
+          Hierarchy.renderDisplay(field.id, configHierarchy);
+          Hierarchy.selectedNode(field.id, field._selected);
         }
       });
     });

@@ -3,8 +3,8 @@ FieldOffline = {
     var fieldParams = {
       collection_id: layer.cId,
       user_id: layer.userId,
-      name_wrapper: layer.name_wrapper,
-      id_wrapper: layer.id_wrapper,
+      layer_name: layer.layer_name,
+      layer_id: layer.layer_id,
       fields: layer.fields
     };
     var fieldObj = new Field(fieldParams);
@@ -15,11 +15,11 @@ FieldOffline = {
     $.map(newLayers, function (layer) {
       var isNew = true;
       $.each(oldLayers , function(i, oldLayer){
-        if(oldLayer.id_wrapper() == layer.id_wrapper){
+        if(oldLayer.layer_id() == layer.layer_id){
           isNew = false;
           oldLayer.user_id(layer.userId);
-          oldLayer.name_wrapper(layer.name_wrapper);
-          oldLayer.id_wrapper(layer.id_wrapper);
+          oldLayer.layer_name(layer.layer_name);
+          oldLayer.layer_id(layer.layer_id);
           oldLayer.fields(layer.fields);
           return false;
         }else{

@@ -1,7 +1,7 @@
 var FieldOnlineController = {
   renderByCollectionId: function(site){
-    var cId = CollectionController.getCurrentId();
-    //detect if collection's fields syn to local 
+    var cId = CollectionController.id;
+    //detect if collection's fields syn to local
     if (!FieldController.hasFields){
       $.when(FieldModel.fetchOne(cId)).then(function(){
         FieldController.hasFields = true;
@@ -14,7 +14,7 @@ var FieldOnlineController = {
     FieldModel.fetch(cId, function (layers) {
       var field_collections = $.map(layers.fields, function (layer) {
         var site = {fromServer : true, onUpdate : false};
-        return FieldHelper.buildField(cId, layer, site , {fromServer: true});
+        return FieldHelper.buildLayerFields(layer, true);
       });
       FieldController.synForCurrentCollection(cId, field_collections);
     }, function (error) {
@@ -23,7 +23,7 @@ var FieldOnlineController = {
   },
   renderUpdate: function (siteData) {
     var cId = CollectionController.id;
-    var sId = App.DataStore.get("sId");
+    var sId = SiteController.id;
 
     SitesPermission.fetch(cId, function (site) {
       if ((!site.read && !site.write && !site.none)

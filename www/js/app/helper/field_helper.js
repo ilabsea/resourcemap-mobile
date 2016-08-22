@@ -1,192 +1,25 @@
-var FieldHelper = {
-  buildField: function (cId, fieldObj, site, options) {
-    options = options || {};
-    var fromServer = options["fromServer"];
-    var pf = null;
-    var fieldsBuild = [];
-    var fieldsWrapper = {
-      cId: cId,
+FieldHelper = {
+  buildLayerFields: function (layer, isOnline) {
+    var newLayer = {
+      cId: CollectionController.id,
       userId: SessionHelper.currentUser().id,
-      fields: fieldsBuild,
-      name_wrapper: fromServer ? fieldObj.name : fieldObj.name_wrapper,
-      id_wrapper: fromServer ? fieldObj.id : fieldObj.id_wrapper
-    };
-    if (fromServer) {
-      fieldsWrapper.name_wrapper = fieldObj.name;
-      fieldsWrapper.id_wrapper = fieldObj.id;
+      layer_name: isOnline ?  layer.name : layer.layer_name,
+      layer_id: isOnline ? layer.id : layer.layer_id,
+      fields: []
     }
-    else {
-      fieldsWrapper.name_wrapper = fieldObj.name_wrapper;
-      fieldsWrapper.id_wrapper = fieldObj.id_wrapper;
-    }
-    $.map(fieldObj.fields, function (fields) {
-      pf = FieldHelper.buildFieldProperties(fields, site, fromServer);
-      fieldsWrapper.fields.push(pf);
+
+    $.each(layer.fields, function (_, field) {
+      var fieldForUI = FieldHelper.fieldForUI(field);
+      
+      newLayer.fields.push(fieldForUI);
     });
-    return fieldsWrapper;
+
+    return newLayer;
   },
-  buildFieldProperties: function (field, site, fromServer) {
-    var id = fromServer ? field.id : field.idfield;
-    var kind = field.kind;
-    var widgetType = kind;
-    var config = field.config;
-    var slider = "", ctrue = "" , is_required = "";
-    var is_mandatory = field.is_mandatory;
-    var is_enable_field_logic = field.is_enable_field_logic;
-    var value = "", configHierarchy = "", selected = "", valueLabel="";
-    var invisible = "", readonly = "";
-    var is_display_field = field.is_display_field;
-    if(site.onUpdate){
-      var properties = site.fromServer ? site.properties : site.properties();
-      value = properties ? properties[id] : ""
-    }
-
-    switch (widgetType) {
-      case "numeric":
-        widgetType = "number";
-        if(properties)
-          value = FieldHelper.getFieldNumberValue(config, value);
-        if (config && config.field_logics) {
-          App.DataStore.set("configNumberSkipLogic_" + id,
-              JSON.stringify(config.field_logics));
-        }
-        break;
-      case "select_one":
-        FieldHelper.setSelectedFieldSelectOne(config , value);
-        if (is_enable_field_logic) {
-          config = FieldHelper.buildFieldSelectOne(config);
-          if (!config.field_logics)
-            is_enable_field_logic = false;
-        }
-        break;
-      case "select_many":
-        FieldHelper.setSelectedFieldSelectMany(config , value);
-        if (is_enable_field_logic) {
-          App.DataStore.set("configSelectManyForSkipLogic_" + id,
-              JSON.stringify(field));
-        }
-        break;
-      case "yes_no":
-        widgetType = "select_one";
-        value = properties ? properties[id] : 0
-        config = FieldHelper.buildFieldYesNo(config, site.fromServer, value);
-        slider = "slider";
-        ctrue = "true";
-        break
-      case "phone":
-        widgetType = "tel";
-        break;
-      case "location":
-        widgetType = "location";
-        if(value){
-          valueLabel = FieldHelper.getFieldLocationValue(config, value);
-        }
-        App.DataStore.set("configLocations_" + id,
-            JSON.stringify(config));
-        break;
-      case "site":
-        widgetType = "search";
-        if(value){
-          valueLabel = FieldHelper.getFieldSiteValue(value);
-        }
-        break;
-      case "user":
-        widgetType = "search";
-        valueLabel = value
-        break;
-      case "date":
-        widgetType = "date";
-        if (value)
-          value = FieldHelper.getFieldDateValue(site, id);
-        break;
-      case "hierarchy":
-        configHierarchy = Hierarchy.generateField(config, value,id);
-        if ( value ) selected = Hierarchy._selected
-        break;
-      case "photo" :
-        if(value){
-          value = FieldHelper.getFieldPhotoValue(site, id);
-        }
-        break;
-      case "calculation":
-        widgetType = "text";
-        readonly = 'readonly';
-        !is_display_field ? invisible = "invisible-div" : "";
-        if(properties)
-          value = FieldHelper.getFieldCalculationValue(config, value);
-        break;
-    }
-
-    if (is_mandatory)
-      is_required = "required";
-
-    var fieldProperties = {
-      __value: value,
-      __valueLabel: valueLabel,
-      _selected: selected,
-      idfield: id,
-      name: field.name,
-      kind: kind,
-      code: field.code,
-      multiple: (kind === "select_many" ? "multiple" : ""),
-      isPhoto: (kind === "photo" ? true : false),
-      widgetType: widgetType,
-      readonly: readonly,
-      is_display_field: is_display_field,
-      invisible: invisible,
-      config: config,
-      slider: slider,
-      ctrue: ctrue,
-      is_mandatory: is_mandatory,
-      required: is_required,
-      isHierarchy: (kind === "hierarchy" ? true : false),
-      configHierarchy: configHierarchy,
-      is_enable_field_logic: is_enable_field_logic
-    };
-    return fieldProperties;
-  },
-  buildFieldSelectOne: function (config) {
-    $.each(config.options, function (i, option) {
-      if (config.field_logics) {
-        $.map(config.field_logics, function (field_logic) {
-          if (option.id === field_logic.value && !config.options[i]["field_id"])
-            config.options[i]["field_id"] = field_logic.field_id;
-        });
-      }
-    });
-    return config;
-  },
-  buildFieldYesNo: function (config, fromServer, value) {
-    var field_id0, field_id1;
-    if (fromServer) {
-      if (config) {
-        var field_logics = config.field_logics;
-        if (field_logics) {
-          field_id0 = field_logics[0].field_id;
-          field_id1 = field_logics[1].field_id;
-        }
-      }
-    } else {
-      field_id0 = config.options[0].field_id;
-      field_id1 = config.options[1].field_id;
-    }
-    config = {
-      options: [{
-          id: 0,
-          label: "NO",
-          code: "1",
-          field_id: field_id0,
-          selected: (value == 0 || value == false) ? "" : "selected"
-        },
-        {id: 1,
-          label: "YES",
-          code: "2",
-          field_id: field_id1,
-          selected: (value == 1 || value == true) ? "selected" : ""
-        }]
-    };
-
-    return config;
+  fieldForUI: function(field, isOnline){
+    fieldImpl = FieldParser.parse(field);
+    fieldImpl.config = fieldImpl._buildConfig();
+    return fieldImpl;
   },
   getFieldSiteValue: function(value){
     valueLabel = "";
@@ -235,14 +68,6 @@ var FieldHelper = {
     }
     return value;
   },
-  getFieldCalculationValue: function (config, value) {
-    if (config && config.allows_decimals == "true"
-        && config.digits_precision && !isNaN(parseFloat(value))) {
-      value = parseInt(value * Math.pow(10, parseInt(config.digits_precision)))
-                 / Math.pow(10, parseInt(config.digits_precision));
-    }
-    return value;
-  },
   getFieldLocationValue: function (config, value) {
     var valueLabel = "";
     $.each(config.locations, function(i, option){
@@ -271,4 +96,11 @@ var FieldHelper = {
         option["selected"] = "selected";
     });
   },
+  imageWithPath: function(imgFileName) {
+    return App.IMG_PATH + imgFileName;
+  },
+
+  imageWithoutPath: function(imageFullPath) {
+    return imageFullPath.replace(App.IMG_PATH, '')
+  }
 };

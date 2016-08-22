@@ -173,7 +173,7 @@ var SiteOfflineController = {
     var currentUser = SessionHelper.currentUser();
     SiteOffline.countByCollectionIdUserId(cId, currentUser.id, function (count) {
       var options = [];
-      if (App.isOnline()) 
+      if (App.isOnline())
         options.push({value: 1, label: "View all", selected: "selected"}, {value: 2, label: "View online"});
       if (count > 0) {
         var optionHash = {value: 3, label: "View offline"};

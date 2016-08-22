@@ -3,16 +3,16 @@ $(function () {
     App.emptyHTML();
     hideElement($("#info_sign_in"));
     CollectionController.get();
-    CollectionController.setCurrentId("");
+    CollectionController.id = "";
     var currentUser = SessionHelper.currentUser();
     SiteOfflineController.countByUserId(currentUser.id);
   });
 
   $(document).delegate('#page-collection-list li', 'click', function () {
     var cId = $(this).attr("data-id");
-    CollectionController.setCurrentId(cId);
+    CollectionController.id = cId;
     var cName = $(this).attr("data-name");
-    App.DataStore.set("collectionName", cName);
+    CollectionController.name = cName;
     CollectionView.displayName({name: cName});
     CollectionController.getOne();
     //for user field

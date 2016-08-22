@@ -12,8 +12,6 @@ App.Session = {
   },
   resetState: function() {
     App.DataStore.remove("authToken");
-    App.DataStore.remove("cId");
-    App.DataStore.remove("collectionName");
     App.DataStore.remove("currentUser");
     App.DataStore.remove("field_id_arr");
     App.DataStore.remove("sId");

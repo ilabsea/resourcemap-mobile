@@ -1,5 +1,6 @@
 CollectionController = {
   id: "",
+  name: "",
   setCurrentId: function(id){
     CollectionController.id = id;
   },

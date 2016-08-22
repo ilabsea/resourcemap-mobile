@@ -56,7 +56,7 @@ SiteModel = {
     });
   },
   update: function (data, successCallback, errorCallback) {
-    var cId = CollectionController.getCurrentId();
+    var cId = CollectionController.id;
     var sId = localStorage.getItem("sId");
     var endpoint = getEndPoint();
     $.ajax({
@@ -92,4 +92,3 @@ SiteMenu = {
     }
   }
 };
-

@@ -2,7 +2,7 @@ SiteOffline = {
   limit: 15,
   sitePage: 0,
   add: function(data) {
-    var collectionName = App.DataStore.get("collectionName");
+    var collectionName = CollectionController.name;
     var today = new Date();
     var siteParams = data;
     siteParams["created_at"] = today;
