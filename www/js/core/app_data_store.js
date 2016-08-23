@@ -31,6 +31,5 @@ App.DataStore = {
     App.DataStore.clearConfig("configSelectManyForSkipLogic");
     App.DataStore.clearConfig("configLocations");
     App.DataStore.remove("field_id_arr");
-    App.DataStore.remove("location_fields_id");
   }
 };

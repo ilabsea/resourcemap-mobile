@@ -1,20 +1,18 @@
 var FieldOnlineController = {
-  renderByCollectionId: function(site){
-    var cId = CollectionController.id;
+  renderByCollectionId: function(){
     //detect if collection's fields syn to local
     if (!FieldController.hasFields){
-      $.when(FieldModel.fetchOne(cId)).then(function(){
+      $.when(FieldModel.fetchOne(CollectionController.id)).then(function(){
         FieldController.hasFields = true;
-        FieldOfflineController.renderByCollectionId(site, cId);
+        FieldOfflineController.renderByCollectionId();
       });
     } else
-      FieldOfflineController.renderByCollectionId(site, cId);
+      FieldOfflineController.renderByCollectionId();
   },
   getByCollectionId: function(cId){
     FieldModel.fetch(cId, function (layers) {
       var field_collections = $.map(layers.fields, function (layer) {
-        var site = {fromServer : true, onUpdate : false};
-        return FieldHelper.buildLayerFields(layer, true);
+        return FieldHelper.buildLayerFields(cId, layer);
       });
       FieldController.synForCurrentCollection(cId, field_collections);
     }, function (error) {
@@ -23,14 +21,13 @@ var FieldOnlineController = {
   },
   renderUpdate: function (siteData) {
     var cId = CollectionController.id;
-    var sId = SiteController.id;
 
     SitesPermission.fetch(cId, function (site) {
       if ((!site.read && !site.write && !site.none)
           || (site.read.all_sites && site.write.all_sites && site.none.all_sites))
-        LayerMembershipsHelper.buildAllLayersOfSite(cId, siteData);
+        FieldOnlineController.renderByCollectionId();
       else
-        LayerMembershipsHelper.buildCustomerSitePermission(site, siteData, cId, sId);
+        LayerMembershipsHelper.buildCustomerSitePermission(site, siteData);
     });
   }
 };

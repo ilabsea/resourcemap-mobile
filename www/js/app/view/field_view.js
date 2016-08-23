@@ -54,8 +54,7 @@ FieldView = {
     $.map(fieldData.field_collections, function (properties) {
       $.map(properties.fields, function (field) {
         if (field.kind === "hierarchy") {
-          var configHierarchy = Hierarchy.generateField(field.config, "" , field.id);
-          Hierarchy.renderDisplay(field.id, configHierarchy);
+          Hierarchy.renderDisplay(field.id, field.config);
           Hierarchy.selectedNode(field.id, field._selected);
         }
       });

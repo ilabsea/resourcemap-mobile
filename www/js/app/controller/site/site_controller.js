@@ -26,7 +26,7 @@ SiteController = {
     if (App.isOnline())
       SiteOnlineController.getByCollectionId();
   },
-  renderForm: function () {
+  renderCreate: function () {
     var data = {name: "", lat: "", lng: ""};
     var btnData = {title: "global.save_site", isUpdateOffline: false};
     SiteView.displayDefaultLayer("site/form.html",

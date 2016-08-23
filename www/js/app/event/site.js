@@ -6,7 +6,7 @@ $(function () {
     var cId = CollectionController.id;
     SiteModel.sitePage = 0;
     SiteOffline.sitePage = 0;
-    SiteOfflineController.disabledOptionMenu();
+    SiteOfflineController.disabledOptionMenu(cId);
     SiteController.getAllByCollectionId();
     SiteController.setSitesByTermForSiteField();
     PhotoList.clear();

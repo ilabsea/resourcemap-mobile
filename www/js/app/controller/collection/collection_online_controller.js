@@ -1,5 +1,5 @@
-var CollectionOnlineController = {
-  getByUserId: function (currentUser) {
+CollectionOnlineController = {
+  getByUserId: function () {
     ViewBinding.setBusy(true);
     CollectionModel.fetch(function (collections) {
       FieldController.hasFields = false;
@@ -8,8 +8,9 @@ var CollectionOnlineController = {
         var cId = collection.id;
         LayerMembershipOnlineController.getByCollectionId(cId);
         FieldOnlineController.getByCollectionId(cId);
+        var currentUser = SessionHelper.currentUser();
         SiteOffline.countByCollectionIdUserId(cId, currentUser.id, function (count) {
-          var item = CollectionHelper.dataCollection(collection, currentUser, count, true);
+          var item = CollectionHelper.dataCollection(collection, currentUser, count, fromServer = true);
           collectionData.push(item);
 
           if (key === collections.length - 1) {
@@ -22,7 +23,7 @@ var CollectionOnlineController = {
   },
   getOne: function () {
     CollectionModel.fetchOne(function (collection) {
-      App.DataStore.set("collection", JSON.stringify(collection));
+      CollectionController.collection = collection;
     });
   }
 };

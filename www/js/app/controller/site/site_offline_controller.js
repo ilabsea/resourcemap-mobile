@@ -160,7 +160,8 @@ var SiteOfflineController = {
       }
     });
   },
-  countByUserId: function (userId) {
+  toggleViewOfflineSitesBtn: function () {
+    var userId = SessionHelper.currentUser().id;
     SiteOffline.countByUserId(userId, function (count) {
       if (count == 0) {
         $('#btn_viewOfflineSite').hide();
@@ -169,8 +170,9 @@ var SiteOfflineController = {
       }
     });
   },
-  disabledOptionMenu: function (cId) {
+  disabledOptionMenu: function () {
     var currentUser = SessionHelper.currentUser();
+    var cId = CollectionController.id;
     SiteOffline.countByCollectionIdUserId(cId, currentUser.id, function (count) {
       var options = [];
       if (App.isOnline())

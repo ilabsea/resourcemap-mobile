@@ -3,13 +3,10 @@ FieldController = {
   layers: [],
   site: { properties: {}, files: {} },
   getByCollectionId: function () {
-    var site = {fromServer: App.isOnline(), onUpdate: false};
-    if(App.isOnline()){
-      FieldOnlineController.renderByCollectionId(site);
-    }else{
-      var cId = CollectionController.id;
-      FieldOfflineController.renderByCollectionId(site, cId);
-    }
+    if(App.isOnline())
+      FieldOnlineController.renderByCollectionId();
+    else
+      FieldOfflineController.renderByCollectionId();
   },
   synForCurrentCollection: function (cId, newLayers) {
     FieldOffline.fetchByCollectionId(cId, function (layers) {
@@ -41,8 +38,8 @@ FieldController = {
   },
   handleLayerMembership: function(){
     var uId = SessionHelper.currentUser().id;
-    FieldController.layers.forEach(function (layer) {
-      LayerMembershipOffline.fetchByUserLayerId(uId, layer.layer_id(), function(layermembership){
+    $.each(FieldController.layers, function (_ , layer) {
+      LayerMembershipOffline.fetchByUserLayerId(uId, layer.layer_id, function(layermembership){
         FieldView.displayUiDisabled(layermembership);
       });
     });
@@ -107,7 +104,6 @@ FieldController = {
       properties: properties,
       files: files
     };
-    console.log('data : ', data);
     return data;
   }
 };

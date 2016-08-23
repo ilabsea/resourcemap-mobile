@@ -21,7 +21,7 @@ var FieldImpl = function(field){
     return kinds[kind] || kind;
   })(this.kind);
 
-  this.__value = field.__value ? field.__value : "";
+  this.__value = "";
   this.__filename = "";
 }
 
@@ -39,6 +39,8 @@ FieldImpl.prototype._buildConfig = function(){
     return this._buildConfigYesNo();
   else if(this.kind == "select_one")
     return this._buildConfigSelectOne();
+  else if(this.kind == "hierarchy")
+    return Hierarchy.generateField(this.config)
   else
     return this.config;
 },

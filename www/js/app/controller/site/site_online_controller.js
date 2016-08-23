@@ -65,11 +65,13 @@ var SiteOnlineController = {
         lat: site.lat,
         lng: site.lng
       };
+      FieldController.site.properties = site.properties;
+      FieldController.site.files = site.files;
       var btnData = {title: "global.update", isUpdateOffline: false};
       SiteView.displayDefaultLayer("site/form.html",
           $("#div_default_layer"), siteData);
       SiteView.displayBtnSubmit("site/submit.html", $("#btn_submit_site"), btnData);
-      FieldOnlineController.renderUpdate(response);
+      FieldOnlineController.renderUpdate(site);
     });
   }
 };
