@@ -1,7 +1,7 @@
 VisibleLayersFor = {
   fetch: function (successCallback) {
     var cId = CollectionController.id;
-    var sId = localStorage.getItem("sId");
+    var sId = SiteController.id;
     var endpoint = getEndPoint();
     $.ajax({
       url: endpoint.URL_SITE + cId + "/sites/" + sId

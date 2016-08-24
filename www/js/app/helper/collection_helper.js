@@ -9,7 +9,7 @@ var CollectionHelper = {
       user_id: currentUser.id,
     };
 
-    item.idcollection = collection.id;
+    item.idcollection = collection.idcollection || collection.id;
     item.displayCount = count == 0 ? "" : count;
     return item;
   }

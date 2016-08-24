@@ -62,32 +62,33 @@ var SiteOfflineController = {
     });
   },
   updateBySiteId: function (callback) {
-    var sId = App.DataStore.get("sId");
+    var sId = SiteController.id;
     SiteOffline.fetchBySiteId(sId, function (site) {
-      var siteAttr = SiteHelper.buildDataForSite();
-      site.name(siteAttr.name);
-      site.lat(siteAttr.lat);
-      site.lng(siteAttr.lng);
-      site.properties(siteAttr.properties);
-      site.files(siteAttr.files);
+      var data = SiteController.params();
+      site.name(data.name);
+      site.lat(data.lat);
+      site.lng(data.lng);
+      site.properties(data.properties);
+      site.files(data.files);
       persistence.flush();
       callback();
-      PhotoList.clear();
     });
   },
   renderUpdateSiteForm: function () {
-    var sId = App.DataStore.get("sId");
+    var sId = SiteController.id;
     SiteOffline.fetchBySiteId(sId, function (site) {
       var siteData = {
         name: site.name(),
         lat: site.lat(),
         lng: site.lng()
       };
+      FieldController.site.properties = site.properties();
+      FieldController.site.files = site.files();
       var btnData = {title: "global.update", isUpdateOffline: true};
       SiteView.displayDefaultLayer("site/form.html",
           $('#div_default_layer'), siteData);
       SiteView.displayBtnSubmit("site/submit.html", $("#btn_submit_site"), btnData);
-      FieldOfflineController.renderUpdate(site);
+      FieldOfflineController.renderByCollectionId();
     });
   },
   deleteBySiteId: function (sId) {

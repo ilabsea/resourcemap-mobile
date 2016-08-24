@@ -1,9 +1,10 @@
 CollectionOfflineController = {
-  getByUserId: function (currentUser) {
+  getByUserId: function () {
+    var currentUser = SessionHelper.currentUser();
     CollectionOffline.fetchByUserId(currentUser, function (collections) {
       var asyncTotal = 0;
       var collectionData = [];
-      $.map(collections, function (collection) {
+      $.each(collections, function (_ , collection) {
         var currentUser = SessionHelper.currentUser();
         SiteOffline.countByCollectionIdUserId(collection.idcollection(), currentUser.id, function (count) {
           var item = CollectionHelper.dataCollection(collection, currentUser, count, fromServer = false);
@@ -18,8 +19,10 @@ CollectionOfflineController = {
     });
   },
   getOne: function () {
+    console.log('CollectionController.id : ', CollectionController.id);
     CollectionOffline.fetchOne(CollectionController.id, function (collection) {
-      CollectionController.collection = collection;
+      console.log('collection : ', collection._data);
+      CollectionController.collection = collection._data;
     });
   }
 };

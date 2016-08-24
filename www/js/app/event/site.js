@@ -41,7 +41,7 @@ $(function () {
       SiteOfflineController.getByCollectionId();
     } else {
       SiteController.form = "update_offline";
-      App.DataStore.set("sId", sId);
+      SiteController.id = sId
       SiteOfflineController.renderUpdateSiteForm();
     }
   });
@@ -55,13 +55,13 @@ $(function () {
       SiteOfflineController.getByUserId(uId);
     } else {
       SiteController.form = "update_offline_all";
-      App.DataStore.set("sId", sId);
+      SiteController.id = sId;
       SiteOfflineController.renderUpdateSiteForm();
     }
   });
 
   $(document).delegate('#btn_delete-site', 'click', function () {
-    var sId = App.DataStore.get("sId");
+    var sId = SiteController.id;
     SiteOfflineController.deleteBySiteId(sId);
   });
 
