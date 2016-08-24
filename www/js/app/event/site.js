@@ -11,6 +11,7 @@ $(function () {
     SiteController.setSitesByTermForSiteField();
     PhotoList.clear();
     ValidList.clear();
+    FieldController.reset();
   });
 
   $(document).delegate('#btn_create_site', 'click', function () {

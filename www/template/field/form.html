@@ -6,7 +6,7 @@
        id="collapsable_{{layer_id}}">
     <h3>{{layer_name}}</h3>
     {{#each fields}}
-      <div id="wrapper_{{id}}" tabindex="0" >
+      <div id="wrapper_{{id}}" tabindex="0" class="{{invisible}}">
         <label for='name'>{{name}} {{#if required}} <span class="requiredAsteric">*</span> {{/if}}</label>
           {{#ifCond widgetType "input"}}
             <input type="{{type}}"

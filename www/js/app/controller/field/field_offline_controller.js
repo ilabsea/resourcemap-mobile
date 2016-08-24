@@ -15,7 +15,7 @@ var FieldOfflineController = {
           });
           field_collections.push(layer._data);
         });
-
+        console.log('field_collections : ', field_collections);
         FieldView.displayLayerMenu("layer/menu.html", $('#ui-btn-layer-menu'),
             {field_collections: field_collections});
         FieldView.display("field/form.html", $('#div_field_collection'),

@@ -11,29 +11,31 @@ FieldView = {
   display: function (templateURL, element, fieldData) {
     App.Template.process(templateURL, fieldData, function (content) {
       element.html(content);
-      FieldView.displayHierarchy(fieldData);
       element.trigger("create");
-      FieldView.displayCalculationField(fieldData);
+      FieldView.displayCalcAndHierarchyField(fieldData);
 
       DigitAllowance.prepareEventListenerOnKeyPress();
     });
   },
-  displayCalculationField: function (fieldData) {
-    var fieldCal = [];
+  displayCalcAndHierarchyField: function (fieldData) {
+    $.each(fieldData.field_collections, function (_, properties) {
+      $.each(properties.fields, function (_, field) {
+        if (field.kind === "hierarchy") {
+          Hierarchy.renderDisplay(field.id, field.config);
+          Hierarchy.selectedNode(field.id, field._selected);
+        }
 
-    $.map(fieldData.field_collections, function (properties) {
-      $.map(properties.fields, function (field) {
-        if (field.kind === "calculation") {
-          if (field.config.dependent_fields) {
-            $.map(field.config.dependent_fields, function (dependent_field) {
-              var e = "#" + dependent_field.id;
-              $(e).addClass('calculation');
-            });
-          }
-          fieldCal.push(field);
+        if (field.kind == "calculation" && field.config.dependent_fields) {
+          $.each(field.config.dependent_fields, function (_, dependentField) {
+            var $dependentField = $("#" + dependentField.id)
+            $dependentField.addClass('calculation');
+            var calculationIds = $dependentField.attr('data-calculation-ids') || "";
+            calculationIds = calculationIds ? calculationIds.split(',') : [];
+            calculationIds.push(field.id);
+            $dependentField.attr('data-calculation-ids', calculationIds.join(","));
+          });
         }
       });
-      App.DataStore.set('fields_cal', JSON.stringify(fieldCal));
     });
   },
   displayLocationField: function (templateURL, element, configData) {
@@ -48,16 +50,6 @@ FieldView = {
     App.Template.process(templateURL, layers_collection, function (content) {
       element.html(content);
       element.trigger("create");
-    });
-  },
-  displayHierarchy: function (fieldData) {
-    $.map(fieldData.field_collections, function (properties) {
-      $.map(properties.fields, function (field) {
-        if (field.kind === "hierarchy") {
-          Hierarchy.renderDisplay(field.id, field.config);
-          Hierarchy.selectedNode(field.id, field._selected);
-        }
-      });
     });
   },
   displayUiDisabled: function (layermembership) {

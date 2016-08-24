@@ -21,6 +21,7 @@ var FieldImpl = function(field){
     return kinds[kind] || kind;
   })(this.kind);
 
+  this.invisible = !field.is_display_field && field.kind == 'calculation' ? "invisible-div" : "" ;
   this.__value = "";
   this.__filename = "";
 }

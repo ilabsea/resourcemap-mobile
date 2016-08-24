@@ -2,6 +2,10 @@ FieldController = {
   hasFields: false, //use to detect if collection has fields
   layers: [],
   site: { properties: {}, files: {} },
+  reset: function() {
+    this.layers = [];
+    this.site = { properties: {}, files: {} };
+  },
   getByCollectionId: function () {
     if(App.isOnline())
       FieldOnlineController.renderByCollectionId();
@@ -48,7 +52,7 @@ FieldController = {
     var properties = {};
     var files = {};
     this.layers.forEach(function(layer){
-      layer.fields().forEach(function(field){
+      $.each(layer.fields, function(_, field){
         var idfield = field.id;
         var kind = field.kind;
         var $field = $('#' + idfield);
@@ -105,5 +109,14 @@ FieldController = {
       files: files
     };
     return data;
-  }
+  },
+  findFieldById: function(idfield) {
+    for(var i=0; i<this.layers.length; i++) {
+      for(var j=0; j<this.layers[i].fields.length; j++){
+        if(this.layers[i].fields[j].id == idfield)
+          return this.layers[i].fields[j];
+      }
+    }
+    return null;
+  },
 };
