@@ -37,7 +37,7 @@ var SiteOnlineController = {
   },
   updateBySiteId: function () {
     ViewBinding.setBusy(true);
-    var data = SiteHelper.buildDataForSite();
+    var data = SiteController.params();
     attr = {
       "_method": "put",
       "auth_token": App.Session.getAuthToken(),
@@ -45,8 +45,6 @@ var SiteOnlineController = {
     };
     SiteModel.update(attr, function () {
       PhotoList.clear();
-      App.Cache.resetValue();
-      App.DataStore.clearAllSiteFormData();
       App.redirectTo("#page-site-list");
     }, function (err) {
       if (err["responseJSON"]) {

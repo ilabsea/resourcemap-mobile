@@ -22,7 +22,6 @@ var SiteHelper = {
   },
   resetForm: function () {
     PhotoList.clear();
-    App.DataStore.clearAllSiteFormData();
     $('#form_site')[0].reset();
     App.redirectTo("#page-site-list");
   }

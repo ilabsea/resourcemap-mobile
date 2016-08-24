@@ -25,11 +25,5 @@ App.DataStore = {
       if (key.substr(0, key.indexOf('_')) === prefix)
         localStorage.removeItem(key);
     }
-  },
-  clearAllSiteFormData: function () {
-    App.DataStore.clearConfig("configNumberSkipLogic");
-    App.DataStore.clearConfig("configSelectManyForSkipLogic");
-    App.DataStore.clearConfig("configLocations");
-    App.DataStore.remove("field_id_arr");
   }
 };

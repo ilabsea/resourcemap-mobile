@@ -17,14 +17,14 @@ FieldController = {
       FieldOffline.update(layers,newLayers);
     });
   },
-  renderLocationField: function (id, isFocus) {
+  showNearbyOptions: function (id, isFocus) {
     var offset = Location.pageID[id] * Location.limit;
     var $ul = $("#autocomplete_" + id);
     var lat = $("#lat").val();
     var lng = $("#lng").val();
-    var config = JSON.parse(App.DataStore.get("configLocations_" + id));
+    var field = this.findFieldById(id);
+    var config = field.config;
     var locationOptions = LocationHelper.getLocations(lat, lng, config);
-
 
     if (offset == 0)
       $ul.html("");
@@ -42,7 +42,7 @@ FieldController = {
   },
   handleLayerMembership: function(){
     var uId = SessionHelper.currentUser().id;
-    $.each(FieldController.layers, function (_ , layer) {
+    $.each(this.layers, function (_ , layer) {
       LayerMembershipOffline.fetchByUserLayerId(uId, layer.layer_id, function(layermembership){
         FieldView.displayUiDisabled(layermembership);
       });

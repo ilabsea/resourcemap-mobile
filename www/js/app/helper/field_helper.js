@@ -74,7 +74,7 @@ FieldHelper = {
       case "location":
         field.__value = value;
         field.__valueLabel = '';
-        $.each(config.locations, function(i, option){
+        $.each(field.config.locations, function(i, option){
           if (option.code == value) {
             field.__valueLabel = option.name;
             return;

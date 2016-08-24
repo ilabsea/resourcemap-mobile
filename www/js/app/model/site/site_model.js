@@ -57,7 +57,7 @@ SiteModel = {
   },
   update: function (data, successCallback, errorCallback) {
     var cId = CollectionController.id;
-    var sId = localStorage.getItem("sId");
+    var sId = SiteController.id;
     var endpoint = getEndPoint();
     $.ajax({
       data: data,

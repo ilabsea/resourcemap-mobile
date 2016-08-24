@@ -73,8 +73,6 @@ var SiteOfflineController = {
       persistence.flush();
       callback();
       PhotoList.clear();
-      App.DataStore.clearAllSiteFormData();
-      App.Cache.resetValue();
     });
   },
   renderUpdateSiteForm: function () {

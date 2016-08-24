@@ -26,22 +26,13 @@ var FieldImpl = function(field){
   this.__filename = "";
 }
 
-FieldImpl.prototype.parseValue = function(config, value){
-  if (config && config.allows_decimals == "true"
-      && config.digits_precision && !isNaN(parseFloat(value))) {
-    value = parseInt(value * Math.pow(10, parseInt(config.digits_precision)))
-               / Math.pow(10, parseInt(config.digits_precision));
-  }
-  return value;
-}
-
 FieldImpl.prototype._buildConfig = function(){
   if(this.kind == "yes_no")
     return this._buildConfigYesNo();
   else if(this.kind == "select_one")
     return this._buildConfigSelectOne();
   else if(this.kind == "hierarchy")
-    return Hierarchy.generateField(this.config)
+    return Hierarchy.generateField(this.config);
   else
     return this.config;
 },

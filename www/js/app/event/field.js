@@ -71,7 +71,7 @@ $(function () {
 
   $(document).delegate(".search_input", "focus", function () {
     if ($(this).attr("data-kind") == "location")
-      FieldController.renderLocationField(this.id, true);
+      FieldController.showNearbyOptions(this.id, true);
   });
 
   $(document).delegate(".autocomplete li", "click", function () {
@@ -81,7 +81,7 @@ $(function () {
       Location.pageID[id] += 1;
       $("#load_more_location").remove();
       $("#autocomplete_" + id).listview("refresh");
-      FieldController.renderLocationField(id, false);
+      FieldController.showNearbyOptions(id, false);
     } else {
       AutoCompleteList.getLi(this);
       Location.pageID[id] = 0;
