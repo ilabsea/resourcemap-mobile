@@ -9,7 +9,6 @@ $(function () {
     SiteOfflineController.disabledOptionMenu(cId);
     SiteController.getAllByCollectionId();
     SiteController.setSitesByTermForSiteField();
-    PhotoList.clear();
     ValidList.clear();
     FieldController.reset();
   });
@@ -70,7 +69,6 @@ $(function () {
     var currentUser = SessionHelper.currentUser();
     SiteOffline.sitePage = 0;
     SiteOfflineController.getByUserId(currentUser.id);
-    PhotoList.clear();
     ValidList.clear();
   });
 

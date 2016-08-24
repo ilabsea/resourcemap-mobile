@@ -21,7 +21,6 @@ var SiteHelper = {
     return result;
   },
   resetForm: function () {
-    PhotoList.clear();
     $('#form_site')[0].reset();
     App.redirectTo("#page-site-list");
   }

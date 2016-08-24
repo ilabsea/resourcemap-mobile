@@ -44,7 +44,6 @@ var SiteOnlineController = {
       "site": data
     };
     SiteModel.update(attr, function () {
-      PhotoList.clear();
       App.redirectTo("#page-site-list");
     }, function (err) {
       if (err["responseJSON"]) {

@@ -36,7 +36,7 @@ App = {
   setDefaultEndPoint: function () {
     var url = App.DataStore.get("URL");
     if (url == null || url == "" || url == "undefined") {
-      url = "http://localhost:3000";
+      url = "http://192.168.1.100:3000";
       App.DataStore.set("URL", url);
     }
   },

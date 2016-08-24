@@ -56,18 +56,16 @@ FieldController = {
         var idfield = field.id;
         var kind = field.kind;
         var $field = $('#' + idfield);
+
         switch(kind){
           case "photo":
-            var lPhotoList = PhotoList.count();
-            for (var p = 0; p < lPhotoList; p++) {
-              if (PhotoList.getPhotos()[p].id == idfield) {
-                var fileName = PhotoList.getPhotos()[p].name;
-                properties[idfield] = fileName;
-                files[fileName] = PhotoList.getPhotos()[p].data;
-                break;
-              }
+            if(field.__filename){
+              properties[idfield] = field.__filename;
+              files[field.__filename] = SiteCamera.dataWithoutMimeType(field.__value)
             }
-            break;
+            else
+              properties[idfield] = FieldHelper.imageWithoutPath(field.__value)
+            break
           case "date" :
             var date = $field.val();
             if (date)

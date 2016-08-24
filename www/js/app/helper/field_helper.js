@@ -37,16 +37,16 @@ FieldHelper = {
 
     switch (field.kind) {
       case "photo" :
-        if (isOnline)
-          field.__value = SiteCamera.imagePath(value);
-        else {
+        if(isOnline)
+          field.__value = FieldHelper.imageWithPath(value);
+        else{
           var imageData = FieldController.site.files[value];
-          if (imageData){
+          if(imageData){
             field.__value = SiteCamera.dataWithMimeType(imageData);
             field.__filename = value;
-          }else {
-            field.__value = '';
           }
+          else
+            field.__value = ''
         }
         break;
       case "select_many":
@@ -114,5 +114,15 @@ FieldHelper = {
       default:
         field.__value = value;
     }
+  },
+  imageWithPath: function(imgFileName) {
+    var url = App.DataStore.get("URL");
+    var endpoint = new EndPoint(url, url + "/api");
+    return endpoint.IMG_PATH + imgFileName;
+  },
+  imageWithoutPath: function(imageFullPath) {
+    var url = App.DataStore.get("URL");
+    var endpoint = new EndPoint(url, url + "/api");
+    return imageFullPath.replace(endpoint.IMG_PATH, '')
   }
 };
