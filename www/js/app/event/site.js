@@ -9,8 +9,8 @@ $(function () {
     SiteOfflineController.disabledOptionMenu(cId);
     SiteController.getAllByCollectionId();
     SiteController.setSitesByTermForSiteField();
-    ValidList.clear();
     FieldController.reset();
+    ValidList.clear();
   });
 
   $(document).delegate('#btn_create_site', 'click', function () {

@@ -5,15 +5,17 @@ var FieldOfflineController = {
       if (layers.length == 0) {
         if(!App.isOnline())
           FieldView.displayNoFields("field/no_field_pop_up.html", $('#page-pop-up-no-fields'));
-      }else{
+      } else{
         var field_collections = [];
-        layers.forEach(function (layer) {
-          $.each(layer.fields(), function (_, field) {
+        $.each(layers, function (i, layer) {
+          field_collections[i] = $.extend(true, {}, layer._data);
+          $.each(layer._data.fields, function (j,dbField) {
+            var field = $.extend(true, {}, dbField);
             if (field.kind === "location")
               Location.pageID[field.id] = 0;
-            FieldHelper.prepareFieldValue(field, fromServer = true);
+            FieldHelper.prepareFieldValue(field, true);
+            field_collections[i].fields[j] = field;
           });
-          field_collections.push(layer._data);
         });
         FieldView.displayLayerMenu("layer/menu.html", $('#ui-btn-layer-menu'),
             {field_collections: field_collections});
