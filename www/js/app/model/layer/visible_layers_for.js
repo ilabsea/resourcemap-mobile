@@ -2,9 +2,8 @@ VisibleLayersFor = {
   fetch: function (successCallback) {
     var cId = CollectionController.id;
     var sId = SiteController.id;
-    var endpoint = getEndPoint();
     $.ajax({
-      url: endpoint.URL_SITE + cId + "/sites/" + sId
+      url: AppServerApi.getV1Collection() + cId + "/sites/" + sId
           + "/visible_layers_for?auth_token="
           + App.Session.getAuthToken(),
       type: "GET",

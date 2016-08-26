@@ -1,5 +1,11 @@
 /nbproject/private/
+/node_modules*
+
 /platforms/*
+/plugins/*
+
 /nbproject/*
 *DS_Store*
-/plugins/*
+
+/plugins/android.json
+/plugins/ios.json

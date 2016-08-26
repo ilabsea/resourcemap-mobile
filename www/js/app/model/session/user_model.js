@@ -1,9 +1,9 @@
 UserModel = {
-  create: function(url, attr, successCallback, errorCallback) {
+  create: function(attr, successCallback, errorCallback) {
     var email = attr["user"]["email"];
     var password = attr["user"]["password"];
     $.ajax({
-      url: url,
+      url: AppServerApi.getSignIn(),
       type: "POST",
       headers: {'Authorization': 'Basic ' + btoa(email + ":" + password)},
       complete: function(){
@@ -14,9 +14,8 @@ UserModel = {
     });
   },
   delete: function(callback) {
-    var endpoint = getEndPoint();
     $.ajax({
-      url: endpoint.URL_LOGOUT + App.Session.getAuthToken(),
+      url: AppServerApi.getSignOut() + App.Session.getAuthToken(),
       type: "POST",
       complete: function() {
         callback();

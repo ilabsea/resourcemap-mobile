@@ -116,13 +116,9 @@ FieldHelper = {
     }
   },
   imageWithPath: function(imgFileName) {
-    var url = App.DataStore.get("URL");
-    var endpoint = new EndPoint(url, url + "/api");
-    return endpoint.IMG_PATH + imgFileName;
+    return AppServerApi.getImagePath() + imgFileName;
   },
   imageWithoutPath: function(imageFullPath) {
-    var url = App.DataStore.get("URL");
-    var endpoint = new EndPoint(url, url + "/api");
-    return imageFullPath.replace(endpoint.IMG_PATH, '')
+    return imageFullPath.replace(AppServerApi.getImagePath(), '');
   }
 };

@@ -7,9 +7,8 @@ var SitesByTerm = {
     SitesByTerm.sites = sites;
   },
   fetchAll: function(success){
-    var endpoint = getEndPoint();
     $.ajax({
-      url: endpoint.URL_COLLECTION + CollectionController.id + "/sites_by_term.json",
+      url: AppServerApi.getUrl() + '/collections/' + CollectionController.id + "/sites_by_term.json",
       type: "GET",
       crossDomain: true,
       data: {
@@ -19,9 +18,8 @@ var SitesByTerm = {
     });
   },
   fetch: function (value, success) {
-    var endpoint = getEndPoint();
     $.ajax({
-      url: endpoint.URL_COLLECTION + CollectionController.id + "/sites_by_term.json",
+      url: AppServerApi.getUrl() + '/collections/' + CollectionController.id + "/sites_by_term.json",
       type: "GET",
       crossDomain: true,
       data: {

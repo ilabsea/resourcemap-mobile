@@ -2,7 +2,6 @@ App = {
   DB_SIZE: 5 * 1024 * 1024,
   DB_NAME: 'resourcemap_db',
   DEBUG: true,
-  userId: "",
   log: function (text, data) {
     if (App.DEBUG)
       console.log(text, data);
@@ -28,17 +27,6 @@ App = {
     App.Cache.clearTemplate();
     App.initialPage();
     FastClick.attach(document.body);
-
-    App.setDefaultEndPoint();
-    var url = App.DataStore.get("URL");
-    EndPointView.display($("#page-about-release"), {url: url});
-  },
-  setDefaultEndPoint: function () {
-    var url = App.DataStore.get("URL");
-    if (url == null || url == "" || url == "undefined") {
-      url = "http://localhost:3000";
-      App.DataStore.set("URL", url);
-    }
   },
   initialPage: function () {
     var currentUser = JSON.parse(App.DataStore.get("currentUser"));
