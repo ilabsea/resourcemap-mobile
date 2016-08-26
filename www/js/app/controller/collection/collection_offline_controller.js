@@ -19,9 +19,7 @@ CollectionOfflineController = {
     });
   },
   getOne: function () {
-    console.log('CollectionController.id : ', CollectionController.id);
     CollectionOffline.fetchOne(CollectionController.id, function (collection) {
-      console.log('collection : ', collection._data);
       CollectionController.collection = collection._data;
     });
   }

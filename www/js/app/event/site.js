@@ -55,6 +55,8 @@ $(function () {
     } else {
       SiteController.form = "update_offline_all";
       SiteController.id = sId;
+      CollectionController.id = $(this).attr('data-collection_id');
+      CollectionOfflineController.getOne();
       SiteOfflineController.renderUpdateSiteForm();
     }
   });

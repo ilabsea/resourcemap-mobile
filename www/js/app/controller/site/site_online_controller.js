@@ -17,6 +17,7 @@ var SiteOnlineController = {
         date = dateToParam(date);
         var item = {id: data.id,
           name: data.name ? data.name : "\u00A0",
+          collection_id: data.collection_id,
           collectionName: "",
           date: date,
           link: "#page-form-site"

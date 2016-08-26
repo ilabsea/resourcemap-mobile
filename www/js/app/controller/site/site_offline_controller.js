@@ -8,16 +8,8 @@ var SiteOfflineController = {
     var uId = SessionHelper.currentUser().id;
     var offset = SiteOffline.sitePage * SiteOffline.limit;
     SiteOffline.fetchByCollectionIdUserId(cId, uId, offset, function (sites) {
-      var siteData = [];
-      sites.forEach(function (site) {
-        var fullDate = dateToParam(site.created_at());
-        siteData.push({
-          id: site.id,
-          name: site.name(),
-          collectionName: "offline",
-          date: fullDate,
-          link: "#page-form-site"
-        });
+      var siteData = $.map(sites, function(site){
+        return SiteController.paramsSiteList(site);
       });
       SiteOffline.countByCollectionIdUserId(cId, uId, function (count) {
         var siteLength = sites.length + offset;
@@ -36,16 +28,8 @@ var SiteOfflineController = {
   getByUserId: function (userId) {
     var offset = SiteOffline.sitePage * SiteOffline.limit;
     SiteOffline.fetchByUserId(userId, offset, function (sites) {
-      var siteofflineData = [];
-      sites.forEach(function (site) {
-        var fullDate = dateToParam(site.created_at());
-        var item = {id: site.id,
-          name: site.name(),
-          collectionName: site.collection_name(),
-          date: fullDate,
-          link: "#page-form-site"
-        };
-        siteofflineData.push(item);
+      var siteofflineData = $.map(sites, function(site){
+        return SiteController.paramsSiteList(site);
       });
       SiteOffline.countByUserId(userId, function (count) {
         var siteLength = sites.length + offset;

@@ -5,7 +5,7 @@ var FieldOfflineController = {
       if (layers.length == 0) {
         if(!App.isOnline())
           FieldView.displayNoFields("field/no_field_pop_up.html", $('#page-pop-up-no-fields'));
-      } else{
+      } else {
         var field_collections = [];
         $.each(layers, function (i, layer) {
           field_collections[i] = $.extend(true, {}, layer._data);
@@ -17,6 +17,7 @@ var FieldOfflineController = {
             field_collections[i].fields[j] = field;
           });
         });
+
         FieldView.displayLayerMenu("layer/menu.html", $('#ui-btn-layer-menu'),
             {field_collections: field_collections});
         FieldView.display("field/form.html", $('#div_field_collection'),

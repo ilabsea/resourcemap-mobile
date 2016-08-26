@@ -21,6 +21,19 @@ SiteController = {
 
     return data;
   },
+  paramsSiteList: function(site){
+    var fullDate = dateToParam(site.created_at());
+    var siteData = {
+      id: site.id,
+      name: site.name(),
+      collection_id: site.collection_id(),
+      collectionName: site.collection_name(),
+      date: fullDate,
+      link: "#page-form-site"
+    };
+
+    return siteData;
+  },
   getAllByCollectionId: function () {
     SiteOfflineController.getByCollectionId();
     if (App.isOnline())
