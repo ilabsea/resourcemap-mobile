@@ -7,7 +7,7 @@ var SiteOfflineController = {
     var cId = CollectionController.id;
     var uId = SessionHelper.currentUser().id;
     var offset = SiteOffline.sitePage * SiteOffline.limit;
-    SiteOffline.fetchByCollectionIdUserId(cId, uId, offset, function (sites) {
+    SiteOffline.fetchFieldsByCollectionIdUserId(cId, uId, offset, function (sites) {
       var siteData = $.map(sites, function(site){
         return SiteController.paramsSiteList(site);
       });
@@ -27,7 +27,7 @@ var SiteOfflineController = {
   },
   getByUserId: function (userId) {
     var offset = SiteOffline.sitePage * SiteOffline.limit;
-    SiteOffline.fetchByUserId(userId, offset, function (sites) {
+    SiteOffline.fetchFieldsByUserId(userId, offset, function (sites) {
       var siteofflineData = $.map(sites, function(site){
         return SiteController.paramsSiteList(site);
       });
@@ -66,8 +66,8 @@ var SiteOfflineController = {
         lat: site.lat(),
         lng: site.lng()
       };
-      FieldController.site.properties = site.properties();
-      FieldController.site.files = site.files();
+      FieldController.site.properties = JSON.parse(site.properties());
+      FieldController.site.files = JSON.parse(site.files());
       var btnData = {title: "global.update", isUpdateOffline: true};
       SiteView.displayDefaultLayer("site/form.html",
           $('#div_default_layer'), siteData);
@@ -79,39 +79,74 @@ var SiteOfflineController = {
     SiteOffline.deleteBySiteId(sId);
   },
   submitAllToServerByCollectionIdUserId: function () {
-    var cId = CollectionController.id;
-    var user = SessionHelper.currentUser();
-    SiteOfflineController.processToServerByCollectionIdUserId(cId, user.id);
+    if (App.isOnline()) {
+      var cId = CollectionController.id;
+      var uId = SessionHelper.currentUser().id;
+      SiteOffline.countByCollectionIdUserId(cId, uId, function(totalOffline){
+        SiteOfflineController.totalOffline = totalOffline;
+        SiteOfflineController.processItem = 1;
+        SiteOfflineController.processToServerByCollectionIdUserId();
+      });
+    }
+    else{
+      alert(i18n.t("global.no_internet_connection"));
+    }
   },
   submitAllToServerByUserId: function () {
-    var currentUser = SessionHelper.currentUser();
-    SiteOfflineController.processToServerByUserId(currentUser.id);
-  },
-  processToServerByCollectionIdUserId: function (cId, uId) {
     if (App.isOnline()) {
-      Site.all()
-          .filter('collection_id', "=", cId)
-          .filter('user_id', '=', uId).list(function (sites) {
-        if (sites.length > 0)
-          SiteOfflineController.processingToServer(sites);
+      this.processToServerByUserId();
+      var uId = SessionHelper.currentUser().id;
+      SiteOffline.countByUserId(uId, function(totalOffline){
+        SiteOfflineController.totalOffline = totalOffline;
+        SiteOfflineController.processItem = 1;
+        SiteOfflineController.processToServerByUserId();
       });
     }
-    else
+    else{
       alert(i18n.t("global.no_internet_connection"));
-  },
-  processToServerByUserId: function (userId) {
-    if (App.isOnline()) {
-      Site.all().filter('user_id', '=', userId).list(function (sites) {
-        if (sites.length > 0)
-          SiteOfflineController.processingToServer(sites);
-      });
     }
-    else
-      alert(i18n.t("global.no_internet_connection"));
   },
-  processingToServer: function (sites) {
-    var site = sites[0];
-    ViewBinding.setBusy(true);
+  processToServerByCollectionIdUserId: function () {
+    var cId = CollectionController.id;
+    var uId = SessionHelper.currentUser().id;
+    SiteOffline.fetchOneByCollectionIdUserId(cId, uId, function(site){
+      if(site){
+        SiteOfflineController.progressStatus(true);
+        SiteOfflineController.processingToServer(site, function() {
+          SiteOfflineController.processItem++;
+          SiteOfflineController.processToServerByCollectionIdUserId();
+        });
+      }
+      else{
+        SiteOfflineController.progressStatus(false);
+        App.redirectTo("#page-collection-list");
+      }
+    });
+  },
+  progressStatus: function(status) {
+    ViewBinding.setBusy(status);
+    if(status){
+      var msg = "Progressing " + SiteOfflineController.processItem + " / " + SiteOfflineController.totalOffline;
+      $('.ui-loader > h1').text(msg);
+    }
+  },
+  processToServerByUserId: function(){
+    var uId = SessionHelper.currentUser().id;
+    SiteOffline.fetchOneByUserId(uId, function(site){
+      if (site){
+        SiteOfflineController.progressStatus(true);
+        SiteOfflineController.processingToServer(site, function(){
+          SiteOfflineController.processItem++;
+          SiteOfflineController.processToServerByUserId();
+        });
+      }
+      else{
+        SiteOfflineController.progressStatus(false);
+        App.redirectTo("#page-collection-list");
+      }
+    });
+  },
+  processingToServer: function (site, callback) {
     var data = {site: {
         device_id: site.device_id(),
         external_id: site.id,
@@ -121,19 +156,14 @@ var SiteOfflineController = {
         name: site.name(),
         lat: site.lat(),
         lng: site.lng(),
-        properties: site.properties(),
-        files: site.files()
+        properties: JSON.parse(site.properties()),
+        files: JSON.parse(site.files())
       }
     };
     SiteModel.create(data["site"], function () {
       persistence.remove(site);
       persistence.flush();
-      $('#sendToServer').show();
-      sites.splice(0, 1);
-      if (sites.length === 0)
-        App.redirectTo("#page-collection-list");
-      else
-        SiteOfflineController.processingToServer(sites);
+      callback();
     }, function (err) {
       if (err.statusText === "Unauthorized") {
         showElement($("#info_sign_in"));

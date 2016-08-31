@@ -1,5 +1,5 @@
 SiteOffline = {
-  limit: 15,
+  limit: 5,
   sitePage: 0,
   add: function(data) {
     var collectionName = CollectionController.name;
@@ -14,22 +14,37 @@ SiteOffline = {
     persistence.flush();
   },
   fetchBySiteId: function(sId, callback) {
-    Site.all().filter('id', "=", sId).one(callback);
+    Site.all().filter('id', "=", sId).one(null, callback);
   },
-  fetchByCollectionIdUserId: function(cId, userId, offset, callback){
+  
+  fetchFieldsByUserId: function (userId, offset, callback) {
+    Site.all()
+        .filter('user_id', '=', userId)
+        .limit(SiteOffline.limit)
+        .skip(offset)
+        .listFields(null, {name: "TEXT", collection_name: "TEXT", collection_id: "INT", created_at: "DATE"}, callback);
+  },
+
+  fetchFieldsByCollectionIdUserId: function (cId, userId, offset, callback) {
     Site.all()
         .filter('collection_id', "=", cId)
         .filter('user_id', '=', userId)
         .limit(SiteOffline.limit)
         .skip(offset)
-        .list(null, callback);
+        .listFields(null, {name: "TEXT", created_at: "DATE"}, callback);
   },
-  fetchByUserId: function(userId, offset, callback) {
+
+  fetchOneByCollectionIdUserId: function (cId, userId, callback) {
+    Site.all()
+        .filter('collection_id', "=", cId)
+        .filter('user_id', '=', userId)
+        .one(null, callback)
+  },
+
+  fetchOneByUserId: function (userId, callback) {
     Site.all()
         .filter('user_id', '=', userId)
-        .limit(SiteOffline.limit)
-        .skip(offset)
-        .list(null, callback);
+        .one(null, callback);
   },
   deleteBySiteId: function(sId) {
     SiteOffline.fetchBySiteId(sId, function(site) {

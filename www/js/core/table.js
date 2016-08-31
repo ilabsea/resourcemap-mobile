@@ -25,8 +25,8 @@ function createTables() {
     collection_name: "TEXT",
     user_id: "INT",
     device_id: "TEXT",
-    properties: "JSON",
-    files: "JSON"
+    properties: "TEXT",
+    files: "TEXT"
   });
 
   Field = persistence.define('fields', {
