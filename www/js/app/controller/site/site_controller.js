@@ -15,9 +15,13 @@ SiteController = {
       "lat": $("#lat").val(),
       "lng": $("#lng").val(),
       "collection_id": CollectionController.id,
+      "start_entry_date": this.startEntryDate,
+      "end_entry_date": new Date().toISOString(),
       "properties": params.properties,
       "files": params.files
     }
+
+    console.log('params : ', params);
 
     return data;
   },
@@ -40,6 +44,8 @@ SiteController = {
       SiteOnlineController.getByCollectionId();
   },
   renderCreate: function () {
+    this.startEntryDate = new Date().toISOString();
+    console.log('this.startEntryDate : ', this.startEntryDate);
     var data = {name: "", lat: "", lng: ""};
     var btnData = {title: "global.save_site", isUpdateOffline: false};
     SiteView.displayDefaultLayer("site/form.html",

@@ -18,7 +18,7 @@ CollectionModel = {
   fetchOne: function (callback) {
     $.ajax({
       type: "get",
-      url: AppServerApi.getUrl() + "/api/collections/" + CollectionController.id + ".json?auth_token=" + App.Session.getAuthToken(),
+      url: AppServerApi.getV1Collection() + CollectionController.id + ".json?auth_token=" + App.Session.getAuthToken(),
       dataType: "json",
       success: callback
     });

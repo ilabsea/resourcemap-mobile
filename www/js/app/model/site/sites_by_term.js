@@ -8,7 +8,7 @@ var SitesByTerm = {
   },
   fetchAll: function(success){
     $.ajax({
-      url: AppServerApi.getUrl() + '/collections/' + CollectionController.id + "/sites_by_term.json",
+      url: AppServerApi.getV1Collection() + CollectionController.id + "/sites_by_term.json",
       type: "GET",
       crossDomain: true,
       data: {
@@ -19,7 +19,7 @@ var SitesByTerm = {
   },
   fetch: function (value, success) {
     $.ajax({
-      url: AppServerApi.getUrl() + '/collections/' + CollectionController.id + "/sites_by_term.json",
+      url: AppServerApi.getV1Collection() + CollectionController.id + "/sites_by_term.json",
       type: "GET",
       crossDomain: true,
       data: {

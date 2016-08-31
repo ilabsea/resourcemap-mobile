@@ -2,6 +2,7 @@ App = {
   DB_SIZE: 5 * 1024 * 1024,
   DB_NAME: 'resourcemap_db',
   DEBUG: true,
+  defaultPage: "#page-collection-list",
   log: function (text, data) {
     if (App.DEBUG)
       console.log(text, data);

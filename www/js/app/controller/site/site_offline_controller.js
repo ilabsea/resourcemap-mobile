@@ -115,6 +115,8 @@ var SiteOfflineController = {
     var data = {site: {
         device_id: site.device_id(),
         external_id: site.id,
+        start_entry_date: site.start_entry_date,
+        end_entry_date: site.end_entry_date,
         collection_id: site.collection_id(),
         name: site.name(),
         lat: site.lat(),
