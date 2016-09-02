@@ -8,22 +8,18 @@ var SitesByTerm = {
   },
   fetchAll: function(success){
     $.ajax({
-      url: AppServerApi.getV1Collection() + CollectionController.id + "/sites_by_term.json",
+      url: AppServerApi.ajaxUrl(AppServerApi.getV1Collection() + CollectionController.id + "/sites_by_term.json"),
       type: "GET",
       crossDomain: true,
-      data: {
-        "auth_token": App.Session.getAuthToken()
-      },
       success: success
     });
   },
   fetch: function (value, success) {
     $.ajax({
-      url: AppServerApi.getV1Collection() + CollectionController.id + "/sites_by_term.json",
+      url: AppServerApi.ajaxUrl(AppServerApi.getV1Collection() + CollectionController.id + "/sites_by_term.json"),
       type: "GET",
       crossDomain: true,
       data: {
-        "auth_token": App.Session.getAuthToken(),
         "term": value
       },
       success: success

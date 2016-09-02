@@ -1,8 +1,7 @@
 MembershipModel = {
   fetch: function (cId, success) {
     $.ajax({
-      url: AppServerApi.getV1Collection() + cId + "/memberships.json?auth_token="
-          + App.Session.getAuthToken(),
+      url: AppServerApi.ajaxUrl(AppServerApi.getV1Collection() + cId + "/memberships.json"),
       type: "get",
       datatype: 'json',
       success: success,

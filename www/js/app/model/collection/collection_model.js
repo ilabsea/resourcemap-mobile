@@ -2,7 +2,7 @@ CollectionModel = {
   fetch: function (successCallback) {
     $.ajax({
       type: "get",
-      url: AppServerApi.getCollection() + App.Session.getAuthToken(),
+      url: AppServerApi.getCollection(),
       dataType: "json",
       success: successCallback,
       complete: function () {
@@ -18,7 +18,7 @@ CollectionModel = {
   fetchOne: function (callback) {
     $.ajax({
       type: "get",
-      url: AppServerApi.getV1Collection() + CollectionController.id + ".json?auth_token=" + App.Session.getAuthToken(),
+      url:  AppServerApi.ajaxUrl(AppServerApi.getV1Collection() + CollectionController.id + ".json"),
       dataType: "json",
       success: callback
     });

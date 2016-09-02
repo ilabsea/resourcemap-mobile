@@ -41,7 +41,6 @@ var SiteOnlineController = {
     var data = SiteController.params();
     attr = {
       "_method": "put",
-      "auth_token": App.Session.getAuthToken(),
       "site": data
     };
     SiteModel.update(attr, function () {

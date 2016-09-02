@@ -21,8 +21,6 @@ SiteController = {
       "files": params.files
     }
 
-    console.log('params : ', params);
-
     return data;
   },
   paramsSiteList: function(site){
@@ -45,7 +43,6 @@ SiteController = {
   },
   renderCreate: function () {
     this.startEntryDate = new Date().toISOString();
-    console.log('this.startEntryDate : ', this.startEntryDate);
     var data = {name: "", lat: "", lng: ""};
     var btnData = {title: "global.save_site", isUpdateOffline: false};
     SiteView.displayDefaultLayer("site/form.html",
