@@ -5,19 +5,12 @@ var CollectionHelper = {
       description: collection.description,
       is_visible_location: collection.is_visible_location,
       is_visible_name: collection.is_visible_name,
+      linkpagesite: "#page-site-list",
       user_id: currentUser.id,
-      linkpagesite: "#page-site-list"
     };
-    if (fromServer)
-      item.idcollection = collection.id;
-    else
-      item.idcollection = collection.idcollection;
 
-    if (count == 0)
-      item.displayCount = "";
-    else
-      item.displayCount = count;
-
+    item.idcollection = collection.idcollection || collection.id;
+    item.displayCount = count == 0 ? "" : count;
     return item;
   }
 };

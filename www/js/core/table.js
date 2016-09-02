@@ -18,6 +18,8 @@ function createTables() {
     name: "TEXT",
     lat: "INT",
     lng: "INT",
+    start_entry_date: "TEXT",
+    end_entry_date: "TEXT",
     created_at: "DATE",
     collection_id: "INT",
     collection_name: "TEXT",
@@ -30,8 +32,8 @@ function createTables() {
   Field = persistence.define('fields', {
     collection_id: "INT",
     user_id: "INT",
-    name_wrapper: "TEXT",
-    id_wrapper: "INT",
+    layer_name: "TEXT",
+    layer_id: "INT",
     fields: "JSON"
   });
 

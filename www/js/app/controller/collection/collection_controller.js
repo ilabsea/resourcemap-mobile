@@ -1,18 +1,18 @@
 CollectionController = {
   id: "",
+  name: "",
+  collection: {},
   setCurrentId: function(id){
     CollectionController.id = id;
   },
   getCurrentId: function(){
     return CollectionController.id;
   },
-  get: function() {
-    var currentUser = SessionHelper.currentUser();
-    if (!App.isOnline()) {
-      CollectionOfflineController.getByUserId(currentUser);
-    } else {
-      CollectionOnlineController.getByUserId(currentUser);
-    }
+  getByUserId: function() {
+    if(App.isOnline())
+      CollectionOnlineController.getByUserId();
+    else
+      CollectionOfflineController.getByUserId();
   },
   synCollectionForCurrentUser: function(newCollections) {
     var currentUser = SessionHelper.currentUser();

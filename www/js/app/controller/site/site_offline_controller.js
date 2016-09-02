@@ -8,16 +8,8 @@ var SiteOfflineController = {
     var uId = SessionHelper.currentUser().id;
     var offset = SiteOffline.sitePage * SiteOffline.limit;
     SiteOffline.fetchByCollectionIdUserId(cId, uId, offset, function (sites) {
-      var siteData = [];
-      sites.forEach(function (site) {
-        var fullDate = dateToParam(site.created_at());
-        siteData.push({
-          id: site.id,
-          name: site.name(),
-          collectionName: "offline",
-          date: fullDate,
-          link: "#page-form-site"
-        });
+      var siteData = $.map(sites, function(site){
+        return SiteController.paramsSiteList(site);
       });
       SiteOffline.countByCollectionIdUserId(cId, uId, function (count) {
         var siteLength = sites.length + offset;
@@ -36,16 +28,8 @@ var SiteOfflineController = {
   getByUserId: function (userId) {
     var offset = SiteOffline.sitePage * SiteOffline.limit;
     SiteOffline.fetchByUserId(userId, offset, function (sites) {
-      var siteofflineData = [];
-      sites.forEach(function (site) {
-        var fullDate = dateToParam(site.created_at());
-        var item = {id: site.id,
-          name: site.name(),
-          collectionName: site.collection_name(),
-          date: fullDate,
-          link: "#page-form-site"
-        };
-        siteofflineData.push(item);
+      var siteofflineData = $.map(sites, function(site){
+        return SiteController.paramsSiteList(site);
       });
       SiteOffline.countByUserId(userId, function (count) {
         var siteLength = sites.length + offset;
@@ -62,34 +46,33 @@ var SiteOfflineController = {
     });
   },
   updateBySiteId: function (callback) {
-    var sId = App.DataStore.get("sId");
+    var sId = SiteController.id;
     SiteOffline.fetchBySiteId(sId, function (site) {
-      var siteAttr = SiteHelper.buildDataForSite();
-      site.name(siteAttr.name);
-      site.lat(siteAttr.lat);
-      site.lng(siteAttr.lng);
-      site.properties(siteAttr.properties);
-      site.files(siteAttr.files);
+      var data = SiteController.params();
+      site.name(data.name);
+      site.lat(data.lat);
+      site.lng(data.lng);
+      site.properties(data.properties);
+      site.files(data.files);
       persistence.flush();
       callback();
-      PhotoList.clear();
-      App.DataStore.clearAllSiteFormData();
-      App.Cache.resetValue();
     });
   },
   renderUpdateSiteForm: function () {
-    var sId = App.DataStore.get("sId");
+    var sId = SiteController.id;
     SiteOffline.fetchBySiteId(sId, function (site) {
       var siteData = {
         name: site.name(),
         lat: site.lat(),
         lng: site.lng()
       };
+      FieldController.site.properties = site.properties();
+      FieldController.site.files = site.files();
       var btnData = {title: "global.update", isUpdateOffline: true};
       SiteView.displayDefaultLayer("site/form.html",
           $('#div_default_layer'), siteData);
       SiteView.displayBtnSubmit("site/submit.html", $("#btn_submit_site"), btnData);
-      FieldOfflineController.renderUpdate(site);
+      FieldOfflineController.renderByCollectionId();
     });
   },
   deleteBySiteId: function (sId) {
@@ -132,6 +115,8 @@ var SiteOfflineController = {
     var data = {site: {
         device_id: site.device_id(),
         external_id: site.id,
+        start_entry_date: site.start_entry_date,
+        end_entry_date: site.end_entry_date,
         collection_id: site.collection_id(),
         name: site.name(),
         lat: site.lat(),
@@ -160,7 +145,8 @@ var SiteOfflineController = {
       }
     });
   },
-  countByUserId: function (userId) {
+  toggleViewOfflineSitesBtn: function () {
+    var userId = SessionHelper.currentUser().id;
     SiteOffline.countByUserId(userId, function (count) {
       if (count == 0) {
         $('#btn_viewOfflineSite').hide();
@@ -169,11 +155,12 @@ var SiteOfflineController = {
       }
     });
   },
-  disabledOptionMenu: function (cId) {
+  disabledOptionMenu: function () {
     var currentUser = SessionHelper.currentUser();
+    var cId = CollectionController.id;
     SiteOffline.countByCollectionIdUserId(cId, currentUser.id, function (count) {
       var options = [];
-      if (App.isOnline()) 
+      if (App.isOnline())
         options.push({value: 1, label: "View all", selected: "selected"}, {value: 2, label: "View online"});
       if (count > 0) {
         var optionHash = {value: 3, label: "View offline"};

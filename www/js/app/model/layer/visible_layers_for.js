@@ -1,12 +1,9 @@
 VisibleLayersFor = {
   fetch: function (successCallback) {
-    var cId = localStorage.getItem("cId");
-    var sId = localStorage.getItem("sId");
-    var endpoint = getEndPoint();
+    var cId = CollectionController.id;
+    var sId = SiteController.id;
     $.ajax({
-      url: endpoint.URL_SITE + cId + "/sites/" + sId
-          + "/visible_layers_for?auth_token="
-          + App.Session.getAuthToken(),
+      url: AppServerApi.ajaxUrl(AppServerApi.getV1Collection() + cId + "/sites/" + sId + "/visible_layers_for"),
       type: "GET",
       datatype: 'json',
       success: successCallback,
@@ -16,4 +13,3 @@ VisibleLayersFor = {
     });
   }
 };
-

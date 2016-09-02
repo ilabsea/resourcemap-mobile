@@ -5,22 +5,26 @@ Hierarchy = {
   setData: function(field) {
     this._data = field["hierarchy"];
   },
-  generateField: function(field, value, id) {
-    this._value = value;
+  generateField: function(field) {
     this.setData(field);
-    this.processHierarchy(this._data, id);
+    this.processHierarchy(this._data);
     return this._data;
   },
-  processHierarchy: function(data, id) {
+  processHierarchy: function(data) {
     for (var i = 0; i < data.length; i++) {
-      this.setSelected(data[i], id);
       if (data[i].sub) {
         data[i].children = data[i].sub;
         delete data[i].sub;
         this.processHierarchy(data[i].children);
       }
-      if (data[i].children) {
-        this.processHierarchy(data[i].children);
+    }
+  },
+  processSetSelected: function(config, value){
+    this._value = value;
+    for (var i = 0; i < config.length; i++) {
+      this.setSelected(config[i]);
+      if (config[i].children) {
+        this.processSetSelected(config[i].children, value);
       }
     }
   },

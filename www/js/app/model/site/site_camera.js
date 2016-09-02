@@ -4,40 +4,35 @@ SiteCamera = {
   dataWithMimeType: function (data) {
     return 'data:image/jpeg;base64,' + data;
   },
-  takePhoto: function (idField, cameraType) {
-    var type;
-    if (cameraType === "camera") {
-      type = Camera.PictureSourceType.CAMERA;
-    }
-    else {
-      type = Camera.PictureSourceType.SAVEDPHOTOALBUM;
-    }
-    SiteCamera.id = idField;
+  dataWithoutMimeType: function(imageData){
+    return imageData.replace("data:image/jpeg;base64,", "")
+  },
+  takePhoto: function (fieldId, cameraType) {
+    var type = cameraType == "camera" ? Camera.PictureSourceType.CAMERA : Camera.PictureSourceType.SAVEDPHOTOALBUM;
+    SiteCamera.id = fieldId;
     var cameraOptions = {
       quality: 50,
       destinationType: Camera.DestinationType.DATA_URL,
       sourceType: type,
-      encodingType: Camera.EncodingType.JPEG
+      encodingType: Camera.EncodingType.JPEG,
+      targetWidth: 800,
+      targetHeight: 800,
+      correctOrientation: true
     };
     navigator.camera.getPicture(SiteCamera.onSuccess, SiteCamera.onFail, cameraOptions);
   },
   onSuccess: function (imageData) {
-    var imageId = SiteCamera.imageId();
-    var image = document.getElementById(imageId);
-    var photo = new Photo(SiteCamera.id, imageData, SiteCamera.format);
-    image.src = SiteCamera.dataWithMimeType(imageData);
+    var image = document.getElementById(SiteCamera.id);
+    var field = FieldController.findFieldById(SiteCamera.id)
 
-    PhotoList.add(photo);
-    ValidationHelper.validateImageChange(imageId);
-  },
-  imageId: function () {
-    var imageId;
-    imageId = SiteCamera.id;
-    return  imageId;
-  },
-  imagePath: function (imgFileName) {
-    var endpoint = getEndPoint();
-    return endpoint.IMG_PATH + imgFileName;
+    var date = new Date()
+
+    field.__value = SiteCamera.dataWithMimeType(imageData);
+    field.__filename = "" + date.getTime() + "_" + SiteCamera.id + "." + SiteCamera.format;
+
+
+    image.src = field.__value;
+    ValidationHelper.validateImageChange(SiteCamera.id);
   },
   onFail: function () {
   }

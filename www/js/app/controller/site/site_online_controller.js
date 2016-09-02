@@ -17,6 +17,7 @@ var SiteOnlineController = {
         date = dateToParam(date);
         var item = {id: data.id,
           name: data.name ? data.name : "\u00A0",
+          collection_id: data.collection_id,
           collectionName: "",
           date: date,
           link: "#page-form-site"
@@ -37,16 +38,12 @@ var SiteOnlineController = {
   },
   updateBySiteId: function () {
     ViewBinding.setBusy(true);
-    var data = SiteHelper.buildDataForSite();
+    var data = SiteController.params();
     attr = {
       "_method": "put",
-      "auth_token": App.Session.getAuthToken(),
       "site": data
     };
     SiteModel.update(attr, function () {
-      PhotoList.clear();
-      App.Cache.resetValue();
-      App.DataStore.clearAllSiteFormData();
       App.redirectTo("#page-site-list");
     }, function (err) {
       if (err["responseJSON"]) {
@@ -57,19 +54,21 @@ var SiteOnlineController = {
     });
   },
   renderUpdateSiteForm: function () {
-    var sId = App.DataStore.get('sId');
+    var sId = SiteController.id;
     ViewBinding.setBusy(true);
-    SiteModel.fetchOne(sId, function (response) {
+    SiteModel.fetchOne(sId, function (site) {
       var siteData = {
-        name: response.name,
-        lat: response.lat,
-        lng: response.lng
+        name: site.name,
+        lat: site.lat,
+        lng: site.lng
       };
+      FieldController.site.properties = site.properties;
+      FieldController.site.files = site.files;
       var btnData = {title: "global.update", isUpdateOffline: false};
       SiteView.displayDefaultLayer("site/form.html",
           $("#div_default_layer"), siteData);
       SiteView.displayBtnSubmit("site/submit.html", $("#btn_submit_site"), btnData);
-      FieldOnlineController.renderUpdate(response);
+      FieldOnlineController.renderUpdate(site);
     });
   }
 };

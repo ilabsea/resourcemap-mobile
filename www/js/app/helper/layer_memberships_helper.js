@@ -6,23 +6,17 @@ LayerMembershipsHelper = {
     });
     return layerMemberships;
   },
-  buildAllLayersOfSite: function (cId, site) {
-    site.fromServer = true;
-    site.onUpdate = true;
-    FieldOnlineController.renderByCollectionId(site);
-  },
-  buildCustomerSitePermission: function (site, siteData, cId, sId) {
+  buildCustomerSitePermission: function (site, siteData) {
     if (site.write.some_sites.length !== 0)
-      LayerMembershipsHelper.buildCustomerSiteReadWrite(site.write, true, siteData
-          , cId, sId);
+      LayerMembershipsHelper.buildCustomerSiteReadWrite(site.write, true, siteData);
     else if (site.read.some_sites.length !== 0)
-      LayerMembershipsHelper.buildCustomerSiteReadWrite(site.read, false, siteData,
-          cId, sId);
+      LayerMembershipsHelper.buildCustomerSiteReadWrite(site.read, false, siteData);
     else if (site.none.some_sites.length !== 0)
-      LayerMembershipsHelper.buildCustomerSiteReadWrite(site.none, "none", siteData,
-          cId, sId);
+      LayerMembershipsHelper.buildCustomerSiteReadWrite(site.none, "none", siteData);
   },
-  buildCustomerSiteReadWrite: function (siteState, rw, siteData, cId, sId) {
+  buildCustomerSiteReadWrite: function (siteState, rw, siteData) {
+    var cId = CollectionController.id;
+    var sId = SiteController.id;
     $.map(siteState.some_sites, function (some_site) {
       if (some_site.id == sId)
         LayerMembershipsHelper.buildSiteWithVisibleLayers(siteData, rw);
@@ -48,5 +42,3 @@ LayerMembershipsHelper = {
     });
   }
 };
-
-

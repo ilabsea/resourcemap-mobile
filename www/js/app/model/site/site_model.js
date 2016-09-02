@@ -3,9 +3,7 @@ SiteModel = {
   sitePage: 0,
   create: function (attr, successCallback, errorCallback) {
     var cId = attr.collection_id;
-    var endpoint = getEndPoint();
-    var url = endpoint.URL_SITE + cId
-        + "/sites?auth_token=" + App.Session.getAuthToken();
+    var url = AppServerApi.getV1Collection() + cId + "/sites";
     $.ajax({
       url: url,
       type: "POST",
@@ -19,14 +17,11 @@ SiteModel = {
     });
   },
   fetch: function (collectionID, offset, successCallback) {
-    var endpoint = getEndPoint();
-    var url = endpoint.URL_SITE + collectionID
-        + "/sites.json?offset=" + offset + "&limit=" +
-        SiteModel.limit + "&auth_token="
-        + App.Session.getAuthToken();
+    var url = AppServerApi.ajaxUrl(AppServerApi.getV1Collection() + collectionID + "/sites.json") ;
     $.ajax({
       url: url,
       type: "GET",
+      data: {"offset": offset, "limit": SiteModel.limit},
       datatype: 'json',
       success: successCallback,
       complete: function () {
@@ -39,10 +34,8 @@ SiteModel = {
   },
   fetchOne: function (sId, successCallback) {
     var cId = CollectionController.id;
-    var endpoint = getEndPoint();
     $.ajax({
-      url: endpoint.URL_SITE + cId + "/sites/" + sId + ".json",
-      data: {"auth_token": App.Session.getAuthToken()},
+      url: AppServerApi.ajaxUrl(AppServerApi.getV1Collection() + cId + "/sites/" + sId + ".json"),
       type: "GET",
       datatype: 'json',
       success: successCallback,
@@ -56,40 +49,15 @@ SiteModel = {
     });
   },
   update: function (data, successCallback, errorCallback) {
-    var cId = CollectionController.getCurrentId();
-    var sId = localStorage.getItem("sId");
-    var endpoint = getEndPoint();
+    var cId = CollectionController.id;
+    var sId = SiteController.id;
     $.ajax({
       data: data,
       type: "post",
-      url: endpoint.URL_SITE + cId + "/sites/" + sId,
+      url: AppServerApi.ajaxUrl(AppServerApi.getV1Collection() + cId + "/sites/" + sId),
       dataType: "json",
       success: successCallback,
       error: errorCallback
     });
   }
 };
-
-SiteMenu = {
-  menu: function () {
-    App.emptyHTML();
-    var cId = CollectionController.id;
-    var value = $('#site-list-menu').val();
-    $("#btn_sendToServer").hide();
-    switch (value) {
-      case "1":
-        SiteController.getAllByCollectionId(cId);
-        break;
-      case "3":
-        SiteOfflineController.getByCollectionId();
-        $("#btn_sendToServer").show();
-        break;
-      case "2":
-        SiteOnlineController.getByCollectionId();
-        break;
-      case "4":
-        SessionController.logout();
-    }
-  }
-};
-

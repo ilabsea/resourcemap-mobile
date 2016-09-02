@@ -1,8 +1,7 @@
 var FieldModel = {
   fetch: function(cId, successCallback, errorCallback) {
-    var endpoint = getEndPoint();
     $.ajax({
-      url: endpoint.URL_FIELD + cId + "/fields?auth_token=" + App.Session.getAuthToken(),
+      url: AppServerApi.ajaxUrl(AppServerApi.getV1Collection() + cId + "/fields"),
       type: "get",
       datatype: 'json',
       success: successCallback,
@@ -11,9 +10,8 @@ var FieldModel = {
     });
   },
   fetchOne: function(cId){
-    var endpoint = getEndPoint();
     return $.ajax({
-      url: endpoint.URL_FIELD + cId + "/fields?auth_token=" + App.Session.getAuthToken()
+      url: AppServerApi.ajaxUrl(AppServerApi.getV1Collection() + cId + "/fields")
     });
   }
 };

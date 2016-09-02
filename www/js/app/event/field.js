@@ -1,4 +1,8 @@
 $(function () {
+  $(document).delegate('.calculation', 'keyup blur', function () {
+    Calculation.calculate($(this));
+  });
+
   $(document).delegate('.skipLogicNumber', 'change', function () {
     SkipLogic.skipLogicNumber(this);
   });
@@ -67,7 +71,7 @@ $(function () {
 
   $(document).delegate(".search_input", "focus", function () {
     if ($(this).attr("data-kind") == "location")
-      FieldController.renderLocationField(this.id, true);
+      FieldController.showNearbyOptions(this.id, true);
   });
 
   $(document).delegate(".autocomplete li", "click", function () {
@@ -77,22 +81,10 @@ $(function () {
       Location.pageID[id] += 1;
       $("#load_more_location").remove();
       $("#autocomplete_" + id).listview("refresh");
-      FieldController.renderLocationField(id, false);
+      FieldController.showNearbyOptions(id, false);
     } else {
       AutoCompleteList.getLi(this);
       Location.pageID[id] = 0;
     }
-  });
-
-  $('body').click(function (event) {
-    var yesNoField = App.DataStore.get("yesNoField");
-    var otherField = $(event.target).attr("id");
-    var highlightedElement = App.DataStore.get("highlightedElement");
-    var typeElement = App.DataStore.get("typeElement");
-    if (highlightedElement)
-      if (("#") + otherField !== yesNoField && otherField) {
-        SkipLogic.unhighlightElement(highlightedElement, typeElement);
-        App.DataStore.remove("yesNoField");
-      }
   });
 });

@@ -9,14 +9,14 @@ $(function () {
     SiteOfflineController.disabledOptionMenu(cId);
     SiteController.getAllByCollectionId();
     SiteController.setSitesByTermForSiteField();
-    PhotoList.clear();
+    FieldController.reset();
     ValidList.clear();
   });
 
   $(document).delegate('#btn_create_site', 'click', function () {
     SiteController.form = "new";
     $('#form_site')[0].reset();
-    SiteController.renderForm();
+    SiteController.renderCreate();
   });
 
   $(document).delegate('#page-site-list #site-list-online li', 'click', function () {
@@ -27,7 +27,7 @@ $(function () {
       SiteOnlineController.getByCollectionId();
     } else {
       SiteController.form = "update_online";
-      App.DataStore.set("sId", sId);
+      SiteController.id = sId;
       SiteOnlineController.renderUpdateSiteForm();
     }
   });
@@ -40,7 +40,7 @@ $(function () {
       SiteOfflineController.getByCollectionId();
     } else {
       SiteController.form = "update_offline";
-      App.DataStore.set("sId", sId);
+      SiteController.id = sId
       SiteOfflineController.renderUpdateSiteForm();
     }
   });
@@ -54,13 +54,15 @@ $(function () {
       SiteOfflineController.getByUserId(uId);
     } else {
       SiteController.form = "update_offline_all";
-      App.DataStore.set("sId", sId);
+      SiteController.id = sId;
+      CollectionController.id = $(this).attr('data-collection_id');
+      CollectionOfflineController.getOne();
       SiteOfflineController.renderUpdateSiteForm();
     }
   });
 
   $(document).delegate('#btn_delete-site', 'click', function () {
-    var sId = App.DataStore.get("sId");
+    var sId = SiteController.id;
     SiteOfflineController.deleteBySiteId(sId);
   });
 
@@ -69,7 +71,6 @@ $(function () {
     var currentUser = SessionHelper.currentUser();
     SiteOffline.sitePage = 0;
     SiteOfflineController.getByUserId(currentUser.id);
-    PhotoList.clear();
     ValidList.clear();
   });
 

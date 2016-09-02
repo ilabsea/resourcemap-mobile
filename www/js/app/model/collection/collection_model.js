@@ -1,9 +1,8 @@
 CollectionModel = {
   fetch: function (successCallback) {
-    var endpoint = getEndPoint();
     $.ajax({
       type: "get",
-      url: endpoint.LIST_COLLECTION + App.Session.getAuthToken(),
+      url: AppServerApi.getCollection(),
       dataType: "json",
       success: successCallback,
       complete: function () {
@@ -17,10 +16,9 @@ CollectionModel = {
     });
   },
   fetchOne: function (callback) {
-    var endpoint = getEndPoint();
     $.ajax({
       type: "get",
-      url: endpoint.URL_COLLECTION + CollectionController.id + ".json?auth_token=" + App.Session.getAuthToken(),
+      url:  AppServerApi.ajaxUrl(AppServerApi.getV1Collection() + CollectionController.id + ".json"),
       dataType: "json",
       success: callback
     });

@@ -1,6 +1,6 @@
 InvisibleLayer = {
   invisibleNameLatLng: function(locationId, nameId, callback) {
-    var collection = JSON.parse(App.DataStore.get("collection"));
+    var collection = CollectionController.collection;
     if (collection.is_visible_location) {
       callback();
       $("#" + locationId).show();
