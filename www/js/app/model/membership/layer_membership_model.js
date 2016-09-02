@@ -1,8 +1,7 @@
 var LayerMembershipModel = {
   fetch: function (cId, successCallback, errorCallback) {
     $.ajax({
-      url: AppServerApi.getV1Collection() + cId + "/layer_memberships?auth_token="
-          + App.Session.getAuthToken(),
+      url: AppServerApi.ajaxUrl(AppServerApi.getV1Collection() + cId + "/layer_memberships"),
       type: "GET",
       datatype: 'json',
       success: successCallback,

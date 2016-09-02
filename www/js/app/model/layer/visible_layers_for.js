@@ -3,9 +3,7 @@ VisibleLayersFor = {
     var cId = CollectionController.id;
     var sId = SiteController.id;
     $.ajax({
-      url: AppServerApi.getV1Collection() + cId + "/sites/" + sId
-          + "/visible_layers_for?auth_token="
-          + App.Session.getAuthToken(),
+      url: AppServerApi.ajaxUrl(AppServerApi.getV1Collection() + cId + "/sites/" + sId + "/visible_layers_for"),
       type: "GET",
       datatype: 'json',
       success: successCallback,
