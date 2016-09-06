@@ -17,7 +17,6 @@ var FieldOfflineController = {
             field_collections[i].fields[j] = field;
           });
         });
-
         FieldView.displayLayerMenu("layer_menu", $('#ui-btn-layer-menu'),
             {field_collections: field_collections});
         FieldView.display("field_form", $('#div_field_collection'),

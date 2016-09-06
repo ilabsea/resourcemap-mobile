@@ -24,7 +24,6 @@ SiteController = {
     return data;
   },
   paramsSiteList: function(site){
-    console.log('site : ', site);
     var fullDate = dateToParam(site.created_at());
     var siteData = {
       id: site.id,

@@ -4,8 +4,8 @@ var SiteView = {
     element.append(content);
     element.listview("refresh");
   },
-  displayDefaultLayer: function (templateURL, element, siteData) {
-    var content = App.Template.process(templateURL, siteData);
+  displayDefaultLayer: function (templateName, element, siteData) {
+    var content = App.Template.process(templateName, siteData);
     element.html(content);
     element.trigger("create");
     InvisibleLayer.invisibleNameLatLng("wrapper_site_location", "wrapper_site_name", function () {
@@ -18,21 +18,21 @@ var SiteView = {
       });
     });
   },
-  displayBtnSubmit: function (templateURL,element, btnData) {
-    var content = App.Template.process(templateURL, btnData);
+  displayBtnSubmit: function (templateName,element, btnData) {
+    var content = App.Template.process(templateName, btnData);
     element.html(content);
     element.trigger("create");
   },
-  displayError: function (templateURL, element, fieldData) {
-    var content = App.Template.process(templateURL, fieldData);
+  displayError: function (templateName, element, fieldData) {
+    var content = App.Template.process(templateName, fieldData);
     element.html(content);
     setTimeout(function () {
       Dialog.showDialog("page-error-submit-site");
     }, 50);
     element.css("z-index", 200000);
   },
-  displaySiteListMenu: function(templateURL, element, options){
-    var content = App.Template.process(templateURL, options)
+  displaySiteListMenu: function(templateName, element, options){
+    var content = App.Template.process(templateName, options)
     element.html(content);
     element.trigger("create");
   }

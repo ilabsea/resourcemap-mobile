@@ -1,21 +1,19 @@
 FieldView = {
-  displayNoFields: function (templateURL, element) {
-    App.Template.process(templateURL, {}, function (content) {
-      element.html(content);
-      setTimeout(function () {
-        Dialog.showDialog("page-pop-up-no-fields");
-      }, 50);
-      element.css("z-index", 200000);
-    });
+  displayNoFields: function (templateName, element) {
+    var content = App.Template.process(templateName, {});
+    element.html(content);
+    setTimeout(function () {
+      Dialog.showDialog("page-pop-up-no-fields");
+    }, 50);
+    element.css("z-index", 200000);
   },
-  display: function (templateURL, element, fieldData) {
-    App.Template.process(templateURL, fieldData, function (content) {
-      element.html(content);
-      element.trigger("create");
-      FieldView.displayCalcAndHierarchyField(fieldData);
+  display: function (templateName, element, fieldData) {
+    var content = App.Template.process(templateName, fieldData);
+    element.html(content);
+    element.trigger("create");
+    FieldView.displayCalcAndHierarchyField(fieldData);
 
-      DigitAllowance.prepareEventListenerOnKeyPress();
-    });
+    DigitAllowance.prepareEventListenerOnKeyPress();
   },
   displayCalcAndHierarchyField: function (fieldData) {
     $.each(fieldData.field_collections, function (_, properties) {
@@ -38,19 +36,17 @@ FieldView = {
       });
     });
   },
-  displayLocationField: function (templateURL, element, configData) {
-    App.Template.process(templateURL, configData, function (content) {
-      element.append(content);
-      element.removeClass("ui-screen-hidden");
-      element.listview("refresh");
-      element.trigger("updatelayout");
-    });
+  displayLocationField: function (templateName, element, configData) {
+    var content = App.Template.process(templateName, configData);
+    element.append(content);
+    element.removeClass("ui-screen-hidden");
+    element.listview("refresh");
+    element.trigger("updatelayout");
   },
-  displayLayerMenu: function (templateURL, element, layers_collection) {
-    App.Template.process(templateURL, layers_collection, function (content) {
-      element.html(content);
-      element.trigger("create");
-    });
+  displayLayerMenu: function (templateName, element, layers_collection) {
+    var content = App.Template.process(templateName, layers_collection);
+    element.html(content);
+    element.trigger("create");
   },
   displayUiDisabled: function (layermembership) {
     if (layermembership) {
