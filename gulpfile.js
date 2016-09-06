@@ -7,16 +7,17 @@ var cssnano = require('gulp-cssnano');
 var imagemin = require('gulp-imagemin');
 var cache = require('gulp-cache');
 var del = require('del');
-var runSequence = require('run-sequence');
 var handlebars = require('gulp-handlebars');
 var wrap = require('gulp-wrap');
 var declare = require('gulp-declare');
+var runSequence = require('run-sequence');
 var concat = require('gulp-concat');
+var jsonminify = require('gulp-jsonminify');
 
 gulp.task('browserSync', function() {
   browserSync.init({
     server: {
-      baseDir: 'www'
+      baseDir: 'www/dist'
     },
   })
 })
@@ -29,17 +30,23 @@ gulp.task('useref', function () {
     .pipe(gulp.dest('www/dist'))
 })
 
+gulp.task('jsonminify', function () {
+  return gulp.src('www/locales/**/*.json')
+    .pipe(jsonminify())
+    .pipe(gulp.dest('www/dist/locales'));
+});
+
 gulp.task('images', function(){
   return gulp.src('www/img/*.+(png|gif)')
       .pipe(cache(imagemin({
         interlaced: true
       })))
-      .pipe(gulp.dest('www/dist/images'))
+      .pipe(gulp.dest('www/dist/img'))
 });
 
 gulp.task('fonts', function() {
   return gulp.src('www/font/*')
-    .pipe(gulp.dest('www/dist/fonts'))
+    .pipe(gulp.dest('www/dist/font'))
 })
 
 gulp.task('templates', function(){
@@ -70,7 +77,7 @@ gulp.task('watch', ['browserSync'], function (){
 })
 
 gulp.task('build', function (callback){
-  runSequence('clean:dist', ['templates','useref', 'images', 'fonts'], callback)
+  runSequence('clean:dist', ['templates', 'useref', 'images', 'fonts','jsonminify'], callback)
 })
 
 gulp.task('default', function(callback) {
