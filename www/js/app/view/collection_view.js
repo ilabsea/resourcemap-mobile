@@ -1,13 +1,11 @@
 var CollectionView = {
   displayList: function (collectionData) {
-    App.Template.process("collection/list.html", collectionData, function (content) {
-      $('#collection-list').html(content);
-      $('#collection-list').listview('refresh');
-    });
+    var content = App.Template.process("collection_list", collectionData);
+    $('#collection-list').html(content);
+    $('#collection-list').listview('refresh');
   },
   displayName: function (collectionName) {
-    App.Template.process("collection/name.html", collectionName, function (content) {
-      $('.title').html(content);
-    });
+    var content = App.Template.process("collection_name", collectionName)
+    $('.title').html(content);
   }
 };

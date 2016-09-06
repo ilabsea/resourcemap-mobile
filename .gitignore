@@ -9,3 +9,9 @@
 
 /plugins/android.json
 /plugins/ios.json
+
+/www/dist/*
+/www/build/*
+
+/plugins/android.json
+/plugins/ios.json

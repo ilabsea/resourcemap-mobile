@@ -69,9 +69,9 @@ var SiteOfflineController = {
       FieldController.site.properties = JSON.parse(site.properties());
       FieldController.site.files = JSON.parse(site.files());
       var btnData = {title: "global.update", isUpdateOffline: true};
-      SiteView.displayDefaultLayer("site/form.html",
+      SiteView.displayDefaultLayer("site_form",
           $('#div_default_layer'), siteData);
-      SiteView.displayBtnSubmit("site/submit.html", $("#btn_submit_site"), btnData);
+      SiteView.displayBtnSubmit("site_submit", $("#btn_submit_site"), btnData);
       FieldOfflineController.renderByCollectionId();
     });
   },
@@ -170,7 +170,7 @@ var SiteOfflineController = {
         App.redirectTo("#page-login");
       } else {
         var error = SiteHelper.buildSubmitError(err["responseJSON"], data["site"], true);
-        SiteView.displayError("site/errorUpload.html", $('#page-error-submit-site'),
+        SiteView.displayError("site_errorUpload", $('#page-error-submit-site'),
             error);
       }
     });
@@ -200,7 +200,7 @@ var SiteOfflineController = {
         }
         options.push(optionHash);
       }
-      SiteView.displaySiteListMenu("site/menu.html", $("#div-site-list-menu"),{options: options});
+      SiteView.displaySiteListMenu("site_menu", $("#div-site-list-menu"),{options: options});
     });
   }
 };

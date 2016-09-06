@@ -46,9 +46,9 @@ SiteController = {
     this.startEntryDate = new Date().toISOString();
     var data = {name: "", lat: "", lng: ""};
     var btnData = {title: "global.save_site", isUpdateOffline: false};
-    SiteView.displayDefaultLayer("site/form.html",
+    SiteView.displayDefaultLayer("site_form",
         $('#div_default_layer'), data);
-    SiteView.displayBtnSubmit("site/submit.html", $("#btn_submit_site"), btnData);
+    SiteView.displayBtnSubmit("site_submit", $("#btn_submit_site"), btnData);
     FieldController.getByCollectionId();
   },
   setSitesByTermForSiteField: function(){

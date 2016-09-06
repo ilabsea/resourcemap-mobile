@@ -25,9 +25,8 @@ Translation = {
     Translation.setLang($('#' + ele).val());
   },
   displayTemplate: function(language) {
-    App.Template.process("language/menu.html", language, function(content) {
-      $('#div-language').html(content);
-      $('#div-language').trigger("create");
-    });
+    var content = App.Template.process("language_menu", language);
+    $('#div-language').html(content);
+    $('#div-language').trigger("create");
   }
 };

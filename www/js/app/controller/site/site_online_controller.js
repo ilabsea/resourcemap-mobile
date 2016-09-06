@@ -48,7 +48,7 @@ var SiteOnlineController = {
     }, function (err) {
       if (err["responseJSON"]) {
         var error = SiteHelper.buildSubmitError(err["responseJSON"], data, false);
-        SiteView.displayError("site/errorUpload.html", $('#page-error-submit-site'),
+        SiteView.displayError("site_errorUpload", $('#page-error-submit-site'),
             error);
       }
     });
@@ -65,9 +65,9 @@ var SiteOnlineController = {
       FieldController.site.properties = site.properties;
       FieldController.site.files = site.files;
       var btnData = {title: "global.update", isUpdateOffline: false};
-      SiteView.displayDefaultLayer("site/form.html",
+      SiteView.displayDefaultLayer("site_form",
           $("#div_default_layer"), siteData);
-      SiteView.displayBtnSubmit("site/submit.html", $("#btn_submit_site"), btnData);
+      SiteView.displayBtnSubmit("site_submit", $("#btn_submit_site"), btnData);
       FieldOnlineController.renderUpdate(site);
     });
   }

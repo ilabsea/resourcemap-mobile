@@ -1,0 +1,41 @@
+{
+  "name": "resourcemap-mobile",
+  "version": "1.0.0",
+  "description": "resource map sea mobile application from http://resourcemap-sea.instedd.org",
+  "main": "index.js",
+  "dependencies": {
+    "gulp": "^3.9.1"
+  },
+  "devDependencies": {
+    "handlebars": "^4.0.5",
+    "browser-sync": "^2.14.3",
+    "del": "^2.2.2",
+    "gulp": "^3.9.1",
+    "gulp-cache": "^0.4.5",
+    "gulp-concat": "^2.6.0",
+    "gulp-cssnano": "^2.1.2",
+    "gulp-declare": "^0.3.0",
+    "gulp-handlebars": "^4.0.0",
+    "gulp-imagemin": "^3.0.3",
+    "gulp-uglify": "^2.0.0",
+    "gulp-useref": "^3.1.2",
+    "gulp-wrap": "^0.13.0",
+    "run-sequence": "^1.2.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ilabsea/resourcemap-mobile.git"
+  },
+  "keywords": [
+    "resourcemap-mobile"
+  ],
+  "author": "ilabsea",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ilabsea/resourcemap-mobile/issues"
+  },
+  "homepage": "https://github.com/ilabsea/resourcemap-mobile#readme"
+}

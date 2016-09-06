@@ -7,7 +7,7 @@ var SiteFieldController = {
     if (value && value.length > 0) {
       if (App.isOnline()) {
         SitesByTerm.fetch(value, function (sites) {
-          AutoComplete.display("field/site.html", $ul, {sites: sites});
+          AutoComplete.display("field_site", $ul, {sites: sites});
         });
       }
     }

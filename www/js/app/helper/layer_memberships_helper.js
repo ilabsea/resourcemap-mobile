@@ -31,9 +31,9 @@ LayerMembershipsHelper = {
       var layerMemberships = LayerMembershipsHelper.build(layers, rw);
       var field_collections = FieldHelper.buildFieldsUpdate(layers,
           siteData, true, layerMemberships);
-      FieldView.displayLayerMenu("layer/menu.html", $('#ui-btn-layer-menu-update-online'),
+      FieldView.displayLayerMenu("layer_menu", $('#ui-btn-layer-menu-update-online'),
           {field_collections: field_collections});
-      FieldView.display("field/form.html",
+      FieldView.display("field_form",
           $('#div_field_collection'),
           {field_collections: field_collections});
       ViewBinding.setBusy(false);

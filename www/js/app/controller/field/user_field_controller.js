@@ -19,7 +19,7 @@ var UserFieldController = {
         match_value = matches[0].user_email;
         ValidationHelper.removeClassUserError(id);
       }
-      AutoComplete.display("field/user.html", $ul, {members: matches});
+      AutoComplete.display("field_user", $ul, {members: matches});
     } else
       ValidationHelper.removeClassUserError(id);
   },
@@ -45,13 +45,10 @@ var AutoCompleteList = {
   getLi: function (liElement) {
     var text = $(liElement).text();
     var ul = $(liElement).closest("ul");
-    var id = $(ul).attr("data-input"); 
+    var id = $(ul).attr("data-input");
     $(id).val(text);
     var valueId =  $(liElement).attr('data-id')
     $(id).attr('data-code', valueId);
     ul.addClass('ui-screen-hidden');
   }
 };
-
-
-

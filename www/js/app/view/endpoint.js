@@ -1,7 +1,6 @@
 EndPointView = {
   display: function (element, url) {
-    App.Template.process("endpoint.html", url, function (content) {
-      element.html(content);
-    });
+    var content = App.Template.process("endpoint", url)
+    element.html(content);
   }
 };

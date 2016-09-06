@@ -36,7 +36,7 @@ FieldController = {
       }
       config.locationOptions = locationOptions.slice(offset, Location.limit + offset);
 
-      FieldView.displayLocationField("field/location.html", $ul,
+      FieldView.displayLocationField("field_location", $ul,
           {hasMoreLocation: hasMoreLocation, config: config});
     }
   },
