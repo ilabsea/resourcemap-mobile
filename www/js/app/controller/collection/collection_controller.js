@@ -8,11 +8,11 @@ CollectionController = {
   getCurrentId: function(){
     return CollectionController.id;
   },
-  getByUserId: function() {
+  getByUserId: function(userId) {
     if(App.isOnline())
-      CollectionOnlineController.getByUserId();
+      CollectionOnlineController.getByUserId(userId);
     else
-      CollectionOfflineController.getByUserId();
+      CollectionOfflineController.getByUserId(userId);
   },
   synCollectionForCurrentUser: function(newCollections) {
     var currentUser = SessionHelper.currentUser();
