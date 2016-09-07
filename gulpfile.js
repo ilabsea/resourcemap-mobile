@@ -17,7 +17,7 @@ var jsonminify = require('gulp-jsonminify');
 gulp.task('browserSync', function() {
   browserSync.init({
     server: {
-      baseDir: 'www/dist'
+      baseDir: 'www'
     },
   })
 })

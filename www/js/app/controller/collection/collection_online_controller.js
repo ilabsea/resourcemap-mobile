@@ -1,5 +1,5 @@
 CollectionOnlineController = {
-  getByUserId: function () {
+  getByUserId: function (uId) {
     ViewBinding.setBusy(true);
     CollectionModel.fetch(function (collections) {
       FieldController.hasFields = false;
@@ -8,8 +8,7 @@ CollectionOnlineController = {
         var cId = collection.id;
         LayerMembershipOnlineController.getByCollectionId(cId);
         FieldOnlineController.getByCollectionId(cId);
-        var currentUser = SessionHelper.currentUser();
-        SiteOffline.countByCollectionIdUserId(cId, currentUser.id, function (count) {
+        SiteOffline.countByCollectionIdUserId(cId, uId, function (count) {
           var item = CollectionHelper.dataCollection(collection, currentUser, count, fromServer = true);
           collectionData.push(item);
 

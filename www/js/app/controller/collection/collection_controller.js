@@ -2,17 +2,18 @@ CollectionController = {
   id: "",
   name: "",
   collection: {},
+  nbOfflineSites: "",
   setCurrentId: function(id){
     CollectionController.id = id;
   },
   getCurrentId: function(){
     return CollectionController.id;
   },
-  getByUserId: function() {
+  getByUserId: function(uId) {
     if(App.isOnline())
-      CollectionOnlineController.getByUserId();
+      CollectionOnlineController.getByUserId(uId);
     else
-      CollectionOfflineController.getByUserId();
+      CollectionOfflineController.getByUserId(uId);
   },
   synCollectionForCurrentUser: function(newCollections) {
     var currentUser = SessionHelper.currentUser();

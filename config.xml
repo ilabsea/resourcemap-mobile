@@ -10,8 +10,8 @@
     <author email="phnompenh@ilabsea.org" href="http://www.ilabsoutheastasia.org/">
       InSTEDD iLabSEA
     </author>
-    <!-- <content src="index.html"/> -->
-    <content src="dist/index.html"/>
+    <content src="index.html"/>
+    <!-- <content src="dist/index.html"/> -->
     <icon src="res/ios/icon.png"/>
 
     <platform name="android">

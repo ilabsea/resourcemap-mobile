@@ -12,6 +12,7 @@ var SiteOfflineController = {
         return SiteController.paramsSiteList(site);
       });
       SiteOffline.countByCollectionIdUserId(cId, uId, function (count) {
+        CollectionController.nbOfflineSites = count;
         var siteLength = sites.length + offset;
         var hasMoreSites = false;
         if (siteLength < count) {
@@ -82,11 +83,10 @@ var SiteOfflineController = {
     if (App.isOnline()) {
       var cId = CollectionController.id;
       var uId = SessionHelper.currentUser().id;
-      SiteOffline.countByCollectionIdUserId(cId, uId, function(totalOffline){
-        SiteOfflineController.totalOffline = totalOffline;
-        SiteOfflineController.processItem = 1;
-        SiteOfflineController.processToServerByCollectionIdUserId();
-      });
+      SiteOfflineController.totalOffline = CollectionController.nbOfflineSites;
+      SiteOfflineController.totalOffline = totalOffline;
+      SiteOfflineController.processItem = 1;
+      SiteOfflineController.processToServerByCollectionIdUserId();
     }
     else{
       alert(i18n.t("global.no_internet_connection"));
@@ -188,19 +188,17 @@ var SiteOfflineController = {
   disabledOptionMenu: function () {
     var currentUser = SessionHelper.currentUser();
     var cId = CollectionController.id;
-    SiteOffline.countByCollectionIdUserId(cId, currentUser.id, function (count) {
-      var options = [];
-      if (App.isOnline())
-        options.push({value: 1, label: "View all", selected: "selected"}, {value: 2, label: "View online"});
-      if (count > 0) {
-        var optionHash = {value: 3, label: "View offline"};
-        if(!App.isOnline()){
-          optionHash.selected = "selected";
-          $("#btn_sendToServer").show();
-        }
-        options.push(optionHash);
+    var options = [];
+    if (App.isOnline())
+      options.push({value: 1, label: "View all", selected: "selected"}, {value: 2, label: "View online"});
+    if (CollectionController.nbOfflineSites > 0) {
+      var optionHash = {value: 3, label: "View offline"};
+      if(!App.isOnline()){
+        optionHash.selected = "selected";
+        $("#btn_sendToServer").show();
       }
-      SiteView.displaySiteListMenu("site_menu", $("#div-site-list-menu"),{options: options});
-    });
+      options.push(optionHash);
+    }
+    SiteView.displaySiteListMenu("site_menu", $("#div-site-list-menu"),{options: options});
   }
 };

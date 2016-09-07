@@ -20,8 +20,8 @@ CollectionOffline = {
     });
     persistence.flush();
   },
-  fetchByUserId: function(user, callback) {
-    Collection.all().filter('user_id', '=', user.id).list(null, callback);
+  fetchByUserId: function(userId, callback) {
+    Collection.all().filter('user_id', '=', userId).list(null, callback);
   },
   fetchOne: function(cId, callback) {
     Collection.all().filter('idcollection', "=", cId).one(callback);
