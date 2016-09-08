@@ -1,17 +1,19 @@
 CollectionOffline = {
   add: function(collections) {
-    $.map(collections, function(collection) {
+    for(var i = 0; i<collections.length; i++){
+      console.log(UserSession.getUser());
+      console.log('collection : ', collections[i]);
       var collectionParams = {
-        idcollection: collection.idcollection,
-        name: collection.name,
-        description: collection.description,
-        is_visible_location: collection.is_visible_location,
-        is_visible_name: collection.is_visible_name,
-        user_id: collection.user_id
-      };
+        idcollection: collections[i].idcollection,
+        name: collections[i].name,
+        description: collections[i].description,
+        is_visible_location: collections[i].is_visible_location,
+        is_visible_name: collections[i].is_visible_name,
+        user_id: collections[i].user_id
+      }
       var collectionObj = new Collection(collectionParams);
       persistence.add(collectionObj);
-    });
+    }
     persistence.flush();
   },
   remove: function(collections) {
@@ -25,5 +27,8 @@ CollectionOffline = {
   },
   fetchOne: function(cId, callback) {
     Collection.all().filter('idcollection', "=", cId).one(callback);
+  },
+  destroyAllByUserId: function(userId, callback) {
+    Collection.all().filter('user_id', '=', userId).destroyAll(null, callback);
   }
 };

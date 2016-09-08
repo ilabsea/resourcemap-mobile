@@ -1,9 +1,15 @@
 SessionController = {
-  authUser: function (email, password) {
+  signIn: function (user) {
+    UserSession.setUser(user)
+  },
+  currentUser: function () {
+    return UserSession.getUser()
+  },
+  authUser: function (userParams) {
     if (!App.isOnline())
-      SessionOfflineController.authUser(email, password);
+      SessionOfflineController.authUser(userParams);
     else
-      SessionOnlineController.authUser(email, password);
+      SessionOnlineController.authUser(userParams);
   },
   logout: function () {
     $('#form_login')[0].reset();
@@ -14,12 +20,5 @@ SessionController = {
       $.xhrPool.abortAll();
       SessionOnlineController.logout();
     }
-  },
-  storeSessionLogin: function (email, password) {
-    var isOnline = App.isOnline();
-    if (!isOnline)
-      SessionOfflineController.storeSession(email, password);
-    else
-      SessionOnlineController.storeSession(email, password);
   }
 };

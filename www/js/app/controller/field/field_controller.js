@@ -12,7 +12,7 @@ FieldController = {
     else
       FieldOfflineController.renderByCollectionId();
   },
-  synForCurrentCollection: function (cId, newLayers) {
+  synByCollectionId: function (cId, newLayers) {
     FieldOffline.fetchByCollectionId(cId, function (layers) {
       FieldOffline.update(layers,newLayers);
     });
@@ -41,7 +41,7 @@ FieldController = {
     }
   },
   handleLayerMembership: function(){
-    var uId = SessionHelper.currentUser().id;
+    var uId = UserSession.getUser().id;
     $.each(this.layers, function (_ , layer) {
       LayerMembershipOffline.fetchByUserLayerId(uId, layer.layer_id, function(layermembership){
         FieldView.displayUiDisabled(layermembership);

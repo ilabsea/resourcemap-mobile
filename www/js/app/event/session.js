@@ -1,5 +1,10 @@
-App.initialize();
-App.onDeviceReady();
+$(document).on("mobileinit", function() {
+  $(document).delegate('#page-login', 'pagebeforeshow', function() {
+    ViewBinding.setBusy(false);
+    if(UserSession.isLoggedIn())
+      App.redirectTo(App.defaultPage)
+  });
+})
 
 $(function () {
   FastClick.attach(document.body);

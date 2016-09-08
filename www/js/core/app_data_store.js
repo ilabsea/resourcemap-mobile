@@ -11,11 +11,5 @@ App.DataStore = {
   },
   clearAll: function () {
     localStorage.clear();
-  },
-  clearConfig: function (prefix) {
-    for (var key in localStorage) {
-      if (key.substr(0, key.indexOf('_')) === prefix)
-        localStorage.removeItem(key);
-    }
   }
 };

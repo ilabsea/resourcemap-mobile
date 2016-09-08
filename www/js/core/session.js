@@ -1,15 +1,32 @@
 App = App || {};
 App.Session = {
-  setAuthToken: function(authToken) {
-    App.DataStore.set("authToken", authToken);
+  setUser: function(user){
+    App.DataStore.set("currentUser", JSON.stringify(user));
   },
+
+  getUser: function(){
+    var u = App.DataStore.get("currentUser");
+    if (u)
+      return JSON.parse(u);
+    return {};
+  },
+
+  clearUser: function(){
+    App.DataStore.remove("currentUser")
+  },
+
   getAuthToken: function() {
-    return App.DataStore.get("authToken");
+    var user = App.Session.getUser()
+    if(user)
+     return user['auth_token']
+    else
+      return false
   },
   create: function(user) {
-    var currentUser = {id: user.id, password: user.password(), email: user.email()};
+    var currentUser = {id: user.id, password: user.password, email: user.email};
     App.DataStore.set("currentUser", JSON.stringify(currentUser));
   },
+  
   resetState: function() {
     App.DataStore.remove("authToken");
     App.DataStore.remove("currentUser");

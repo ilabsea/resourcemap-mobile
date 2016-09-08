@@ -14,7 +14,7 @@ var FieldOnlineController = {
       var field_collections = $.map(layers.fields, function (layer) {
         return FieldHelper.buildLayerFields(cId, layer);
       });
-      FieldController.synForCurrentCollection(cId, field_collections);
+      FieldController.synByCollectionId(cId, field_collections);
     }, function (error) {
       App.log('error : ', error);
     });

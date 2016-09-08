@@ -4,8 +4,9 @@ CollectionOfflineController = {
       var asyncTotal = 0;
       var collectionData = [];
       $.each(collections, function (_ , collection) {
-        SiteOffline.countByCollectionIdUserId(collection.idcollection(), userId, function (count) {
-          var item = CollectionHelper.dataCollection(collection, userId, count, fromServer = false);
+        collection = collection._data;
+        SiteOffline.countByCollectionIdUserId(collection.idcollection, userId, function (count) {
+          var item = CollectionController.params(collection, userId, count);
           asyncTotal++;
           collectionData.push(item);
 

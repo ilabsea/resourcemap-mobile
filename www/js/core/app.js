@@ -2,6 +2,7 @@ App = {
   DB_SIZE: 5 * 1024 * 1024,
   DB_NAME: 'resourcemap_db',
   DEBUG: true,
+  dbConnected: false,
   defaultPage: "#page-collection-list",
   log: function (text, data) {
     if (App.DEBUG)
@@ -11,6 +12,9 @@ App = {
     App.bindEvents();
     App.setUp();
     App.onBackPress();
+    //for mobile web testing without platform
+    if(typeof cordova == "undefined" )
+      App.onDeviceReady();
   },
   resetDb: function () {
     persistence.reset();
@@ -23,22 +27,9 @@ App = {
     document.addEventListener('deviceready', App.onDeviceReady, false);
   },
   onDeviceReady: function () {
-    connectionDB(App.DB_NAME, App.DB_SIZE);
-    createTables();
-    App.Cache.clearTemplate();
-    App.initialPage();
-    FastClick.attach(document.body);
+    AppDatabase.connectDB(App.DB_NAME, App.DB_SIZE);
   },
-  initialPage: function () {
-    var currentUser = JSON.parse(App.DataStore.get("currentUser"));
-    if (currentUser) {
-      var email = currentUser.email;
-      var password = currentUser.password;
-      $("#page-initial").prependTo("body");
-      Spinner.spinner();
-      SessionController.storeSessionLogin(email, password);
-    }
-  },
+
   onBackPress: function () {
     document.addEventListener("backbutton", function () {
       if ($.mobile.activePage.is("#page-login"))
@@ -60,8 +51,8 @@ App = {
       cache: true
     });
   },
-  redirectTo: function (url) {
-    $.mobile.changePage(url);
+  redirectTo: function (nextPage, options) {
+    $.mobile.pageContainer.pagecontainer('change', nextPage, options);
   },
   replacePage: function (url) {
     location.replace(url);
@@ -73,7 +64,7 @@ App = {
       return online;
     }
     online = navigator.onLine;
-    return online;
+    return !online;
   },
   allBooleanTrue: function (arr) {
     for (var i in arr)
@@ -82,3 +73,5 @@ App = {
     return true;
   }
 };
+
+App.initialize();

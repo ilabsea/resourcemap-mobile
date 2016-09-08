@@ -12,15 +12,15 @@ FieldOffline = {
     persistence.flush();
   },
   update: function(oldLayers, newLayers){
-    $.map(newLayers, function (layer) {
+    $.each(newLayers, function (_, layer) {
       var isNew = true;
       $.each(oldLayers , function(i, oldLayer){
-        if(oldLayer.layer_id() == layer.layer_id){
+        if(oldLayer.layer_id == layer.layer_id){
           isNew = false;
-          oldLayer.user_id(layer.userId);
-          oldLayer.layer_name(layer.layer_name);
-          oldLayer.layer_id(layer.layer_id);
-          oldLayer.fields(layer.fields);
+          oldLayer.user_id = layer.userId;
+          oldLayer.layer_name = layer.layer_name;
+          oldLayer.layer_id = layer.layer_id;
+          oldLayer.fields = layer.fields;
           return false;
         }else{
           isNew = true;

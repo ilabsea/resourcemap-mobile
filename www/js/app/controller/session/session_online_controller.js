@@ -1,21 +1,23 @@
 var SessionOnlineController = {
-  authUser: function (email, password) {
-    var data = SessionHelper.getUser(email, password);
+  authUser: function (userParams) {
+    var data = {user: userParams};
+    hideElement($('#invalidmail'));
     ViewBinding.setBusy(true);
 
-    UserModel.create(data, function (response) {
-      App.Session.setAuthToken(response.auth_token);
+    UserModel.create(userParams, function (response) {
+      userParams.auth_token = response.auth_token;
 
-      UserOffline.fetchByEmail(email, function (user) {
+      UserOffline.fetchByEmail(userParams.email, function (user) {
+
         if (user === null)
-          SessionHelper.signIn(UserOffline.add(email, password));
+          UserOffline.add(userParams);
         else {
-          if (user.password() !== password) {
-            user.password(password);
-            persistence.flush();
-          }
-          SessionHelper.signIn(user);
+          user.password = userParams.password;
+          user.auth_token = userParams["auth_token"];
+          persistence.flush();
         }
+
+        SessionController.signIn(userParams);
         App.redirectTo("#page-collection-list");
       });
     }, function (x, t, m) {
@@ -30,19 +32,6 @@ var SessionOnlineController = {
     UserModel.delete(function () {
       App.Session.resetState();
       App.redirectTo("#page-login");
-    });
-  },
-  storeSession: function (email, password) {
-    var data = SessionHelper.getUser(email, password);
-    UserModel.create(data, function () {
-      App.redirectTo("#page-collection-list");
-    }, function (x, t, m) {
-      if (!x.responseJSON.success) {
-        App.redirectTo("#page-login");
-      }
-      if (t === "timeout" || t === "notmodified") {
-        alert("Internet connection problem");
-      }
     });
   }
 };

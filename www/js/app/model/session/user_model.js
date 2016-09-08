@@ -1,11 +1,9 @@
 UserModel = {
-  create: function(attr, successCallback, errorCallback) {
-    var email = attr["user"]["email"];
-    var password = attr["user"]["password"];
+  create: function(userParams, successCallback, errorCallback) {
     $.ajax({
       url: AppServerApi.getSignIn(),
       type: "POST",
-      headers: {'Authorization': 'Basic ' + btoa(email + ":" + password)},
+      headers: {'Authorization': 'Basic ' + btoa(userParams.email + ":" + userParams.password)},
       complete: function(){
         ViewBinding.setBusy(false);
       },

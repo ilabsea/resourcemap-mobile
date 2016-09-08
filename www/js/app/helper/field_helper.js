@@ -2,7 +2,7 @@ FieldHelper = {
   buildLayerFields: function (cId, layer) {
     var newLayer = {
       cId: cId,
-      userId: SessionHelper.currentUser().id,
+      userId: UserSession.getUser().id,
       layer_name: layer.name,
       layer_id: layer.id ,
       fields: []

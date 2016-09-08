@@ -1,16 +1,6 @@
 var UserOffline = {
-  __email: "",
-  password: "",
-  set: function(email, password){
-    this.__email = email;
-    this.password = password;
-  },
-  add: function (email, password, userId) {
-    userParams = {
-      email: email,
-      password: password
-    };
-    user = new User(userParams);
+  add: function (userParams) {
+    var user = new User(userParams);
     persistence.add(user);
     persistence.flush();
     return user;

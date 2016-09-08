@@ -14,9 +14,8 @@ $(document).ready(function () {
       ValidationHelper.showPopUpErrorMessage();
     },
     submitHandler: function () {
-      var email = $("#email").val();
-      var password = $("#password").val();
-      SessionController.authUser(email, password);
+      var userParams = {email: $("#email").val(), password: $("#password").val()};
+      SessionController.authUser(userParams);
     }
   });
 

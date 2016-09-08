@@ -46,7 +46,7 @@ $(function () {
     var members = [];
     MembershipOffline.fetchByCollectionId(cId, function (results) {
       results.forEach(function (result) {
-        members.push({user_email: result.user_email()});
+        members.push({user_email: result.user_email});
       });
     });
 

@@ -3,7 +3,7 @@ $(function () {
     App.emptyHTML();
     hideElement($("#info_sign_in"));
     CollectionController.id = "";
-    var currentUser = SessionHelper.currentUser();
+    var currentUser = UserSession.getUser();
     CollectionController.getByUserId(currentUser.id);
     SiteOfflineController.toggleViewOfflineSitesBtn();
   });

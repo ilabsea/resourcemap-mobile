@@ -47,7 +47,7 @@ $(function () {
 
   $(document).delegate('#page-site-list-all li', 'click', function () {
     var sId = $(this).attr('data-id');
-    var uId = SessionHelper.currentUser().id;
+    var uId = UserSession.getUser().id;
     if (sId == "load-more-site-all") {
       $("#" + sId).remove();
       SiteOffline.sitePage++;
@@ -68,7 +68,7 @@ $(function () {
 
   $(document).delegate('#page-site-list-all', 'pageshow', function () {
     App.emptyHTML();
-    var currentUser = SessionHelper.currentUser();
+    var currentUser = UserSession.getUser();
     SiteOffline.sitePage = 0;
     SiteOfflineController.getByUserId(currentUser.id);
     ValidList.clear();

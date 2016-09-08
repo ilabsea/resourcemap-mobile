@@ -5,10 +5,10 @@ var SiteOfflineController = {
   },
   getByCollectionId: function () {
     var cId = CollectionController.id;
-    var uId = SessionHelper.currentUser().id;
+    var uId = UserSession.getUser().id;
     var offset = SiteOffline.sitePage * SiteOffline.limit;
     SiteOffline.fetchFieldsByCollectionIdUserId(cId, uId, offset, function (sites) {
-      var siteData = $.map(sites, function(site){
+      var siteData = $.each(sites, function(_ , site){
         return SiteController.paramsSiteList(site);
       });
       SiteOffline.countByCollectionIdUserId(cId, uId, function (count) {
@@ -29,7 +29,7 @@ var SiteOfflineController = {
   getByUserId: function (userId) {
     var offset = SiteOffline.sitePage * SiteOffline.limit;
     SiteOffline.fetchFieldsByUserId(userId, offset, function (sites) {
-      var siteofflineData = $.map(sites, function(site){
+      var siteofflineData = $.each(sites, function(_, site){
         return SiteController.paramsSiteList(site);
       });
       SiteOffline.countByUserId(userId, function (count) {
@@ -63,12 +63,12 @@ var SiteOfflineController = {
     var sId = SiteController.id;
     SiteOffline.fetchBySiteId(sId, function (site) {
       var siteData = {
-        name: site.name(),
-        lat: site.lat(),
-        lng: site.lng()
+        name: site.name,
+        lat: site.lat,
+        lng: site.lng
       };
-      FieldController.site.properties = JSON.parse(site.properties());
-      FieldController.site.files = JSON.parse(site.files());
+      FieldController.site.properties = JSON.parse(site.properties);
+      FieldController.site.files = JSON.parse(site.files);
       var btnData = {title: "global.update", isUpdateOffline: true};
       SiteView.displayDefaultLayer("site_form",
           $('#div_default_layer'), siteData);
@@ -82,7 +82,7 @@ var SiteOfflineController = {
   submitAllToServerByCollectionIdUserId: function () {
     if (App.isOnline()) {
       var cId = CollectionController.id;
-      var uId = SessionHelper.currentUser().id;
+      var uId = UserSession.getUser().id;
       SiteOfflineController.totalOffline = CollectionController.nbOfflineSites;
       SiteOfflineController.totalOffline = totalOffline;
       SiteOfflineController.processItem = 1;
@@ -95,7 +95,7 @@ var SiteOfflineController = {
   submitAllToServerByUserId: function () {
     if (App.isOnline()) {
       this.processToServerByUserId();
-      var uId = SessionHelper.currentUser().id;
+      var uId = UserSession.getUser().id;
       SiteOffline.countByUserId(uId, function(totalOffline){
         SiteOfflineController.totalOffline = totalOffline;
         SiteOfflineController.processItem = 1;
@@ -108,7 +108,7 @@ var SiteOfflineController = {
   },
   processToServerByCollectionIdUserId: function () {
     var cId = CollectionController.id;
-    var uId = SessionHelper.currentUser().id;
+    var uId = UserSession.getUser().id;
     SiteOffline.fetchOneByCollectionIdUserId(cId, uId, function(site){
       if(site){
         SiteOfflineController.progressStatus(true);
@@ -131,7 +131,7 @@ var SiteOfflineController = {
     }
   },
   processToServerByUserId: function(){
-    var uId = SessionHelper.currentUser().id;
+    var uId = UserSession.getUser().id;
     SiteOffline.fetchOneByUserId(uId, function(site){
       if (site){
         SiteOfflineController.progressStatus(true);
@@ -148,16 +148,16 @@ var SiteOfflineController = {
   },
   processingToServer: function (site, callback) {
     var data = {site: {
-        device_id: site.device_id(),
+        device_id: site.device_id,
         external_id: site.id,
         start_entry_date: site.start_entry_date,
         end_entry_date: site.end_entry_date,
-        collection_id: site.collection_id(),
-        name: site.name(),
-        lat: site.lat(),
-        lng: site.lng(),
-        properties: JSON.parse(site.properties()),
-        files: JSON.parse(site.files())
+        collection_id: site.collection_id,
+        name: site.name,
+        lat: site.lat,
+        lng: site.lng,
+        properties: JSON.parse(site.properties),
+        files: JSON.parse(site.files)
       }
     };
     SiteModel.create(data["site"], function () {
@@ -176,7 +176,7 @@ var SiteOfflineController = {
     });
   },
   toggleViewOfflineSitesBtn: function () {
-    var userId = SessionHelper.currentUser().id;
+    var userId = UserSession.getUser().id;
     SiteOffline.countByUserId(userId, function (count) {
       if (count == 0) {
         $('#btn_viewOfflineSite').hide();
@@ -186,7 +186,7 @@ var SiteOfflineController = {
     });
   },
   disabledOptionMenu: function () {
-    var currentUser = SessionHelper.currentUser();
+    var currentUser = UserSession.getUser();
     var cId = CollectionController.id;
     var options = [];
     if (App.isOnline())

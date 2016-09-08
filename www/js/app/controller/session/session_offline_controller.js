@@ -1,11 +1,11 @@
 var SessionOfflineController = {
-  authUser: function (email, password) {
-    UserOffline.fetchByEmail(email, function (user) {
+  authUser: function (userParams) {
+    UserOffline.fetchByEmail(userParams.email, function (user) {
       if (user === null) {
         showElement($('#noMailInDb'));
       }
-      if (user.password() === password) {
-        SessionHelper.signIn(user);
+      if (user.password === userParams.password) {
+        SessionController.signIn(user);
         App.redirectTo("#page-collection-list");
       }
       else {
@@ -18,12 +18,5 @@ var SessionOfflineController = {
   logout: function () {
     App.Session.resetState();
     App.redirectTo("#page-login");
-  },
-  storeSession: function (email, password) {
-    UserOffline.fetchByEmail(email, function (user) {
-      if (user.password() === password) {
-        App.redirectTo("#page-collection-list");
-      }
-    });
   }
 };

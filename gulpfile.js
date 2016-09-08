@@ -62,7 +62,11 @@ gulp.task('templates', function(){
 });
 
 gulp.task('clean:dist', function() {
-  return del.sync('dist');
+  return del.sync('www/dist');
+})
+
+gulp.task('clean:templates', function() {
+  return del.sync('www/build');
 })
 
 gulp.task('cache:clear', function(callback) {
@@ -77,7 +81,7 @@ gulp.task('watch', ['browserSync'], function (){
 })
 
 gulp.task('build', function (callback){
-  runSequence('clean:dist', ['templates', 'useref', 'images', 'fonts','jsonminify'], callback)
+  runSequence('clean:dist', ['images', 'fonts','jsonminify', 'useref', 'templates'], callback)
 })
 
 gulp.task('default', function(callback) {
