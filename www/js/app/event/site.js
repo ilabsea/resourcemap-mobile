@@ -40,7 +40,7 @@ $(function () {
       SiteOfflineController.getByCollectionId();
     } else {
       SiteController.form = "update_offline";
-      SiteController.id = sId
+      SiteController.id = sId;
       SiteOfflineController.renderUpdateSiteForm();
     }
   });

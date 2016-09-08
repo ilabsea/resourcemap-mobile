@@ -75,7 +75,7 @@ gulp.task('cache:clear', function(callback) {
 
 gulp.task('watch', ['browserSync'], function (){
   gulp.watch('www/*.html', browserSync.reload);
-  gulp.watch('www/js/**/*.js', browserSync.reload);
+  gulp.watch('www/js/**/**/*.js', browserSync.reload);
   gulp.watch('www/css/**/*.css', browserSync.reload);
   gulp.watch('www/js/app/templates/*.hbs', browserSync.reload);
 })

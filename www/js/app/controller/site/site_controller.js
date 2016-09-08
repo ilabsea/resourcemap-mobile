@@ -17,8 +17,8 @@ SiteController = {
       "collection_id": CollectionController.id,
       "start_entry_date": this.startEntryDate,
       "end_entry_date": new Date().toISOString(),
-      "properties": JSON.stringify(params.properties),
-      "files": JSON.stringify(params.files)
+      "properties": params.properties,
+      "files": params.files
     }
 
     return data;
@@ -33,6 +33,7 @@ SiteController = {
       date: fullDate,
       link: "#page-form-site"
     };
+    console.log('siteData  : ', siteData);
 
     return siteData;
   },

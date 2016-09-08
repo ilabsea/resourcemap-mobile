@@ -54,9 +54,6 @@ App = {
   redirectTo: function (nextPage, options) {
     $.mobile.pageContainer.pagecontainer('change', nextPage, options);
   },
-  replacePage: function (url) {
-    location.replace(url);
-  },
   isOnline: function () {
     var online = false;
     if (navigator.connection) {

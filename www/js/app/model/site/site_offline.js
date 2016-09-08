@@ -9,6 +9,8 @@ SiteOffline = {
     siteParams["collection_name"] = collectionName;
     siteParams["user_id"] = UserSession.getUser().id;
     siteParams["device_id"] = uuid.v1();
+    siteParams["properties"] = JSON.stringify(siteParams.properties);
+    siteParams["files"] = JSON.stringify(siteParams.files);
     var site = new Site(siteParams);
     persistence.add(site);
     persistence.flush();
@@ -22,7 +24,8 @@ SiteOffline = {
         .filter('user_id', '=', userId)
         .limit(SiteOffline.limit)
         .skip(offset)
-        .listFields(null, {name: "TEXT", collection_name: "TEXT", collection_id: "INT", created_at: "DATE"}, callback);
+        .list(null, callback)
+        // .listFields(null, {name: "TEXT", collection_name: "TEXT", collection_id: "INT", created_at: "DATE"}, callback);
   },
 
   fetchFieldsByCollectionIdUserId: function (cId, userId, offset, callback) {
@@ -31,7 +34,8 @@ SiteOffline = {
         .filter('user_id', '=', userId)
         .limit(SiteOffline.limit)
         .skip(offset)
-        .listFields(null, {name: "TEXT", created_at: "DATE"}, callback);
+        .list(null, callback)
+        // .listFields(null, {name: "TEXT", created_at: "DATE"}, callback);
   },
 
   fetchOneByCollectionIdUserId: function (cId, userId, callback) {

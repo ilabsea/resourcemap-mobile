@@ -6,10 +6,7 @@ SessionController = {
     return UserSession.getUser()
   },
   authUser: function (userParams) {
-    if (!App.isOnline())
-      SessionOfflineController.authUser(userParams);
-    else
-      SessionOnlineController.authUser(userParams);
+    App.isOnline() ? SessionOnlineController.authUser(userParams) : SessionOfflineController.authUser(userParams);
   },
   logout: function () {
     $('#form_login')[0].reset();

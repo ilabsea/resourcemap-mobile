@@ -3,7 +3,7 @@ SiteModel = {
   sitePage: 0,
   create: function (attr, successCallback, errorCallback) {
     var cId = attr.collection_id;
-    var url = AppServerApi.getV1Collection() + cId + "/sites";
+    var url = AppServerApi.ajaxUrl(AppServerApi.getV1Collection() + cId + "/sites");
     $.ajax({
       url: url,
       type: "POST",

@@ -1,6 +1,5 @@
 var SessionOnlineController = {
   authUser: function (userParams) {
-    var data = {user: userParams};
     hideElement($('#invalidmail'));
     ViewBinding.setBusy(true);
 
@@ -8,16 +7,15 @@ var SessionOnlineController = {
       userParams.auth_token = response.auth_token;
 
       UserOffline.fetchByEmail(userParams.email, function (user) {
-
         if (user === null)
-          UserOffline.add(userParams);
+          user = UserOffline.add(userParams);
         else {
           user.password = userParams.password;
           user.auth_token = userParams["auth_token"];
           persistence.flush();
         }
 
-        SessionController.signIn(userParams);
+        SessionController.signIn(user);
         App.redirectTo("#page-collection-list");
       });
     }, function (x, t, m) {

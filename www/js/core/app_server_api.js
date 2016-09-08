@@ -11,9 +11,6 @@ AppServerApi = {
   getSignIn: function () {
     return AppServerApi.getUrl() + "/api/users/sign_in.json";
   },
-  ajaxUrl: function (path) {
-    return path + "?auth_token=" + App.Session.getAuthToken();
-  },
   getSignOut: function () {
     return this.ajaxUrl(AppServerApi.getUrl() + "/api/users/sign_out.json");
   },
@@ -22,5 +19,8 @@ AppServerApi = {
   },
   getV1Collection: function () {
     return AppServerApi.getUrl() + "/api/v1/collections/";
+  },
+  ajaxUrl: function (path) {
+    return path + "?auth_token=" + App.Session.getAuthToken();
   }
 }

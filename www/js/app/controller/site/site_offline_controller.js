@@ -8,9 +8,10 @@ var SiteOfflineController = {
     var uId = UserSession.getUser().id;
     var offset = SiteOffline.sitePage * SiteOffline.limit;
     SiteOffline.fetchFieldsByCollectionIdUserId(cId, uId, offset, function (sites) {
-      var siteData = $.each(sites, function(_ , site){
+      var siteData = $.map(sites, function(site){
         return SiteController.paramsSiteList(site);
       });
+      console.log('siteData getByCollectionId : ', siteData);
       SiteOffline.countByCollectionIdUserId(cId, uId, function (count) {
         CollectionController.nbOfflineSites = count;
         var siteLength = sites.length + offset;
@@ -29,7 +30,7 @@ var SiteOfflineController = {
   getByUserId: function (userId) {
     var offset = SiteOffline.sitePage * SiteOffline.limit;
     SiteOffline.fetchFieldsByUserId(userId, offset, function (sites) {
-      var siteofflineData = $.each(sites, function(_, site){
+      var siteofflineData = $.map(sites, function(site){
         return SiteController.paramsSiteList(site);
       });
       SiteOffline.countByUserId(userId, function (count) {
@@ -50,16 +51,17 @@ var SiteOfflineController = {
     var sId = SiteController.id;
     SiteOffline.fetchBySiteId(sId, function (site) {
       var data = SiteController.params();
-      site.name(data.name);
-      site.lat(data.lat);
-      site.lng(data.lng);
-      site.properties(data.properties);
-      site.files(data.files);
+      site.name = data.name;
+      site.lat = data.lat;
+      site.lng = data.lng;
+      site.properties = JSON.stringify(data.properties);
+      site.files = JSON.stringify(data.files);
       persistence.flush();
       callback();
     });
   },
   renderUpdateSiteForm: function () {
+    console.log('renderUpdateSiteForm');
     var sId = SiteController.id;
     SiteOffline.fetchBySiteId(sId, function (site) {
       var siteData = {
@@ -73,6 +75,7 @@ var SiteOfflineController = {
       SiteView.displayDefaultLayer("site_form",
           $('#div_default_layer'), siteData);
       SiteView.displayBtnSubmit("site_submit", $("#btn_submit_site"), btnData);
+      console.log('display site : ', FieldController.site);
       FieldOfflineController.renderByCollectionId();
     });
   },
