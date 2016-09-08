@@ -1,8 +1,6 @@
 CollectionOffline = {
   add: function(collections) {
     for(var i = 0; i<collections.length; i++){
-      console.log(UserSession.getUser());
-      console.log('collection : ', collections[i]);
       var collectionParams = {
         idcollection: collections[i].idcollection,
         name: collections[i].name,

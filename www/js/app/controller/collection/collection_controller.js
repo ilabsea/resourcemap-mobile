@@ -17,7 +17,6 @@ CollectionController = {
   },
   synCollectionByUser: function(userId, newCollections) {
     CollectionOffline.destroyAllByUserId(userId, function(){
-      console.log('success ');
       CollectionOffline.add(newCollections);
     })
   },

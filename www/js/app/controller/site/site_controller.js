@@ -33,7 +33,6 @@ SiteController = {
       date: fullDate,
       link: "#page-form-site"
     };
-    console.log('siteData  : ', siteData);
 
     return siteData;
   },

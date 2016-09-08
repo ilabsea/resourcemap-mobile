@@ -11,7 +11,6 @@ var SiteOfflineController = {
       var siteData = $.map(sites, function(site){
         return SiteController.paramsSiteList(site);
       });
-      console.log('siteData getByCollectionId : ', siteData);
       SiteOffline.countByCollectionIdUserId(cId, uId, function (count) {
         CollectionController.nbOfflineSites = count;
         var siteLength = sites.length + offset;
@@ -61,7 +60,6 @@ var SiteOfflineController = {
     });
   },
   renderUpdateSiteForm: function () {
-    console.log('renderUpdateSiteForm');
     var sId = SiteController.id;
     SiteOffline.fetchBySiteId(sId, function (site) {
       var siteData = {
@@ -75,7 +73,6 @@ var SiteOfflineController = {
       SiteView.displayDefaultLayer("site_form",
           $('#div_default_layer'), siteData);
       SiteView.displayBtnSubmit("site_submit", $("#btn_submit_site"), btnData);
-      console.log('display site : ', FieldController.site);
       FieldOfflineController.renderByCollectionId();
     });
   },
