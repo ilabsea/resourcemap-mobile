@@ -117,8 +117,9 @@
 
       {{#ifCond widgetType "photo"}}
         <div onclick="CameraModel.openCameraDialog({{id}}, '')"
+             data-id={{id}}
              id='property_{{id}}_container'
-             class="photo">
+             class="photo {{invalid}}">
          <img class="image {{invalid}}"
               src='{{__value}}'
               id='{{id}}'

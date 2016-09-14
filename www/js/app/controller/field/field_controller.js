@@ -25,21 +25,21 @@ FieldController = {
       var layerChanged = $layerNode.attr('data-id') != this.activeLayer.attr('data-id')
       if(layerChanged) {
         this.removeLayerContent(this.activeLayer);
-        this.renderLayerNode($layerNode)
-      }
-      else{
+        this.renderLayerNode($layerNode);
+      }else{
         var layer = this.findLayerById($layerNode.attr('data-id'))
         $.each(layer.fields, function(_, field){
           var $fieldUI = $("#" + field.id)
-          if(field.kind == "photo")
+          if(field.kind == "photo" || field.kind == 'select_one' || field.kind == 'select_many')
             field.invalid ?  $fieldUI.parent().addClass("error") : $fieldUI.parent().removeClass("error")
           else
             field.invalid ?  $fieldUI.addClass("error") : $fieldUI.removeClass("error")
-        });
+        })
       }
     }
-    else
+    else{
       this.renderLayerNode($layerNode);
+    }
   },
 
   renderLayerNode: function($layerNode) {
@@ -47,8 +47,9 @@ FieldController = {
     var $layerNodeBody = $layerNode.find(".ui-collapsible-content")
     var layer = this.findLayerById(layerId);
 
-    this.renderLayer(layer, $layerNodeBody);
     this.activeLayer = $layerNode;
+    this.renderLayer(layer, $layerNodeBody);
+
   },
 
   findLayerById: function(layerId) {
@@ -83,6 +84,11 @@ FieldController = {
         DigitAllowance.prepareEventListenerOnKeyPress();
 
       $layerNodeContent.enhanceWithin();
+
+      if(field.kind == 'select_one' || field.kind == 'select_many'){
+        var $fieldUI = $("#" + field.id);
+        field.invalid ?  $fieldUI.parent().addClass("error") : $fieldUI.parent().removeClass("error")
+      }
     })
   },
 
