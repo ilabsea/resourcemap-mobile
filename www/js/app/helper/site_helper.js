@@ -1,5 +1,5 @@
 var SiteHelper = {
-  buildSubmitError: function (error, site, state) {
+  buildSubmitError: function (error, site) {
     var p = [];
     if (error.properties) {
       $.map(error.properties, function (error) {
@@ -11,7 +11,6 @@ var SiteHelper = {
     var result = {
       isLat: error["lat"] ? true : false,
       isLng: error["lng"] ? true : false,
-      isSubmitSites: state,
       lat: error["lat"],
       lng: error["lng"],
       name: site["name"],
@@ -19,9 +18,5 @@ var SiteHelper = {
       errorProperties: p
     };
     return result;
-  },
-  resetForm: function () {
-    $('#form_site')[0].reset();
-    App.redirectTo("#page-site-list");
   }
 };

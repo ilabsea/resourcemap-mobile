@@ -6,9 +6,10 @@
 
   <!-- build:css css/styles.min.css -->
   <link href="css/index.css" rel="stylesheet" type="text/css"/>
-  <link href="css/vendor/form_validation.css" rel="stylesheet" type="text/css"/>
+  <link href="css/form_validation.css" rel="stylesheet" type="text/css"/>
   <link href="css/alertStyle.css" rel="stylesheet" type="text/css"/>
-  <link href="css/vendor/font_style.css" rel="stylesheet" type="text/css"/>
+  <link href="css/font_style.css" rel="stylesheet" type="text/css"/>
+  <link href="css/override.css" rel="stylesheet" type="text/css"/>
 
   <link href="css/libs/jquery.mobile-1.4.2.css" rel="stylesheet" type="text/css"/>
   <link href="css/libs/jqm1.4.2.css" rel="stylesheet" type="text/css"/>
@@ -223,29 +224,42 @@
    </div>
   </div>
 
-  <!--page-form-site-->
+  <!-- page form site -->
   <div data-role="page" id="page-form-site" data-theme="b">
-   <div data-role="header" data-position="fixed">
-    <a data-role="button"
-       data-rel='back'
-       data-theme="a"
-       data-icon="carat-l"
-       class="ui-btn-left"
-       data-i18n="global.back">
-    </a>
-    <h2 class="title"></h2>
-    <div class="ui-btn-right" id="ui-btn-layer-menu"></div>
-   </div>
-   <div data-role="content">
-    <form id="form_site">
-     <div class="clearPreviousDisplay" id="div_default_layer"></div>
-     <div class="clearPreviousDisplay" id="div_field_collection"></div>
-     <div id="btn_submit_site"></div>
-     <p id="validation_form_site" class="required_data"  tabindex="200"
+    <div data-role="header" data-position='fixed'>
+      <a data-role="button" data-rel='back' data-theme="a" data-icon="carat-l"
+         class="ui-btn-left" data-i18n="global.back">
+      </a>
+      <h1 class="title"> </h1>
+      <div class="ui-btn-right" id="ui-layer-menu"></div>
+
+    </div>
+    <div data-role="content">
+      <form  method="post" id="form-site" class="form-site">
+        <div id="div-site" class="clearPreviousDisplay"></div>
+      </form>
+
+      <form id='form-site-fields'>
+        <div class="clearPreviousDisplay" id="div_field_collection"></div>
+      </form>
+
+      <div>
+        <button type='button' id="btn_save_site" data-i18n="global.update">Save</button>
+      </div>
+
+      <div>
+        <a href="delete-site.html" data-role='button' style='display:none;'
+          data-i18n="global.delete" id='btn_delete_site'  data-rel="dialog" data-transition="pop">
+          Delete
+        </a>
+      </div>
+
+      </div>
+      <p id="validation-save-site" class="required_data validation-save-site" tabindex="200"
         data-i18n="validation.emailPsdConfirm"> Please enter all required fields.
-     </p>
-    </form>
-   </div>
+      </p>
+
+    </div>
   </div>
 
   <!-- page map -->

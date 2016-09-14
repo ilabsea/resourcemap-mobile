@@ -1,12 +1,15 @@
 var SiteOnlineController = {
-  add: function (data, callback) {
+  add: function (data) {
     ViewBinding.setBusy(true);
-    SiteModel.create(data, callback, function () {
+    SiteModel.create(data, function(){
+      ViewBinding.setBusy(false);
+      App.redirectTo("#page-site-list");
+    }, function () {
       ViewBinding.setAlert("Please send data again.");
     });
   },
-  getByCollectionId: function () {
-    var cId = CollectionController.id;
+
+  getByCollectionId: function (cId) {
     var offset = SiteModel.sitePage * SiteModel.limit;
     ViewBinding.setBusy(true);
     SiteModel.fetch(cId, offset, function (response) {
@@ -31,14 +34,13 @@ var SiteOnlineController = {
       }
       var siteData = {
         hasMoreSites: hasMoreSites,
-        state: "online",
         siteList: siteOnlineData};
       SiteView.display($('#site-list-online'), siteData);
     });
   },
-  updateBySiteId: function () {
+
+  update: function (data) {
     ViewBinding.setBusy(true);
-    var data = SiteController.params();
     attr = {
       "_method": "put",
       "site": data
@@ -47,12 +49,13 @@ var SiteOnlineController = {
       App.redirectTo("#page-site-list");
     }, function (err) {
       if (err["responseJSON"]) {
-        var error = SiteHelper.buildSubmitError(err["responseJSON"], data, false);
+        var error = SiteHelper.buildSubmitError(err["responseJSON"], data);
         SiteView.displayError("site_errorUpload", $('#page-error-submit-site'),
             error);
       }
     });
   },
+
   renderUpdateSiteForm: function () {
     var sId = SiteController.id;
     ViewBinding.setBusy(true);
@@ -62,12 +65,7 @@ var SiteOnlineController = {
         lat: site.lat,
         lng: site.lng
       };
-      FieldController.site.properties = site.properties;
-      FieldController.site.files = site.files;
-      var btnData = {title: "global.update", isUpdateOffline: false};
-      SiteView.displayDefaultLayer("site_form",
-          $("#div_default_layer"), siteData);
-      SiteView.displayBtnSubmit("site_submit", $("#btn_submit_site"), btnData);
+      SiteView.displayDefaultLayer("site_form", $("#div-site"), siteData);
       FieldOnlineController.renderUpdate(site);
     });
   }

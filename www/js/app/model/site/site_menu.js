@@ -9,11 +9,11 @@ SiteMenu = {
         SiteController.getAllByCollectionId(cId);
         break;
       case "3":
-        SiteOfflineController.getByCollectionId();
+        SiteOfflineController.getByCollectionId(cId);
         $("#btn_sendToServer").show();
         break;
       case "2":
-        SiteOnlineController.getByCollectionId();
+        SiteOnlineController.getByCollectionId(cId);
         break;
       case "4":
         SessionController.logout();

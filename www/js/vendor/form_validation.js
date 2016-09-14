@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(function () {
   $.validator.setDefaults({
     debug: true,
     success: "valid",
@@ -16,35 +16,6 @@ $(document).ready(function () {
     submitHandler: function () {
       var userParams = {email: $("#email").val(), password: $("#password").val()};
       SessionController.authUser(userParams);
-    }
-  });
-
-  $('#form_site').validate({
-    errorPlacement: function (error, element) {
-      ValidationHelper.AddClassSelectError(element);
-      error.insertAfter($(element).parent());
-    },
-    invalidHandler: function (e, validator) {
-      ValidationHelper.invalidHandler(validator, "#validation_form_site");
-    },
-    submitHandler: function () {
-      ValidationHelper.handleSubmitHandler("#validation_form_site",
-          function () {
-            if (SiteController.form == 'new')
-              SiteController.add();
-            else if (SiteController.form == 'update_online')
-              SiteOnlineController.updateBySiteId();
-            else if (SiteController.form == 'update_offline'){
-              SiteOfflineController.updateBySiteId(function(){
-                App.redirectTo("#page-site-list");
-              });
-            }
-            else if(SiteController.form == 'update_offline_all'){
-              SiteOfflineController.updateBySiteId(function(){
-                App.redirectTo("#page-site-list-all");
-              });
-            }
-          });
     }
   });
 });

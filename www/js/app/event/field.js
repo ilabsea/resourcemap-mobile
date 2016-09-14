@@ -1,4 +1,15 @@
 $(function () {
+  $(document).on("collapsibleexpand", "[data-role=collapsible]", function () {
+    var $this = $(this);
+    var position = $this.offset().top;
+    FieldController.layerExpandFields($this)
+    $.mobile.silentScroll(position);
+  });
+
+  $(document).on("collapsiblecollapse", "[data-role=collapsible]", function () {
+    FieldController.layerCollapseFields();
+  });
+
   $(document).delegate('.calculation', 'keyup blur', function () {
     Calculation.calculate($(this));
   });
@@ -33,9 +44,9 @@ $(function () {
     scrollToLayer($('#' + ele).val());
   });
 
-  $(document).delegate('#ui-btn-layer-menu, \n\
-#ui-btn-layer-menu-update, \n\
-#ui-btn-layer-menu-update-online', 'click', function () {
+  $(document).delegate('#ui-layer-menu, \n\
+#ui-layer-menu-update, \n\
+#ui-layer-menu-update-online', 'click', function () {
     var ele = $(this).children().children()[1].id;
     $("#" + ele).val("");
   });

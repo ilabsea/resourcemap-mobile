@@ -18,11 +18,6 @@ var SiteView = {
       });
     });
   },
-  displayBtnSubmit: function (templateName,element, btnData) {
-    var content = App.Template.process(templateName, btnData);
-    element.html(content);
-    element.trigger("create");
-  },
   displayError: function (templateName, element, fieldData) {
     var content = App.Template.process(templateName, fieldData);
     element.html(content);

@@ -1,10 +1,9 @@
 var SiteOfflineController = {
   add: function (data) {
     SiteOffline.add(data);
-    SiteHelper.resetForm();
+    App.redirectTo("#page-site-list");
   },
-  getByCollectionId: function () {
-    var cId = CollectionController.id;
+  getByCollectionId: function (cId) {
     var uId = UserSession.getUser().id;
     var offset = SiteOffline.sitePage * SiteOffline.limit;
     SiteOffline.fetchFieldsByCollectionIdUserId(cId, uId, offset, function (sites) {
@@ -20,7 +19,6 @@ var SiteOfflineController = {
         }
         var sitesRender = {
           hasMoreSites: hasMoreSites,
-          state: "offline",
           siteList: siteData};
         SiteView.display($('#site-list'), sitesRender);
       });
@@ -40,23 +38,21 @@ var SiteOfflineController = {
         }
         var sitesRender = {
           hasMoreSites: hasMoreSites,
-          state: "all",
           siteList: siteofflineData};
         SiteView.display($('#offlinesite-list'), sitesRender);
       });
     });
   },
-  updateBySiteId: function (callback) {
+  update: function (data) {
     var sId = SiteController.id;
     SiteOffline.fetchBySiteId(sId, function (site) {
-      var data = SiteController.params();
       site.name = data.name;
       site.lat = data.lat;
       site.lng = data.lng;
       site.properties = JSON.stringify(data.properties);
       site.files = JSON.stringify(data.files);
       persistence.flush();
-      callback();
+      App.redirectTo("#page-site-list");
     });
   },
   renderUpdateSiteForm: function () {
@@ -69,11 +65,8 @@ var SiteOfflineController = {
       };
       FieldController.site.properties = JSON.parse(site.properties);
       FieldController.site.files = JSON.parse(site.files);
-      var btnData = {title: "global.update", isUpdateOffline: true};
-      SiteView.displayDefaultLayer("site_form",
-          $('#div_default_layer'), siteData);
-      SiteView.displayBtnSubmit("site_submit", $("#btn_submit_site"), btnData);
-      FieldOfflineController.renderByCollectionId();
+      SiteView.displayDefaultLayer("site_form", $('#div-site'), siteData);
+      FieldOfflineController.renderNewSiteForm();
     });
   },
   deleteBySiteId: function (sId) {
@@ -169,7 +162,7 @@ var SiteOfflineController = {
         showElement($("#info_sign_in"));
         App.redirectTo("#page-login");
       } else {
-        var error = SiteHelper.buildSubmitError(err["responseJSON"], data["site"], true);
+        var error = SiteHelper.buildSubmitError(err["responseJSON"], data["site"]);
         SiteView.displayError("site_errorUpload", $('#page-error-submit-site'),
             error);
       }

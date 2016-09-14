@@ -1,28 +1,26 @@
 var FieldOfflineController = {
-  renderByCollectionId: function () {
+  renderNewSiteForm: function () {
     var cId = CollectionController.id;
     FieldOffline.fetchByCollectionId(cId, function (layers) {
       if (layers.length == 0) {
         if(!App.isOnline())
           FieldView.displayNoFields("field_no_field_pop_up", $('#page-pop-up-no-fields'));
       } else {
-        var field_collections = [];
+        var cloneLayers = [];
         $.each(layers, function (i, layer) {
-          field_collections[i] = $.extend(true, {}, layer._data);
+          cloneLayers[i] = $.extend(true, {}, layer._data);
           $.each(layer._data.fields, function (j,dbField) {
             var field = $.extend(true, {}, dbField);
-            if (field.kind === "location")
-              Location.pageID[field.id] = 0;
-            FieldHelper.prepareFieldValue(field, true);
-            field_collections[i].fields[j] = field;
-          });
-        });
-        FieldView.displayLayerMenu("layer_menu", $('#ui-btn-layer-menu'),
-            {field_collections: field_collections});
-        FieldView.display("field_form", $('#div_field_collection'),
-            {field_collections: field_collections});
+             FieldHelper.prepareFieldValue(field, true);
+             cloneLayers[i].fields[j] = field;
+           });
+         });
+        FieldController.layers = cloneLayers;
+        FieldView.displayLayerMenu("layer_menu", $('#ui-layer-menu'),
+            {field_collections: cloneLayers});
+        FieldView.display("layer_sets", $('#div_field_collection'),
+            {field_collections: cloneLayers});
 
-        FieldController.layers = field_collections;
         FieldController.handleLayerMembership();
       }
       ViewBinding.setBusy(false);

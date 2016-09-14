@@ -61,7 +61,7 @@ App = {
       return online;
     }
     online = navigator.onLine;
-    return !online;
+    return online;
   },
   allBooleanTrue: function (arr) {
     for (var i in arr)

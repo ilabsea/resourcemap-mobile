@@ -176,5 +176,12 @@ var ValidationHelper = {
     if (!$("#" + id).attr('required'))
       $("#" + id).removeClass("error");
     $("#label_" + id).css("display", 'none');
+  },
+  showValidateMessage: function (selector, message) {
+    var $element = $(selector)
+    if(message != undefined)
+      $element.html(message)
+
+    $element.show().delay(3000).fadeOut();
   }
 };

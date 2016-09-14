@@ -7,7 +7,7 @@ $(function () {
     SiteModel.sitePage = 0;
     SiteOffline.sitePage = 0;
     SiteOfflineController.disabledOptionMenu(cId);
-    SiteController.getAllByCollectionId();
+    SiteController.getAllByCollectionId(cId);
     SiteController.setSitesByTermForSiteField();
     FieldController.reset();
     ValidList.clear();
@@ -15,19 +15,26 @@ $(function () {
 
   $(document).delegate('#btn_create_site', 'click', function () {
     SiteController.form = "new";
-    $('#form_site')[0].reset();
-    SiteController.renderCreate();
+    SiteController.id = null;
+    $("#btn_save_site").text(i18n.t('global.save_site'));
+    $("#btn_delete_site").hide();
+    SiteController.renderNewSiteForm();
   });
 
   $(document).delegate('#page-site-list #site-list-online li', 'click', function () {
-    var sId = $(this).attr('data-id');
-    if (sId == "load-more-site-online") {
-      $("#" + sId).remove();
+    var li = this;
+    var sId = li.getAttribute('data-id');
+    var cId = li.getAttribute('data-collection-id');
+    if (sId == "load-more-site-list") {
       SiteModel.sitePage++;
-      SiteOnlineController.getByCollectionId();
-    } else {
-      SiteController.form = "update_online";
+      SiteOnlineController.getByCollectionId(cId);
+      $(li).remove()
+    }
+    else {
       SiteController.id = sId;
+      $("#btn_save_site").text(i18n.t('global.update'))
+      $("#btn_delete_site").hide();
+
       SiteOnlineController.renderUpdateSiteForm();
     }
   });
@@ -55,7 +62,7 @@ $(function () {
     } else {
       SiteController.form = "update_offline_all";
       SiteController.id = sId;
-      CollectionController.id = $(this).attr('data-collection_id');
+      CollectionController.id = $(this).attr('data-collection-id');
       CollectionOfflineController.getOne();
       SiteOfflineController.renderUpdateSiteForm();
     }
@@ -77,5 +84,9 @@ $(function () {
   $(document).delegate('#page-site-list', 'pagehide', function () {
     if ($.mobile.activePage.is("#page-form-site"))
       ViewBinding.setBusy(true);
+  });
+
+  $(document).delegate('#btn_save_site', 'click', function() {
+    SiteController.save();
   });
 });

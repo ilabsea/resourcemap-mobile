@@ -196,3 +196,8 @@ h1 {
      position: absolute;
      left: -9999px;
 }
+
+.empty-content {
+  background-color: #f3f3f3;
+  min-height: 32px;
+}

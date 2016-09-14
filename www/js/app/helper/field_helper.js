@@ -10,6 +10,7 @@ FieldHelper = {
 
     $.each(layer.fields, function (_, field) {
       var fieldForUI = FieldHelper.fieldForUI(field);
+
       newLayer.fields.push(fieldForUI);
     });
 

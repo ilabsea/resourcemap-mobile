@@ -1,6 +1,6 @@
 /*!
  * modify function attributeRules to allow on min max range on type='tel' validation
- * code original 
+ * code original
  * if (/min|max/.test(method) && (type === null || /number|range|text/.test(type))) {
  *    value = Number(value);
  * }

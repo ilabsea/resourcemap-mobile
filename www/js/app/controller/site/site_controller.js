@@ -1,13 +1,52 @@
 SiteController = {
-  form: "",
   id: "",
-  add: function () {
-    var data = this.params();
-    if (App.isOnline())
-      SiteOnlineController.add(data, SiteHelper.resetForm);
+
+  save: function () {
+    ViewBinding.setBusy(true);
+    ViewBinding.setMessage(i18n.t('global.validating'));
+    var valid = SiteController.validateForm();
+
+    if(!valid){
+      ViewBinding.setBusy(false);
+      return false;
+    }
+
+    ViewBinding.setMessage(i18n.t('global.saving'))
+    var data = SiteController.params();
+
+    if(this.id)
+      App.isOnline() ? SiteOnlineController.update(data) : SiteOfflineController.update(data) ;
     else
-      SiteOfflineController.add(data);
+      App.isOnline() ? SiteOnlineController.add(data) : SiteOfflineController.add(data);
   },
+
+  validateForm: function(){
+    var validSite = this.validate()
+    var validLayer = FieldController.validateLayers()
+
+    var valid = validSite && validLayer;
+
+    if(!valid)
+      ValidationHelper.showValidateMessage("#validation-save-site", i18n.t('validation.emailPsdConfirm'));
+
+    return valid;
+  },
+
+  validate: function(){
+    var items = ['name', 'lat', 'lng']
+    var valid = true;
+    $.each(items, function(_, item){
+      var $elm = $("#" + item)
+      var value = $.trim($elm.val())
+      if(value == "")
+        valid = false
+
+      value == "" ? $elm.addClass('error') : $elm.removeClass("error");
+
+    })
+    return valid;
+  },
+
   params: function() {
     var params = FieldController.params();
     var data = {
@@ -23,6 +62,7 @@ SiteController = {
 
     return data;
   },
+
   paramsSiteList: function(site){
     var fullDate = dateToParam(site.created_at);
     var siteData = {
@@ -36,20 +76,20 @@ SiteController = {
 
     return siteData;
   },
-  getAllByCollectionId: function () {
-    SiteOfflineController.getByCollectionId();
+
+  getAllByCollectionId: function (cId) {
+    SiteOfflineController.getByCollectionId(cId);
     if (App.isOnline())
-      SiteOnlineController.getByCollectionId();
+      SiteOnlineController.getByCollectionId(cId);
   },
-  renderCreate: function () {
+
+  renderNewSiteForm: function () {
     this.startEntryDate = new Date().toISOString();
     var data = {name: "", lat: "", lng: ""};
-    var btnData = {title: "global.save_site", isUpdateOffline: false};
-    SiteView.displayDefaultLayer("site_form",
-        $('#div_default_layer'), data);
-    SiteView.displayBtnSubmit("site_submit", $("#btn_submit_site"), btnData);
-    FieldController.getByCollectionId();
+    SiteView.displayDefaultLayer("site_form", $('#div-site'), data);
+    FieldController.renderNewSiteForm();
   },
+
   setSitesByTermForSiteField: function(){
     if(App.isOnline()){
       SitesByTerm.fetchAll(function(sites){

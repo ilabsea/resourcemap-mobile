@@ -11,30 +11,6 @@ FieldView = {
     var content = App.Template.process(templateName, fieldData);
     element.html(content);
     element.trigger("create");
-    FieldView.displayCalcAndHierarchyField(fieldData);
-
-    DigitAllowance.prepareEventListenerOnKeyPress();
-  },
-  displayCalcAndHierarchyField: function (fieldData) {
-    $.each(fieldData.field_collections, function (_, properties) {
-      $.each(properties.fields, function (_, field) {
-        if (field.kind === "hierarchy") {
-          Hierarchy.renderDisplay(field.id, field.config);
-          Hierarchy.selectedNode(field.id, field._selected);
-        }
-
-        if (field.kind == "calculation" && field.config.dependent_fields) {
-          $.each(field.config.dependent_fields, function (_, dependentField) {
-            var $dependentField = $("#" + dependentField.id)
-            $dependentField.addClass('calculation');
-            var calculationIds = $dependentField.attr('data-calculation-ids') || "";
-            calculationIds = calculationIds ? calculationIds.split(',') : [];
-            calculationIds.push(field.id);
-            $dependentField.attr('data-calculation-ids', calculationIds.join(","));
-          });
-        }
-      });
-    });
   },
   displayLocationField: function (templateName, element, configData) {
     var content = App.Template.process(templateName, configData);
