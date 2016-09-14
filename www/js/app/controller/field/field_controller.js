@@ -78,6 +78,10 @@ FieldController = {
           $dependentField.attr('data-calculation-ids', calculationIds.join(","));
         });
       }
+
+      if(field.kind == "numeric")
+        DigitAllowance.prepareEventListenerOnKeyPress();
+
       $layerNodeContent.enhanceWithin();
     })
   },

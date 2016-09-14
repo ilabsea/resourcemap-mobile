@@ -19,7 +19,7 @@
            min="{{config.range.minimum}}"
            max="{{config.range.maximum}}"
            data-is_enable_field_logic="{{is_enable_field_logic}}"
-           class="skipLogicNumber {{invalid}}"
+           class="numeric {{invalid}}"
            data-allows_decimals= {{config.allows_decimals}}
            data-digits_precision="{{config.digits_precision}}"
            data-previous-value ="{{__value}}"
@@ -118,8 +118,8 @@
       {{#ifCond widgetType "photo"}}
         <div onclick="CameraModel.openCameraDialog({{id}}, '')"
              id='property_{{id}}_container'
-             class="photo {{invalid}}">
-         <img class="image"
+             class="photo">
+         <img class="image {{invalid}}"
               src='{{__value}}'
               id='{{id}}'
               {{required}} />

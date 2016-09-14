@@ -22,7 +22,7 @@ var DigitAllowance = {
     DigitAllowance.digitValidate(re, element);
   },
   prepareEventListenerOnKeyPress: function () {
-    $('.skipLogicNumber').each(function (e) {
+    $('.numeric').each(function (e) {
       this.addEventListener("input", function () {
         DigitAllowance.handleNumberInput(this);
       }, false);
